@@ -162,20 +162,24 @@ const SignUpScreen = ({ navigation }) => {
       email: 'test_2@gmail.com',
       password: '123456',
       address: '930 Foosha Oda Japan',
+      confirm_password: '123456',
     },
     validationSchema: Yup.object({
+      username: Yup.string().required(translate('usernameRequired')),
       email: Yup.string().email(translate('emailInvalid')).required(translate('emailRequired')),
+      address: Yup.string().required(translate('addressRequired')),
       password: Yup.string()
         .min(6, translate('passwordMin'))
         .max(20, translate('passwordMax'))
         .required(translate('passwordRequired')),
+      confirm_password: Yup.string().required(translate('confirm_passwordRequired')),
     }),
     onSubmit: (values) => {
-      handleLogin(values);
+      handleRegister(values);
     },
   });
 
-  const handleLogin = async ({ email, password, username, address }) => {
+  const handleRegister = async ({ email, password, username, address }) => {
     Keyboard.dismiss();
     const data = { email, password, userType: 'child' };
     const result = await dispatch(register(data));
@@ -208,13 +212,13 @@ const SignUpScreen = ({ navigation }) => {
         <Text style={styles.text_header}>Register Now!</Text>
       </View>
 
-      <Animatable.View style={styles.footer} animation="fadeInUp">
+      <Animatable.View style={styles.footer} animation="fadeInUp" duration={500}>
         <Text style={styles.text_footer}>User Name</Text>
         <View style={styles.action}>
           <Feather name="user" color="#05375a" size={20} />
           <TextInput
             style={styles.textInput}
-            placeholder={translate('usernamePlaceholder')}
+            placeholder="Full name"
             autoCapitalize="none"
             defaultValue={formik.values.username}
           />
@@ -231,20 +235,19 @@ const SignUpScreen = ({ navigation }) => {
             ref={emailRef}
             label={translate('email')}
             defaultValue={formik.values.email}
-            placeholder={translate('emailPlaceholder')}
+            placeholder="Your email"
             onChangeText={formik.handleChange('email')}
             onSubmitEditing={() => onSubmitEditing(TEXT_INPUT_EMAIL)}
             errorMessage={formik.errors.email}
             returnKeyType="next"
           />
         </View>
-        {/* <Text style={{color: 'red'}}>{data.emailErr}</Text> */}
         <Text style={([styles.text_footer], { marginTop: 20 })}>Address</Text>
         <View style={styles.action}>
           <Feather name="map-pin" color="#05375a" size={20} />
           <TextInput
             style={styles.textInput}
-            placeholder={translate('addressPlaceholder')}
+            placeholder="Your current address"
             defaultValue={formik.values.address}
             autoCapitalize="none"
           />
@@ -258,7 +261,7 @@ const SignUpScreen = ({ navigation }) => {
             ref={passRef}
             label={translate('password')}
             defaultValue={formik.values.password}
-            placeholder={translate('passwordPlaceholder')}
+            placeholder="Your password"
             onChangeText={formik.handleChange('password')}
             onSubmitEditing={() => onSubmitEditing(TEXT_INPUT_PASSWORD)}
             secureTextEntry={true}
@@ -274,7 +277,7 @@ const SignUpScreen = ({ navigation }) => {
             ref={passRef}
             label={translate('password')}
             defaultValue={formik.values.password}
-            placeholder={translate('passwordPlaceholder')}
+            placeholder="Confirm your password"
             onChangeText={formik.handleChange('password')}
             onSubmitEditing={() => onSubmitEditing(TEXT_INPUT_PASSWORD)}
             secureTextEntry={true}

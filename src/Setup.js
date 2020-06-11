@@ -14,7 +14,7 @@ export const startApp = async () => {
   try {
     const resIcons = await iconsLoaded;
     // Config i18n, if project don't use it. Just remove this line below
-    configI18n();
+    // configI18n();
     console.log(resIcons);
     const isSkip = store.getState().app.isSkip;
     console.log('isSkip', isSkip);

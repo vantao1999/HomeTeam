@@ -155,7 +155,7 @@ import {
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import * as Animatable from 'react-native-animatable';
-import { Container, FlatInput, Button } from '../../components';
+// import { Container, FlatInput, Button } from '../../components';
 import { useFormik } from 'formik';
 import { translate } from '../../i18n';
 import { NavigationUtils } from '../../navigation';
@@ -221,7 +221,7 @@ const Login = () => {
     }
   };
   console.log('error', formik.errors);
-  console.log('Redf', emailRef);
+  console.log('Ref', emailRef);
 
   return (
     <KeyboardAvoidingView
@@ -232,7 +232,7 @@ const Login = () => {
         <Text style={styles.text_header}>Life Begins After Coffee</Text>
       </View>
 
-      <Animatable.View style={styles.footer} animation="fadeInUp">
+      <Animatable.View style={styles.footer} animation="fadeInUp" duration={500}>
         <Text style={styles.text_footer}>Email</Text>
         <View style={styles.action}>
           <Feather name="mail" color="#05375a" size={20} />
@@ -241,7 +241,7 @@ const Login = () => {
             type="email"
             ref={emailRef}
             defaultValue={formik.values.email}
-            placeholder={translate('emailPlaceholder')}
+            placeholder="Enter your email"
             onChangeText={formik.handleChange('email')}
             onSubmitEditing={() => onSubmitEditing(TEXT_INPUT_EMAIL)}
             errorMessage={formik.errors.email}
@@ -256,7 +256,7 @@ const Login = () => {
             style={styles.textInput}
             ref={passRef}
             defaultValue={formik.values.password}
-            placeholder={translate('passwordPlaceholder')}
+            placeholder="Enter your password"
             onChangeText={formik.handleChange('password')}
             onSubmitEditing={() => onSubmitEditing(TEXT_INPUT_PASSWORD)}
             secureTextEntry={true}

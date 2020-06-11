@@ -1,5 +1,6 @@
 {
   "usernamePlaceholder": "Full Name",
+  "usernameRequired": "Username is required",
 
   "email": "Email",
   "emailInvalid": "Email invalid",
@@ -12,11 +13,13 @@
   "passwordRequired": "Password is required",
   "passwordPlaceholder": "Password",
   "forgetPassword": "Forget password",
+  "confirm_passwordRequired": "Password is required",
 
   "login": "Login",
   "register": "Register",
   "createNewAccount": "Create new account?",
   "haveAccountAlready": "Have an account already!",
 
-  "addressPlaceholder": "Your current address"
+  "addressPlaceholder": "Your current address",
+  "addressRequired": "Address is required"
 }
