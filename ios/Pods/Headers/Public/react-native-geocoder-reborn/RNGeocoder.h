@@ -1,0 +1,1 @@
+../../../../../node_modules/react-native-geocoder-reborn/ios/RNGeocoder/RNGeocoder.h

@@ -1,0 +1,286 @@
+@charset "UTF-8";
+
+@font-face {
+  font-family: "myaccountant";
+  src:url("fonts/myaccountant.eot");
+  src:url("fonts/myaccountant.eot?#iefix") format("embedded-opentype"),
+    url("fonts/myaccountant.woff") format("woff"),
+    url("fonts/myaccountant.ttf") format("truetype"),
+    url("fonts/myaccountant.svg#myaccountant") format("svg");
+  font-weight: normal;
+  font-style: normal;
+
+}
+
+[data-icon]:before {
+  font-family: "myaccountant" !important;
+  content: attr(data-icon);
+  font-style: normal !important;
+  font-weight: normal !important;
+  font-variant: normal !important;
+  text-transform: none !important;
+  speak: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+[class^="icon-"]:before,
+[class*=" icon-"]:before {
+  font-family: "myaccountant" !important;
+  font-style: normal !important;
+  font-weight: normal !important;
+  font-variant: normal !important;
+  text-transform: none !important;
+  speak: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-ic-about:before {
+  content: "\61";
+}
+.icon-ic-addexpense:before {
+  content: "\62";
+}
+.icon-ic-addincome:before {
+  content: "\63";
+}
+.icon-ic-addwage:before {
+  content: "\64";
+}
+.icon-ic-assets:before {
+  content: "\65";
+}
+.icon-ic-attachfile:before {
+  content: "\66";
+}
+.icon-ic-back:before {
+  content: "\67";
+}
+.icon-ic-bas:before {
+  content: "\68";
+}
+.icon-ic-camera:before {
+  content: "\6a";
+}
+.icon-ic-close:before {
+  content: "\6b";
+}
+.icon-ic-confirmpassword:before {
+  content: "\6c";
+}
+.icon-ic-dashboard:before {
+  content: "\6d";
+}
+.icon-ic-delete:before {
+  content: "\6e";
+}
+.icon-ic-droparrow:before {
+  content: "\70";
+}
+.icon-ic-edit:before {
+  content: "\71";
+}
+.icon-ic-email:before {
+  content: "\72";
+}
+.icon-ic-fileattached:before {
+  content: "\73";
+}
+.icon-ic-loginaccount:before {
+  content: "\74";
+}
+.icon-ic-loginfacebook:before {
+  content: "\75";
+}
+.icon-ic-logout:before {
+  content: "\76";
+}
+.icon-ic-menu:before {
+  content: "\77";
+}
+.icon-ic-netincome:before {
+  content: "\78";
+}
+.icon-ic-nextarrow:before {
+  content: "\79";
+}
+.icon-ic-password:before {
+  content: "\7a";
+}
+.icon-ic-pending:before {
+  content: "\42";
+}
+.icon-ic-refresh:before {
+  content: "\45";
+}
+.icon-ic-search:before {
+  content: "\46";
+}
+.icon-ic-uploadfile:before {
+  content: "\47";
+}
+.icon-ic-bc-checkinaccount:before {
+  content: "\49";
+}
+.icon-ic-bc-close:before {
+  content: "\4a";
+}
+.icon-ic-bc-codeposit:before {
+  content: "\4b";
+}
+.icon-ic-bc-connect:before {
+  content: "\4c";
+}
+.icon-ic-bc-delete:before {
+  content: "\4d";
+}
+.icon-ic-bc-done:before {
+  content: "\69";
+}
+.icon-ic-bc-iras:before {
+  content: "\4e";
+}
+.icon-ic-bc-onlpayment:before {
+  content: "\4f";
+}
+.icon-ic-bc-private:before {
+  content: "\50";
+}
+.icon-ic-bc-refresh:before {
+  content: "\51";
+}
+.icon-ic-bc-savingaccount:before {
+  content: "\52";
+}
+.icon-ic-bc-transfer:before {
+  content: "\53";
+}
+.icon-ic-bc-upload:before {
+  content: "\54";
+}
+.icon-ic-bc-withdrawal:before {
+  content: "\55";
+}
+.icon-ic-calendar:before {
+  content: "\56";
+}
+.icon-ic-bc-plus:before {
+  content: "\57";
+}
+.icon-ic-ssl:before {
+  content: "\58";
+}
+.icon-ic-securityfield:before {
+  content: "\59";
+}
+.icon-ic-call:before {
+  content: "\5a";
+}
+.icon-ic-message:before {
+  content: "\30";
+}
+.icon-ic-whatsapp:before {
+  content: "\31";
+}
+.icon-ic-arrow-down:before {
+  content: "\33";
+}
+.icon-ic-arrow-up:before {
+  content: "\34";
+}
+.icon-ic-filter:before {
+  content: "\35";
+}
+.icon-ic-done:before {
+  content: "\36";
+}
+.icon-ic-arrow-change:before {
+  content: "\6f";
+}
+.icon-ic-notice:before {
+  content: "\32";
+}
+.icon-ic-client:before {
+  content: "\37";
+}
+.icon-ic-pencil:before {
+  content: "\41";
+}
+.icon-ic-profile:before {
+  content: "\44";
+}
+.icon-ic-phonenumber:before {
+  content: "\43";
+}
+.icon-ic-phonenumber-1:before {
+  content: "\38";
+}
+.icon-ic-connect:before {
+  content: "\39";
+}
+.icon-ic-rule-empty:before {
+  content: "\22";
+}
+.icon-ic-setting:before {
+  content: "\21";
+}
+.icon-ic-location-line:before {
+  content: "\23";
+}
+.icon-ic-pending-1:before {
+  content: "\24";
+}
+.icon-ic-whatsapp-solid:before {
+  content: "\25";
+}
+.icon-ic-invitation:before {
+  content: "\26";
+}
+.icon-ic-call-solid:before {
+  content: "\27";
+}
+.icon-ic-call-line:before {
+  content: "\28";
+}
+.icon-ic-done-1:before {
+  content: "\29";
+}
+.icon-ic-message-solid:before {
+  content: "\2a";
+}
+.icon-ic-decline:before {
+  content: "\2b";
+}
+.icon-ic-username:before {
+  content: "\48";
+}
+.icon-ic-postcode:before {
+  content: "\2d";
+}
+.icon-ic-suburb:before {
+  content: "\2e";
+}
+.icon-ic-streetaddress:before {
+  content: "\2f";
+}
+.icon-ic-state:before {
+  content: "\3a";
+}
+.icon-ic-user:before {
+  content: "\3b";
+}
+.icon-ic-email-line:before {
+  content: "\2c";
+}
+.icon-left-arrow-copy:before {
+  content: "\3c";
+}
+.icon-right-arrow:before {
+  content: "\3d";
+}
+.icon-ic-payment:before {
+  content: "\3e";
+}

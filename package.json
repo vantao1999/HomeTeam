@@ -1,0 +1,97 @@
+{
+  "name": "EnouvoCafe",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "android": "react-native run-android",
+    "ios": "react-native run-ios",
+    "start": "react-native start",
+    "android:clean": "cd android && ./gradlew clean",
+    "test": "jest",
+    "generateIconFontComponent": "./node_modules/.bin/generate-icon ./src/assets/Fonts/IconFont/styles.css --componentName=myaccountant --fontFamily=myaccountant > ./node_modules/react-native-vector-icons/myaccountant.js",
+    "copyIconFontToNodeModules": "cp ./src/assets/Fonts/IconFont/myaccountant.ttf ./node_modules/react-native-vector-icons/myaccountant.ttf",
+    "createFontToNodeModule": "cp ./src/assets/Fonts/*.ttf ./node_modules/react-native-vector-icons/Fonts",
+    "createIconFont": "yarn run generateIconFontComponent && yarn run copyIconFontToNodeModules && yarn run createFontToNodeModule",
+    "removeCachedFiles": "rm -rf $TMPDIR/react-* && watchman watch-del-all && rm -rf ios/build/ModuleCache/* && rm -rf ios/build/* && rm -rf node_modules/* && rm -rf yarn.lock",
+    "removeCachedMetro": " npm cache clean --force && rm -rf ~/Library/Caches/com.facebook.ReactNativeBuild && yarn cache clean --verbose && rm -rf $TMPDIR/metro-bundler-cache-*",
+    "fix-xcode": "react-native-schemes-manager all",
+    "newclear": "yarn run removeCachedFiles && yarn run removeCachedMetro && yarn podNewCLear && yarn install --verbose && yarn run android:clean && yarn run fix-xcode && yarn run podNewCLear && yarn run createIconFont",
+    "podInstall": "cd ios && pod install && cd ..",
+    "podNewCLear": "cd ios && rm -rf Pods/* && rm -rf Podfile.lock && cd ..",
+    "postinstall": "yarn run podInstall",
+    "lint": "eslint .",
+    "fix-lint": "eslint --fix src -c .eslintrc.json --ext js,jsx"
+  },
+  "xcodeSchemes": {
+    "Debug": [
+      "Debug"
+    ],
+    "Release": [
+      "Staging",
+      "UAT",
+      "Release"
+    ],
+    "projectDirectory": "iOS"
+  },
+  "dependencies": {
+    "@react-native-community/async-storage": "^1.9.0",
+    "@react-native-community/netinfo": "^5.6.2",
+    "@react-native-community/viewpager": "^4.0.0",
+    "@react-native-firebase/analytics": "^7.1.0",
+    "@react-native-firebase/app": "^7.1.0",
+    "@react-native-firebase/crashlytics": "^7.1.0",
+    "@reduxjs/toolkit": "^1.3.6",
+    "axios": "^0.19.0",
+    "formik": "^2.1.4",
+    "geolib": "^3.2.1",
+    "i18n-js": "^3.5.1",
+    "lodash": "^4.17.15",
+    "moment": "^2.24.0",
+    "moment-precise-range-plugin": "^1.3.0",
+    "prop-types": "^15.7.2",
+    "react": "16.11.0",
+    "react-native": "0.62.2",
+    "react-native-animatable": "^1.3.3",
+    "react-native-code-push": "^6.2.0",
+    "react-native-config": "^1.0.0",
+    "react-native-device-info": "^5.4.0",
+    "react-native-fast-image": "^8.1.5",
+    "react-native-geocoder-reborn": "^0.8.3",
+    "react-native-gesture-handler": "^1.5.3",
+    "react-native-image-crop-picker": "^0.26.2",
+    "react-native-keyboard-aware-scroll-view": "^0.9.1",
+    "react-native-linear-gradient": "^2.5.6",
+    "react-native-localize": "1.1.4",
+    "react-native-navigation": "6.6.2",
+    "react-native-paper": "3.9.0",
+    "react-native-vector-icons": "^6.6.0",
+    "react-native-webview": "^7.5.1",
+    "react-redux": "^7.2.0",
+    "redux-logger": "4.0.0",
+    "redux-persist": "^6.0.0",
+    "yup": "^0.29.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.9.6",
+    "@babel/runtime": "^7.9.6",
+    "@react-native-community/eslint-config": "^1.1.0",
+    "babel-jest": "^26.0.1",
+    "eslint": "^7.0.0",
+    "eslint-config-prettier": "6.0.0",
+    "eslint-import-resolver-react-native": "^0.2.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-prettier": "2.6.2",
+    "eslint-plugin-react": "7.12.4",
+    "eslint-plugin-react-native": "^3.7.0",
+    "jest": "^26.0.1",
+    "metro-react-native-babel-preset": "^0.59.0",
+    "react-native-schemes-manager": "^2.0.0",
+    "react-test-renderer": "16.11.0"
+  },
+  "jest": {
+    "preset": "react-native"
+  },
+  "resolutions": {
+    "@react-native-community/cli-debugger-ui": "3.0.0"
+  }
+}

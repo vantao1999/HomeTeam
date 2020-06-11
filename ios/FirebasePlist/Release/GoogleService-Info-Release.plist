@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>722215247650-ck08vaoujqvt17bv96scva6nci5k3790.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.722215247650-ck08vaoujqvt17bv96scva6nci5k3790</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDZdh0xbVu2AJqTLSWaxa74Z3MOtJZ7AY4</string>
+	<key>GCM_SENDER_ID</key>
+	<string>722215247650</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.enouvo.myaccountantglobal</string>
+	<key>PROJECT_ID</key>
+	<string>myaccountant-global</string>
+	<key>STORAGE_BUCKET</key>
+	<string>myaccountant-global.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:722215247650:ios:cd8d3433a2f7c55883cf7b</string>
+	<key>DATABASE_URL</key>
+	<string>https://myaccountant-global.firebaseio.com</string>
+</dict>
+</plist>

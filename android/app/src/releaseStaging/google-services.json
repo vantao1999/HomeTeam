@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "462784289656",
+    "firebase_url": "https://rb-base-dev.firebaseio.com",
+    "project_id": "rb-base-dev",
+    "storage_bucket": "rb-base-dev.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:462784289656:android:d341758aa0e3c19972c68d",
+        "android_client_info": {
+          "package_name": "com.enouvo.rnbase"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "462784289656-9ivovikhnipqrto76j1fhre7b9blr8bh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCwiqXVtBO7U_gI3k5bi90p7x8ogd7XiZo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "462784289656-9ivovikhnipqrto76j1fhre7b9blr8bh.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "462784289656-m9kb3d7321lvrk09i8j97rqkufipl9th.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.enouvo.rnbase"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,6 @@
+module Pods_EnouvoCafe {
+  umbrella header "Pods-EnouvoCafe-umbrella.h"
+
+  export *
+  module * { export * }
+}
