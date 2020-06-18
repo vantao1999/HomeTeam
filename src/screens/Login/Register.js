@@ -1,128 +1,3 @@
-// import React, { useRef } from 'react';
-// import { View, StyleSheet, Alert, Keyboard } from 'react-native';
-// import { Container, FlatInput, Button, Text } from '../../components';
-// import { useFormik } from 'formik';
-// import { Colors } from '../../themes';
-// import { translate } from '../../i18n';
-// import { NavigationUtils } from '../../navigation';
-// import { useDispatch, useSelector } from 'react-redux';
-// import { register } from '../../redux/AuthRedux/operations';
-// import * as Yup from 'yup';
-
-// const TEXT_INPUT_EMAIL = 'TEXT_INPUT_EMAIL';
-// const TEXT_INPUT_PASSWORD = 'TEXT_INPUT_PASSWORD';
-
-// const Register = () => {
-//   // map redux
-//   const dispatch = useDispatch();
-//   const loading = useSelector((state) => state.auth.loading);
-
-//   let emailRef = useRef(null);
-//   let passRef = useRef(null);
-
-//   const formik = useFormik({
-//     initialValues: {
-//       email: 'test_2@gmail.com',
-//       password: '123456',
-//     },
-//     validationSchema: Yup.object({
-//       email: Yup.string().email(translate('emailInvalid')).required(translate('emailRequired')),
-//       password: Yup.string()
-//         .min(6, translate('passwordMin'))
-//         .max(20, translate('passwordMax'))
-//         .required(translate('passwordRequired')),
-//     }),
-//     onSubmit: (values) => {
-//       handleLogin(values);
-//     },
-//   });
-
-//   const handleLogin = async ({ email, password }) => {
-//     Keyboard.dismiss();
-//     const data = { email, password, userType: 'child' };
-//     const result = await dispatch(register(data));
-//     if (register.fulfilled.match(result)) {
-//       NavigationUtils.startMainContent();
-//     } else {
-//       if (result.payload) {
-//         Alert.alert('Error', result.payload.message || 'error');
-//       } else {
-//         Alert.alert('Error', result.error || 'error');
-//       }
-//     }
-//   };
-
-//   const onSubmitEditing = (field) => {
-//     if (field === TEXT_INPUT_EMAIL) {
-//       passRef.current?.focus();
-//     }
-//     if (field === TEXT_INPUT_PASSWORD) {
-//       passRef.current?.blur();
-//       formik.handleSubmit();
-//     }
-//   };
-
-//   return (
-//     <Container haveTextInput contentStyle={styles.container} loading={loading}>
-//       <View style={styles.body}>
-//         <FlatInput
-//           type="email"
-//           ref={emailRef}
-//           label={translate('email')}
-//           icon={'md-mail'}
-//           defaultValue={formik.values.email}
-//           placeholder={translate('emailPlaceholder')}
-//           style={styles.textInputContainer}
-//           onChangeText={formik.handleChange('email')}
-//           onSubmitEditing={() => onSubmitEditing(TEXT_INPUT_EMAIL)}
-//           errorMessage={formik.errors.email}
-//           returnKeyType="next"
-//         />
-//         <FlatInput
-//           ref={passRef}
-//           label={translate('password')}
-//           icon={'md-lock'}
-//           defaultValue={formik.values.password}
-//           placeholder={translate('passwordPlaceholder')}
-//           onChangeText={formik.handleChange('password')}
-//           onSubmitEditing={() => onSubmitEditing(TEXT_INPUT_PASSWORD)}
-//           secureTextEntry={true}
-//           style={styles.textInputContainer}
-//           errorMessage={formik.errors.password}
-//         />
-//         <Button label={translate('register')} onPress={formik.handleSubmit} style={styles.btn} />
-//       </View>
-//       <View style={styles.center}>
-//         <Text type={'regular14'} color={Colors.blue} onPress={() => NavigationUtils.pop()}>
-//           {translate('haveAccountAlready')}
-//         </Text>
-//       </View>
-//     </Container>
-//   );
-// };
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     padding: 16,
-//   },
-//   body: {
-//     flex: 1,
-//     justifyContent: 'center',
-//   },
-//   textInputContainer: {
-//     marginVertical: 12,
-//   },
-//   btn: {
-//     marginVertical: 16,
-//   },
-//   center: {
-//     alignItems: 'center',
-//   },
-// });
-
-// export default Register;
-
 /* eslint-disable react-native/no-inline-styles */
 import React, { useRef } from 'react';
 import {
@@ -139,49 +14,94 @@ import LinearGradient from 'react-native-linear-gradient';
 import * as Animatable from 'react-native-animatable';
 import Feather from 'react-native-vector-icons/Feather';
 import { NavigationUtils } from '../../navigation';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { TouchableOpacity, ScrollView } from 'react-native-gesture-handler';
 import { useFormik } from 'formik';
-import { Colors } from '../../themes';
-import { translate } from '../../i18n';
-import { useDispatch, useSelector } from 'react-redux';
-import { register } from '../../redux/AuthRedux/operations';
 import * as Yup from 'yup';
+import { useDispatch } from 'react-redux';
+import { register } from '../../redux/AuthRedux/operations';
+// import { values } from 'lodash';
 
+const TEXT_INPUT_USERNAME = 'TEXT_INPUT_USERNAME';
 const TEXT_INPUT_EMAIL = 'TEXT_INPUT_EMAIL';
 const TEXT_INPUT_PASSWORD = 'TEXT_INPUT_PASSWORD';
-const SignUpScreen = ({ navigation }) => {
-  const dispatch = useDispatch();
-  const loading = useSelector((state) => state.auth.loading);
+const TEXT_INPUT_CONFIRM_PASSWORD = 'TEXT_INPUT_PASSWORD';
 
+const Register = () => {
+  const [DATA, setData] = React.useState({
+    email: '',
+    emailErr: '',
+    secureTextEntry: true,
+    confirm_secureTextEntry: true,
+    errorPassword: '',
+    // disabled: true,
+  });
+  // const validateEmail = () => {
+  //   if (DATA.email === '') {
+  //     setData({ emailErr: 'Email cannot be null' });
+  //   } else {
+  //     setData({ emailErr: '' });
+  //   }
+  // };
+  const showSecureTextEntry = () => {
+    setData({
+      ...DATA,
+      secureTextEntry: !DATA.secureTextEntry,
+    });
+  };
+
+  const checkConfirmPass = () => {
+    const pass = formik.values.password;
+    const confirmPass = formik.values.confirmPassword;
+    console.log('CONSOLE PASS', pass);
+    console.log('CONSOLE CONFIRM_PASS', confirmPass);
+    if (pass !== confirmPass) {
+      setData({
+        ...DATA,
+        errorPassword: 'Confirm password does not match',
+        // disabled: DATA.disabled,
+      });
+    } else {
+      setData({
+        ...DATA,
+        errorPassword: '',
+        // disabled: !DATA.disabled,
+      });
+    }
+  };
+  const showConfirm_Password = () => {
+    setData({
+      ...DATA,
+      confirm_secureTextEntry: !DATA.confirm_secureTextEntry,
+    });
+  };
+  const dispatch = useDispatch();
+
+  let usernameRef = useRef(null);
   let emailRef = useRef(null);
   let passRef = useRef(null);
+  let confirmPassRef = useRef(null);
 
   const formik = useFormik({
     initialValues: {
-      username: 'Monkey D Luffy',
-      email: 'test_2@gmail.com',
-      password: '123456',
-      address: '930 Foosha Oda Japan',
-      confirm_password: '123456',
+      email: '',
+      username: '',
+      password: '',
+      confirmPassword: '',
     },
-    validationSchema: Yup.object({
-      username: Yup.string().required(translate('usernameRequired')),
-      email: Yup.string().email(translate('emailInvalid')).required(translate('emailRequired')),
-      address: Yup.string().required(translate('addressRequired')),
-      password: Yup.string()
-        .min(6, translate('passwordMin'))
-        .max(20, translate('passwordMax'))
-        .required(translate('passwordRequired')),
-      confirm_password: Yup.string().required(translate('confirm_passwordRequired')),
+    validationSchema: Yup.object().shape({
+      email: Yup.string().email('Invalid email').required('Required'),
+      username: Yup.string().min(2, 'Too Short!').max(70, 'Too Long!').required('Required'),
+      password: Yup.string().min(6, 'Password must be at less 6 character').required('Required'),
+      confirmPass: Yup.string().required('Required'),
     }),
     onSubmit: (values) => {
       handleRegister(values);
     },
   });
 
-  const handleRegister = async ({ email, password, username, address }) => {
+  const handleRegister = async ({ email, username, password }) => {
     Keyboard.dismiss();
-    const data = { email, password, userType: 'child' };
+    const data = { email, username, password };
     const result = await dispatch(register(data));
     if (register.fulfilled.match(result)) {
       NavigationUtils.startMainContent();
@@ -196,13 +116,20 @@ const SignUpScreen = ({ navigation }) => {
 
   const onSubmitEditing = (field) => {
     if (field === TEXT_INPUT_EMAIL) {
+      usernameRef.current?.focus();
+    }
+    if (field === TEXT_INPUT_USERNAME) {
       passRef.current?.focus();
     }
     if (field === TEXT_INPUT_PASSWORD) {
-      passRef.current?.blur();
+      passRef.current?.focus();
+    }
+    if (field === TEXT_INPUT_CONFIRM_PASSWORD) {
+      confirmPassRef.current?.blur();
       formik.handleSubmit();
     }
   };
+
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -213,94 +140,107 @@ const SignUpScreen = ({ navigation }) => {
       </View>
 
       <Animatable.View style={styles.footer} animation="fadeInUp" duration={500}>
-        <Text style={styles.text_footer}>User Name</Text>
-        <View style={styles.action}>
-          <Feather name="user" color="#05375a" size={20} />
-          <TextInput
-            style={styles.textInput}
-            placeholder="Full name"
-            autoCapitalize="none"
-            defaultValue={formik.values.username}
-          />
-        </View>
+        <ScrollView showsVerticalScrollIndicator={false}>
+          <Text style={styles.text_footer}>Email</Text>
+          <View style={styles.action}>
+            <Feather name="mail" color="#05375a" size={20} />
+            <TextInput
+              style={styles.textInput}
+              type="email"
+              ref={emailRef}
+              value={formik.values.email}
+              placeholder="Your email"
+              // onBlur={validateEmail}
+              onChangeText={formik.handleChange('email')}
+              onSubmitEditing={() => onSubmitEditing(TEXT_INPUT_EMAIL)}
+              errorMessage={formik.errors.email}
+              returnKeyType="next"
+            />
+          </View>
+          {/* <Text style={{ color: 'red' }}>{DATA.emailErr}</Text> */}
 
-        {/* <Text style={{color: 'red'}}>{data.nameErr}</Text> */}
+          <Text style={[styles.text_footer, { marginTop: 20 }]}>User Name</Text>
+          <View style={styles.action}>
+            <Feather name="user" color="#05375a" size={20} />
+            <TextInput
+              style={styles.textInput}
+              ref={usernameRef}
+              value={formik.values.username}
+              placeholder="Full name"
+              onSubmitEditing={() => onSubmitEditing(TEXT_INPUT_USERNAME)}
+              onChangeText={formik.handleChange('username')}
+              errorMessage={formik.errors.username}
+              returnKeyType="next"
+            />
+          </View>
 
-        <Text style={([styles.text_footer], { marginTop: 20 })}>Email</Text>
-        <View style={styles.action}>
-          <Feather name="mail" color="#05375a" size={20} />
-          <TextInput
-            style={styles.textInput}
-            type="email"
-            ref={emailRef}
-            label={translate('email')}
-            defaultValue={formik.values.email}
-            placeholder="Your email"
-            onChangeText={formik.handleChange('email')}
-            onSubmitEditing={() => onSubmitEditing(TEXT_INPUT_EMAIL)}
-            errorMessage={formik.errors.email}
-            returnKeyType="next"
-          />
-        </View>
-        <Text style={([styles.text_footer], { marginTop: 20 })}>Address</Text>
-        <View style={styles.action}>
-          <Feather name="map-pin" color="#05375a" size={20} />
-          <TextInput
-            style={styles.textInput}
-            placeholder="Your current address"
-            defaultValue={formik.values.address}
-            autoCapitalize="none"
-          />
-        </View>
+          <Text style={[styles.text_footer, { marginTop: 20 }]}>Password</Text>
+          <View style={styles.action}>
+            <Feather name="lock" color="#05375a" size={20} />
+            <TextInput
+              style={styles.textInput}
+              ref={passRef}
+              value={formik.values.password}
+              placeholder="Your password"
+              secureTextEntry={DATA.secureTextEntry ? true : false}
+              errorMessage={formik.errors.password}
+              returnKeyType="next"
+              onSubmitEditing={() => onSubmitEditing(TEXT_INPUT_PASSWORD)}
+              onChangeText={formik.handleChange('password')}
+            />
+            <TouchableOpacity onPress={showSecureTextEntry}>
+              {DATA.secureTextEntry ? (
+                <Feather name="eye-off" color="#05375a" size={20} />
+              ) : (
+                <Feather name="eye" color="#05375a" size={20} />
+              )}
+            </TouchableOpacity>
+          </View>
 
-        <Text style={[styles.text_footer, { marginTop: 20 }]}>Password</Text>
-        <View style={styles.action}>
-          <Feather name="lock" color="#05375a" size={20} />
-          <TextInput
-            style={styles.textInput}
-            ref={passRef}
-            label={translate('password')}
-            defaultValue={formik.values.password}
-            placeholder="Your password"
-            onChangeText={formik.handleChange('password')}
-            onSubmitEditing={() => onSubmitEditing(TEXT_INPUT_PASSWORD)}
-            secureTextEntry={true}
-            errorMessage={formik.errors.password}
-          />
-        </View>
+          <Text style={[styles.text_footer, { marginTop: 20 }]}>Confirm Password</Text>
+          <View style={styles.action}>
+            <Feather name="lock" color="#05375a" size={20} />
+            <TextInput
+              style={styles.textInput}
+              type="confirmPassword"
+              ref={confirmPassRef}
+              value={formik.values.confirmPassword}
+              placeholder="Confirm Your Password"
+              onChangeText={formik.handleChange('confirmPassword')}
+              onSubmitEditing={() => onSubmitEditing(TEXT_INPUT_CONFIRM_PASSWORD)}
+              secureTextEntry={DATA.confirm_secureTextEntry ? true : false}
+              errorMessage={formik.errors.confirmPassword}
+              returnKeyType="go"
+              onBlur={() => {
+                checkConfirmPass();
+              }}
+            />
+            <TouchableOpacity onPress={showConfirm_Password}>
+              {DATA.confirm_secureTextEntry ? (
+                <Feather name="eye-off" color="#05375a" size={20} />
+              ) : (
+                <Feather name="eye" color="#05375a" size={20} />
+              )}
+            </TouchableOpacity>
+          </View>
+          <Text style={{ color: 'red', fontFamily: 'Roboto-Light' }}>{DATA.errorPassword}</Text>
+          <View style={styles.button}>
+            <TouchableOpacity onPress={formik.handleSubmit}>
+              <LinearGradient colors={['#fcdb55', '#f7e188']} style={styles.signIn}>
+                <Text style={[styles.textSign, { color: 'black' }]}>Sign Up</Text>
+              </LinearGradient>
+            </TouchableOpacity>
 
-        <Text style={[styles.text_footer, { marginTop: 20 }]}>Confirm Password</Text>
-        <View style={styles.action}>
-          <Feather name="lock" color="#05375a" size={20} />
-          <TextInput
-            style={styles.textInput}
-            ref={passRef}
-            label={translate('password')}
-            defaultValue={formik.values.password}
-            placeholder="Confirm your password"
-            onChangeText={formik.handleChange('password')}
-            onSubmitEditing={() => onSubmitEditing(TEXT_INPUT_PASSWORD)}
-            secureTextEntry={true}
-            errorMessage={formik.errors.password}
-          />
-        </View>
-
-        <View style={styles.button}>
-          <TouchableOpacity onPress={formik.handleSubmit}>
-            <LinearGradient colors={['#fcdb55', '#f7e188']} style={styles.signIn}>
-              <Text style={[styles.textSign, { color: 'black' }]}>Sign Up</Text>
-            </LinearGradient>
-          </TouchableOpacity>
-
-          <TouchableOpacity onPress={() => NavigationUtils.pop()} style={styles.signUp}>
-            <Text style={[styles.textSign, { color: '#ffcc00' }]}>Sign In</Text>
-          </TouchableOpacity>
-        </View>
+            <TouchableOpacity onPress={() => NavigationUtils.pop()} style={styles.signUp}>
+              <Text style={[styles.textSign, { color: '#ffcc00' }]}>Sign In</Text>
+            </TouchableOpacity>
+          </View>
+        </ScrollView>
       </Animatable.View>
     </KeyboardAvoidingView>
   );
 };
-export default SignUpScreen;
+export default Register;
 const styles = StyleSheet.create({
   container: {
     flex: 1,

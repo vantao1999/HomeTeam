@@ -1,30 +1,34 @@
 import React from 'react';
-import { View, StyleSheet, TouchableOpacity, Dimensions, Text } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, Image, Dimensions, Text } from 'react-native';
 import { NavigationUtils } from '../../navigation';
 import * as Animatable from 'react-native-animatable';
 import LinearGradient from 'react-native-linear-gradient';
 import Feather from 'react-native-vector-icons/Feather';
+import { useSelector, useDispatch } from 'react-redux';
+import { actions } from '../../redux/AppRedux';
 
 const IntroScreen = () => {
-  // const dispatch = useDispatch();
-  // const markSkipIntro = (_isSkip) => dispatch(AppActions.markSkipIntro(_isSkip));
-
+  // const something = useSelector((state) => state.something);
+  const dispatch = useDispatch();
+  const markSkipIntro = (_isSkip) => dispatch(actions.markSkipIntro(_isSkip));
+  const onSkip = () => {
+    markSkipIntro(true);
+    NavigationUtils.startLoginContent();
+  };
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <Animatable.Image
-          animation="flash"
-          duration="5000"
+      <Animatable.View style={styles.header} animation="bounceIn" duration={700}>
+        <Image
           source={require('../../assets/Images/logo.png')}
           style={styles.logo}
           resizeMode="contain"
         />
-      </View>
-      <Animatable.View style={styles.footer} animation="bounceInUp" duration={500}>
+      </Animatable.View>
+      <Animatable.View style={styles.footer} animation="fadeInUp" duration={500}>
         <Text style={styles.title}>Together, we make a difference!</Text>
         <Text style={styles.text}>Sign in with account</Text>
         <View style={styles.button}>
-          <TouchableOpacity onPress={() => NavigationUtils.startLoginContent()}>
+          <TouchableOpacity onPress={onSkip}>
             <LinearGradient colors={['#f7e188', '#fcdb55']} style={styles.signIn}>
               <Text style={styles.textSign}>Get Started</Text>
               <Feather name="chevron-right" color="#05375a" size={20} />

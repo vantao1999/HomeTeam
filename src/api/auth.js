@@ -1,11 +1,11 @@
 import http from './http';
 
 export async function login(data) {
-  return http.post('/mobile/auth/login', data);
+  return http.post('/auth/login', data);
 }
 
 export async function register(data) {
-  return http.post('/mobile/auth/register', data);
+  return http.post('/auth/register', data);
 }
 
 // export async function userRegisterApi(data) {
@@ -16,9 +16,17 @@ export async function register(data) {
 //   return http.post('/auth/loginCustomer', data);
 // }
 
-// export async function forgotPasswordApi(email) {
-//   return http.post('/auth/forgotPassword', email);
-// }
+export async function forgotPasswordApi(data) {
+  return http.post('/auth/forgotPassword', data);
+}
+
+export async function resetPasswordApi(data) {
+  return http.post('/auth/confirmCode', data);
+}
+
+export async function uploadFile(data) {
+  return http.postUploadFile('/user/uploadFile', data);
+}
 
 // export async function userGetInfoApi() {
 //   return http.get('/users/me');

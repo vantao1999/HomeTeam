@@ -5,7 +5,7 @@ import DeviceInfo from 'react-native-device-info';
 
 import { store } from '../Setup';
 
-const checkIfErrorOccurs = res => {
+const checkIfErrorOccurs = (res) => {
   return {
     code: res.status,
     res,
@@ -74,11 +74,11 @@ export const timeoutPromise = function timeoutPromise(ms, promise) {
       reject(new Error('Request time out! Please try again.'));
     }, ms);
     promise.then(
-      res => {
+      (res) => {
         clearTimeout(timeoutId);
         resolve(res);
       },
-      err => {
+      (err) => {
         clearTimeout(timeoutId);
         reject(err);
       },
@@ -159,7 +159,7 @@ function requestWrapper(method) {
 function getQueryString(params) {
   const esc = encodeURIComponent;
   return Object.keys(params)
-    .map(k => `${esc(k)}=${esc(params[k])}`)
+    .map((k) => `${esc(k)}=${esc(params[k])}`)
     .join('&');
 }
 

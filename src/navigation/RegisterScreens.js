@@ -4,20 +4,24 @@ import { withReduxProvider } from '../redux/store';
 import Login from '../screens/Login';
 import Register from '../screens/Login/Register';
 import ForgetPassword from '../screens/Login/ForgetPassword';
+import VerifyCode from '../screens/Login/VerifyCode';
 
 import Loading from '../screens/Utils/Loading';
 import InAppNotification from '../screens/Utils/InAppNotification';
 import IntroScreen from '../screens/Intro';
 import Home from '../screens/Home';
-import Settings from '../screens/Settings';
+import UploadImage from '../screens/Profile/UploadImage';
+import Setting from '../screens/Settings';
 
 const SCREENS_WITH_REDUX = {
   Login,
   Register,
   ForgetPassword,
+  VerifyCode,
   IntroScreen,
   Home,
-  Settings,
+  UploadImage,
+  Setting,
 };
 const SCREENS = {
   Loading,

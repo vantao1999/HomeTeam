@@ -3,6 +3,7 @@ import { Navigation } from 'react-native-navigation';
 import { Colors, Images, Fonts } from '../themes';
 import { iconsMap } from '../utils/AppIcons';
 import Root from './Root';
+import { useSelector } from 'react';
 
 const SIDE_MENU_ID = 'sideMenu';
 const SCREEN_OVERLAY = {

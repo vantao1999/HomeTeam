@@ -1,6 +1,5 @@
 import * as RNLocalize from 'react-native-localize';
 import { getData } from './utils/PersistUtil';
-import i18n from './i18n';
 import { actions } from './redux/AppRedux';
 import { registerScreens, NavigationUtils } from './navigation';
 import { iconsLoaded } from './utils/AppIcons';
@@ -24,6 +23,7 @@ export const startApp = async () => {
       return;
     }
     const user = store.getState().auth.user;
+
     if (user) {
       NavigationUtils.startMainContent();
     } else {
@@ -31,22 +31,5 @@ export const startApp = async () => {
     }
   } catch (err) {
     console.log(err);
-  }
-};
-
-const configI18n = () => {
-  const { language } = store.getState().app;
-  if (language) {
-    i18n(language);
-  } else {
-    const localLanguage = RNLocalize.getLocales();
-    let finalLanguage = 'fr';
-    if (localLanguage && localLanguage[0]) {
-      finalLanguage = localLanguage[0].languageCode === 'fr' ? 'fr' : 'en';
-    }
-    console.log(actions);
-
-    store.dispatch(actions.setLanguage(finalLanguage));
-    i18n(finalLanguage);
   }
 };

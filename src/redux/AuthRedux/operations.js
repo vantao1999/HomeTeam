@@ -1,16 +1,18 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import * as AuthApis from '../../api/auth';
+// import { NavigationUtils } from '../../navigation';
 
 export const login = createAsyncThunk('auth/login', async (data, { rejectWithValue }) => {
   try {
     const response = await AuthApis.login(data);
+
     return response?.data;
   } catch (err) {
     if (!err.data) {
       throw err;
     }
     console.log('====================================');
-    console.log('asgdh', err.data);
+    console.log('aaaaa', err.data);
     console.log('====================================');
     return rejectWithValue(err.data);
   }
@@ -59,33 +61,55 @@ export const register = createAsyncThunk('auth/register', async (data, { rejectW
 //   }
 // });
 
-// export const forgotPassword = createAsyncThunk(
-//   'auth/forgotPassword',
-//   async (data, { rejectWithValue }) => {
-//     try {
-//       const response = await axios.post(`${config.API_URL}/auth/forgotPassword`, data);
-//       return response?.data;
-//     } catch (err) {
-//       // notification.error({ message: err.response.data.message });
-//       NavigationUtils.showNotification({ content: err?.response?.data?.message, type: 'error' });
-//       return rejectWithValue(err.response.data);
-//     }
-//   },
-// );
+export const forgotPassword = createAsyncThunk(
+  'auth/forgotPassword',
+  async (data, { rejectWithValue }) => {
+    try {
+      // const response = await axios.post(`${config.API_URL}/auth/forgotPassword`, data);
+      const response = await AuthApis.forgotPasswordApi(data);
+      return response?.data;
+    } catch (err) {
+      if (!err.data) {
+        throw err;
+      }
 
-// export const resetPassword = createAsyncThunk(
-//   'auth/resetPassword',
-//   async (data, { rejectWithValue }) => {
-//     try {
-//       const response = await axios.post(`${config.API_URL}/auth/resetPassword`, data);
-//       return response?.data;
-//     } catch (err) {
-//       // notification.error({ message: err.response.data.message });
-//       NavigationUtils.showNotification({ content: err?.response?.data?.message, type: 'error' });
-//       return rejectWithValue(err.response.data);
-//     }
-//   },
-// );
+      return rejectWithValue(err.data);
+    }
+  },
+);
+
+export const resetPassword = createAsyncThunk(
+  'auth/confirmCode',
+  async (data, { rejectWithValue }) => {
+    try {
+      // const response = await axios.post(`${config.API_URL}/auth/resetPassword`, data);
+      const response = await AuthApis.resetPasswordApi(data);
+      return response?.data;
+    } catch (err) {
+      if (!err.data) {
+        throw err;
+      }
+
+      return rejectWithValue(err.data);
+    }
+  },
+);
+
+export const uploadImage = createAsyncThunk(
+  'user/uploadFile',
+  async (data, { rejectWithValue }) => {
+    try {
+      const response = await AuthApis.uploadFile(data);
+      return response?.data;
+    } catch (err) {
+      if (!err.data) {
+        throw err;
+      }
+
+      return rejectWithValue(err.data);
+    }
+  },
+);
 
 // export const changeUserPassword = createAsyncThunk(
 //   'auth/changePassword',

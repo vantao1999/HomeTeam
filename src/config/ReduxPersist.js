@@ -10,7 +10,7 @@ const reduxPersist = {
   key: 'root',
   storage: AsyncStorage,
   version: 1,
-  whitelist: ['app'],
+  whitelist: ['app', 'auth'],
   blacklist: [],
 };
 

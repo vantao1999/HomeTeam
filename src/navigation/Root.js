@@ -50,7 +50,7 @@ const mainTab = (profileScreen) => {
       bottomTabs: {
         children: [
           BottomTab('Home', 'md-home', defaultTopBar, 'Home', 'ic-done'),
-          BottomTab('Settings', 'md-settings', defaultTopBar, 'Settings', 'ic-done'),
+          BottomTab('Setting', 'md-person', defaultTopBar, 'Profile'),
         ],
         options: {
           bottomTabs: {

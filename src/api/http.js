@@ -50,16 +50,25 @@ const http = {
   delete(url, config = {}) {
     return axios.delete(url, config);
   },
+  // postUploadFile(url, data = {}) {
+  //   let formData = new FormData();
+  //   data.photos.forEach((photo) => {
+  //     formData.append('photos', {
+  //       uri: photo,
+  //       type: 'image/jpg',
+  //       name: `${new Date().getTime()}.jpg`,
+  //     });
+  //   });
+  //   return this.post(url, formData);
+  // },
   postUploadFile(url, data = {}) {
     let formData = new FormData();
-    data.photos.forEach((photo) => {
-      formData.append('photos', {
-        uri: photo,
-        type: 'image/jpg',
-        name: `${new Date().getTime()}.jpg`,
-      });
-    });
 
+    formData.append('photos', {
+      uri: data,
+      type: 'image/jpg',
+      name: `${new Date().getTime()}.jpg`,
+    });
     return this.post(url, formData);
   },
 };

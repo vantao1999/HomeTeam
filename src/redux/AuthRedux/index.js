@@ -8,6 +8,7 @@ const authSlice = createSlice({
     loading: false,
     location: null,
     fcmToken: null,
+    token: null,
   },
   reducers: {
     login: (state, action) => {},
@@ -27,6 +28,7 @@ const authSlice = createSlice({
     [operations.login.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.user = payload;
+      state.token = payload.token;
     },
     [operations.login.rejected]: (state) => {
       state.loading = false;

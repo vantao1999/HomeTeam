@@ -4,7 +4,7 @@ import { Colors } from '../themes';
 const replaceSuffixPattern = /--(active|big|small|very-big)/g;
 const icons = {
   'md-home': [24, '#000', 'ionIcons'],
-  'md-settings': [24, '#000', 'ionIcons'],
+  'md-person': [24, '#000', 'ionIcons'],
 };
 
 const iconsMap = {};
