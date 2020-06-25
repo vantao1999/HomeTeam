@@ -9,21 +9,26 @@ import {
   Alert,
   KeyboardAvoidingView,
   Keyboard,
+  TouchableOpacity,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import * as Animatable from 'react-native-animatable';
 import { useFormik } from 'formik';
 import { NavigationUtils } from '../../navigation';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { login } from '../../redux/AuthRedux/operations';
 import Feather from 'react-native-vector-icons/Feather';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { get } from 'lodash';
+import { unwrapResult } from '@reduxjs/toolkit';
+import { getMany } from '../../redux/AuthRedux/operations';
 
 const TEXT_INPUT_EMAIL = 'TEXT_INPUT_EMAIL';
 const TEXT_INPUT_PASSWORD = 'TEXT_INPUT_PASSWORD';
 
 const Login = () => {
   const dispatch = useDispatch();
+  const scope = useSelector((state) => get(state, 'auth.user.scope', null));
+  console.log('SCOPE', scope);
 
   const [data, setData] = React.useState({
     secureTextEntry: true,
@@ -56,8 +61,8 @@ const Login = () => {
   };
   const formik = useFormik({
     initialValues: {
-      email: 'vantao.dev@gmail.com',
-      password: '123456',
+      email: 'admin@gmail.com',
+      password: 'admin123',
     },
 
     onSubmit: (values) => {
@@ -66,11 +71,21 @@ const Login = () => {
   });
   const handleLogin = async ({ email, password }) => {
     Keyboard.dismiss();
+
+    const getUser = await dispatch(getMany(''));
+    console.log('USerData', getUser);
+
     const result = await dispatch(login({ email, password }));
-    console.log('sadasdas', login.fulfilled);
 
     if (login.fulfilled.match(result)) {
-      NavigationUtils.startMainContent();
+      const user = unwrapResult(result);
+      console.log('user', user);
+
+      if (user && user.scope === 'admin') {
+        NavigationUtils.startMainAdminContent();
+      } else {
+        NavigationUtils.startMainContent();
+      }
     } else {
       if (result.payload) {
         Alert.alert('Error', result.payload.message || 'error');

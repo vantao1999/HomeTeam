@@ -30,6 +30,8 @@ const handleError = (error) => {
 
 const http = {
   setAuthorizationHeader(accessToken) {
+    console.log('accessToken', accessToken);
+
     axios.defaults.headers.Authorization = `bearer ${accessToken}`;
   },
   request(config = {}) {

@@ -13,15 +13,29 @@ import Home from '../screens/Home';
 import UploadImage from '../screens/Profile/UploadImage';
 import Setting from '../screens/Settings';
 
+//Admin Screens
+import Admin from '../screens/AdminScreens';
+import userProfile from '../screens/AdminScreens/userProfile';
+import editProfile from '../screens/AdminScreens/editProfile';
+import userEditProfile from '../screens/Settings/userEditProfile';
+import addUser from '../screens/AdminScreens/addUser';
+
 const SCREENS_WITH_REDUX = {
   Login,
   Register,
   ForgetPassword,
   VerifyCode,
+
   IntroScreen,
   Home,
   UploadImage,
   Setting,
+
+  Admin,
+  userProfile,
+  editProfile,
+  userEditProfile,
+  addUser,
 };
 const SCREENS = {
   Loading,

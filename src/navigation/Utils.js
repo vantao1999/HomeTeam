@@ -3,7 +3,7 @@ import { Navigation } from 'react-native-navigation';
 import { Colors, Images, Fonts } from '../themes';
 import { iconsMap } from '../utils/AppIcons';
 import Root from './Root';
-import { useSelector } from 'react';
+// import { useSelector } from 'react';
 
 const SIDE_MENU_ID = 'sideMenu';
 const SCREEN_OVERLAY = {
@@ -128,6 +128,9 @@ class NavigationUtils {
     Root.mainTab();
     // Root.mainTab(profileScreen);
   }
+  startMainAdminContent(adminScreen) {
+    Root.mainTabAdmin();
+  }
 
   push({
     id,
@@ -158,7 +161,7 @@ class NavigationUtils {
             title: {
               text: title,
               fontSize: 16,
-              color: 'white',
+              color: 'black',
               fontFamily: Fonts.type.bold,
             },
             background: {

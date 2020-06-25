@@ -34,33 +34,6 @@ export const register = createAsyncThunk('auth/register', async (data, { rejectW
   }
 });
 
-// export const getMe = createAsyncThunk('auth/me', async (data, { rejectWithValue }) => {
-//   try {
-//     const response = await axios.get(`${config.API_URL}/users/me`, data);
-//     return response?.data;
-//   } catch (err) {
-//     // notification.error({ message: err.response.data.message });
-//     return rejectWithValue(err.response.data);
-//   }
-// });
-
-// export const updateMe = createAsyncThunk('auth/me', async (data, { rejectWithValue }) => {
-//   try {
-//     const response = await axios.put(`${config.API_URL}/users/me`, data);
-//     NavigationUtils.showNotification({
-//       content: i18nTranslator('MESSAGE_UPDATE_PROFILE_SCC'),
-//       type: 'success',
-//     });
-//     return response?.data;
-//   } catch (err) {
-//     NavigationUtils.showNotification({
-//       content: i18nTranslator('MESSAGE_UPDATE_PROFILE_FAIL'),
-//       type: 'error',
-//     });
-//     return rejectWithValue(err.response.data);
-//   }
-// });
-
 export const forgotPassword = createAsyncThunk(
   'auth/forgotPassword',
   async (data, { rejectWithValue }) => {
@@ -111,28 +84,88 @@ export const uploadImage = createAsyncThunk(
   },
 );
 
-// export const changeUserPassword = createAsyncThunk(
-//   'auth/changePassword',
-//   async (data, { rejectWithValue }) => {
-//     try {
-//       const response = await axios.post(`${config.API_URL}/auth/changePassword`, data);
-//       return response?.data;
-//     } catch (err) {
-//       // notification.error({ message: err.response.data.message });
-//       return rejectWithValue(err.response.data);
-//     }
-//   },
-// );
+export const updateProfile = createAsyncThunk(
+  'user/updateProfile',
+  async (data, { rejectWithValue, getState }) => {
+    try {
+      const accessToken = getState().auth.token;
+      await AuthApis.setToken(accessToken);
+      const response = await AuthApis.updateProfile(data);
+      return response?.data;
+    } catch (err) {
+      if (!err.data) {
+        throw err;
+      }
+      return rejectWithValue(err.data);
+    }
+  },
+);
+//Admin Doing
+export const getMany = createAsyncThunk(
+  'admin/getMany',
+  async (data, { rejectWithValue, getState }) => {
+    try {
+      const accessToken = getState().auth.token;
+      await AuthApis.setToken(accessToken);
 
-// export const updateDeviceToken = createAsyncThunk(
-//   'auth/updateDeviceToken',
-//   async (data, { rejectWithValue }) => {
-//     try {
-//       const response = await axios.post(`${config.API_URL_V2}/deviceTokens`, data);
-//       return response?.data;
-//     } catch (err) {
-//       // notification.error({ message: err.response.data.message });
-//       return rejectWithValue(err.response.data);
-//     }
-//   },
-// );
+      const response = await AuthApis.getMany(data);
+      return response?.data;
+    } catch (err) {
+      if (!err) {
+        throw err;
+      }
+      return rejectWithValue(err);
+    }
+  },
+);
+
+export const createOne = createAsyncThunk(
+  'admin/createOne',
+  async (data, { rejectWithValue, getState }) => {
+    try {
+      const accessToken = getState().auth.token;
+      await AuthApis.setToken(accessToken);
+      const response = await AuthApis.createOne(data);
+      return response?.data;
+    } catch (err) {
+      if (!err.data) {
+        throw err;
+      }
+      return rejectWithValue(err.data);
+    }
+  },
+);
+
+export const getOne = createAsyncThunk(
+  'admin/getOne/',
+  async (userId, { rejectWithValue, getState }) => {
+    try {
+      const accessToken = getState().auth.token;
+      await AuthApis.setToken(accessToken);
+      const response = await AuthApis.getOne(userId);
+      return response?.data;
+    } catch (err) {
+      if (!err.data) {
+        throw err;
+      }
+      return rejectWithValue(err.data);
+    }
+  },
+);
+
+export const updateOne = createAsyncThunk(
+  'admin/updateOne/',
+  async (data, { rejectWithValue, getState }) => {
+    try {
+      const accessToken = getState().auth.token;
+      await AuthApis.setToken(accessToken);
+      const response = await AuthApis.updateOne(data.id, data.user);
+      return response?.data;
+    } catch (err) {
+      if (!err.data) {
+        throw err;
+      }
+      return rejectWithValue(err.data);
+    }
+  },
+);

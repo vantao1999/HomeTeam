@@ -9,6 +9,7 @@ const authSlice = createSlice({
     location: null,
     fcmToken: null,
     token: null,
+    listUser: [],
   },
   reducers: {
     login: (state, action) => {},
@@ -18,8 +19,9 @@ const authSlice = createSlice({
     },
     logout: (state) => {
       state.user = null;
+      state.token = null; // Using user to check at Setup file
     },
-    updateMe: (state) => {},
+    updateProfile: (state) => {},
   },
   extraReducers: {
     [operations.login.pending]: (state) => {
@@ -33,6 +35,7 @@ const authSlice = createSlice({
     [operations.login.rejected]: (state) => {
       state.loading = false;
     },
+
     [operations.register.pending]: (state) => {
       state.loading = true;
     },
@@ -42,6 +45,21 @@ const authSlice = createSlice({
     },
     [operations.register.rejected]: (state) => {
       state.loading = false;
+    },
+
+    [operations.updateProfile.pending]: (state) => {
+      state.loading = true;
+    },
+    [operations.updateProfile.fulfilled]: (state, { payload }) => {
+      state.loading = false;
+      state.user = payload[0];
+    },
+    [operations.getMany.pending]: (state) => {
+      state.loading = true;
+    },
+    [operations.getMany.fulfilled]: (state, { payload }) => {
+      state.loading = false;
+      state.listUser = payload;
     },
   },
 });

@@ -1,66 +1,53 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { View, Text, ScrollView, StyleSheet, Image } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { NavigationUtils } from '../../navigation';
 import Feather from 'react-native-vector-icons/Feather';
-import { useDispatch, useSelector } from 'react-redux';
-import { actions } from '../../redux/AuthRedux';
-import { get } from 'lodash';
-const Setting = () => {
-  const [userData, setData] = React.useState({
-    username: '',
-    address: '',
-    phone: '',
-  });
-  const dispatch = useDispatch();
-  const user = useSelector((state) => get(state, 'auth.user', null));
-  // console.log('UserData', user);
 
-  useEffect(() => {
-    if (user) {
-      setData(user);
-    }
-  }, [user]);
+const UserProfile = (props) => {
+  const check = props.userData;
+  console.log('Log props from Index', check);
 
-  const LogOut = async () => {
-    await dispatch(actions.logout());
-    NavigationUtils.startLoginContent();
-  };
-
-  const navigateScreen = (screen) => {
+  const navigateScreen = (screen, userData) => {
     NavigationUtils.push({
       screen,
-      isTopBarEnable: screen !== 'userEditProfile',
+      isTopBarEnable: screen !== 'editProfile',
       passProps: { userData },
     });
   };
-
   return (
     <View style={styles.container}>
       <View style={styles.header}>
+        <View style={styles.deleted}>
+          <TouchableOpacity>
+            <Feather name="trash-2" size={20} />
+          </TouchableOpacity>
+        </View>
         <View style={styles.edit}>
-          <TouchableOpacity onPress={() => navigateScreen('userEditProfile')}>
+          <TouchableOpacity onPress={() => navigateScreen('editProfile', props.userData)}>
             <Feather name="edit" size={20} />
           </TouchableOpacity>
         </View>
         <Image source={require('../../assets/Images/user.jpeg')} style={styles.imageUser} />
-        <TouchableOpacity style={styles.btnLogout} onPress={LogOut}>
-          <Text style={styles.textLogout}>LogOut</Text>
-        </TouchableOpacity>
+        <Text style={styles.textBalance}>Balance: 750.000 VND</Text>
       </View>
       <View style={styles.footer}>
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.action}>
             <Text style={styles.textTitle}>Name</Text>
-            <Text style={styles.textContent}>{userData.username}</Text>
+            <Text style={styles.textContent}>{props.userData.username}</Text>
           </View>
           <View style={styles.action}>
-            <Text style={styles.textTitle}>Address</Text>
-            <Text style={styles.textContent}>{userData.address}</Text>
+            <Text style={styles.textTitle}>Email</Text>
+            <Text style={styles.textContent}>{props.userData.email}</Text>
           </View>
           <View style={styles.action}>
             <Text style={styles.textTitle}>Phone Number</Text>
-            <Text style={styles.textContent}>{userData.phone}</Text>
+            <Text style={styles.textContent}>{props.userData.phone}</Text>
+          </View>
+          <View style={styles.action}>
+            <Text style={styles.textTitle}>Address</Text>
+            <Text style={styles.textContent}>{props.userData.address}</Text>
           </View>
         </ScrollView>
       </View>
@@ -68,38 +55,25 @@ const Setting = () => {
   );
 };
 
-export default Setting;
+export default UserProfile;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
   header: {
-    flex: 1.5,
+    flex: 1,
     backgroundColor: '#ffcc00',
     borderBottomLeftRadius: 50,
-    borderBottomRightRadius: 50,
     alignItems: 'center',
     justifyContent: 'center',
   },
   imageUser: {
-    width: 150,
-    height: 150,
+    width: 100,
+    height: 100,
     borderRadius: 100,
   },
   footer: {
-    flex: 2,
-  },
-  btnLogout: {
-    marginTop: 10,
-    backgroundColor: '#fff',
-    marginHorizontal: 20,
-    paddingVertical: 5,
-    paddingHorizontal: 20,
-    borderRadius: 15,
-  },
-  textLogout: {
-    fontFamily: 'Roboto-bold',
-    fontSize: 18,
+    flex: 3,
   },
   action: {
     backgroundColor: '#fff',
@@ -115,13 +89,23 @@ const styles = StyleSheet.create({
   textContent: {
     fontSize: 20,
     marginTop: 5,
-    fontWeight: '600',
+    fontWeight: '500',
     fontFamily: 'Roboto',
   },
   edit: {
     position: 'absolute',
     right: 50,
-    top: 50,
-    flexDirection: 'row',
+    top: 10,
+  },
+  deleted: {
+    position: 'absolute',
+    left: 50,
+    top: 10,
+  },
+  textBalance: {
+    marginTop: 15,
+    fontFamily: 'Roboto-bold',
+    fontSize: 25,
+    color: '#4ba0f4',
   },
 });

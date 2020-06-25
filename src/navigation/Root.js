@@ -51,6 +51,28 @@ const mainTab = (profileScreen) => {
         children: [
           BottomTab('Home', 'md-home', defaultTopBar, 'Home', 'ic-done'),
           BottomTab('Setting', 'md-person', defaultTopBar, 'Profile'),
+          // BottomTab('Admin', 'ios-people', defaultTopBar, 'Users'),
+        ],
+        options: {
+          bottomTabs: {
+            backgroundColor: Colors.white,
+            animate: false,
+            titleDisplayMode: 'alwaysShow',
+          },
+        },
+      },
+    },
+  });
+};
+
+const mainTabAdmin = (adminScreen) => {
+  Navigation.setRoot({
+    root: {
+      bottomTabs: {
+        children: [
+          BottomTab('Home', 'md-home', defaultTopBar, 'Home', 'ic-done'),
+          BottomTab('Admin', 'ios-people', defaultTopBar, 'Users'),
+          BottomTab('Setting', 'md-person', defaultTopBar, 'Profile'),
         ],
         options: {
           bottomTabs: {
@@ -88,6 +110,7 @@ export default {
   introScreen,
   login,
   mainTab,
+  mainTabAdmin,
 };
 
 const bottomTab = {

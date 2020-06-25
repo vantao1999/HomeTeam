@@ -1,8 +1,6 @@
 import React from 'react';
 import { Text, View, StyleSheet, ScrollView, Image, SafeAreaView } from 'react-native';
 import * as Animatable from 'react-native-animatable';
-import { TouchableOpacity } from 'react-native-gesture-handler';
-import { NavigationUtils } from '../../navigation';
 import { useSelector } from 'react-redux';
 const Home = () => {
   const data = useSelector((state) => state);

@@ -5,15 +5,10 @@ import { registerScreens, NavigationUtils } from './navigation';
 import { iconsLoaded } from './utils/AppIcons';
 import { store } from './redux/store';
 
-// Here some global listeners could be placed
-// ...
-
 export const startApp = async () => {
   registerScreens();
   try {
     const resIcons = await iconsLoaded;
-    // Config i18n, if project don't use it. Just remove this line below
-    // configI18n();
     console.log(resIcons);
     const isSkip = store.getState().app.isSkip;
     console.log('isSkip', isSkip);
@@ -25,7 +20,13 @@ export const startApp = async () => {
     const user = store.getState().auth.user;
 
     if (user) {
-      NavigationUtils.startMainContent();
+      if (user.scope === 'user') {
+        NavigationUtils.startMainContent();
+      } else {
+        if (user.scope === 'admin') {
+          NavigationUtils.startMainAdminContent();
+        }
+      }
     } else {
       NavigationUtils.startLoginContent();
     }
