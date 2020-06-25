@@ -41,18 +41,6 @@ export async function getOne(userId) {
 export async function updateOne(userId, data) {
   return http.put(`/admin/updateOne/${userId}`, data);
 }
-
-// export async function userGetInfoApi() {
-//   return http.get('/users/me');
-// }
-
-// export async function updateUserApi(id, data) {
-//   return http.put(`users/${id}`, data);
-// }
-
-// export async function createInstallationApi(params) {
-//   return http.post('/installations', params);
-// }
-// export async function userLoginFacebookApi(accessToken) {
-//   return http.post(`/auth/loginFacebook/access_token=${accessToken}`);
-// }
+export async function disable(userId, data) {
+  return http.put(`/admin/disable/${userId}`, data);
+}

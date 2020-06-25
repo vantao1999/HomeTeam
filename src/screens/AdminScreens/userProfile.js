@@ -3,10 +3,12 @@ import { View, Text, ScrollView, StyleSheet, Image } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { NavigationUtils } from '../../navigation';
 import Feather from 'react-native-vector-icons/Feather';
+import { disable } from '../../redux/AuthRedux/operations';
+import { useDispatch } from 'react-redux';
 
 const UserProfile = (props) => {
-  const check = props.userData;
-  console.log('Log props from Index', check);
+  const dispatch = useDispatch();
+  // const check = props.userData; use check for console
 
   const navigateScreen = (screen, userData) => {
     NavigationUtils.push({
@@ -15,11 +17,18 @@ const UserProfile = (props) => {
       passProps: { userData },
     });
   };
+  const disableUser = async (userId) => {
+    const result = await dispatch(disable(userId));
+  };
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <View style={styles.deleted}>
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              disableUser(props.userData.id);
+            }}
+          >
             <Feather name="trash-2" size={20} />
           </TouchableOpacity>
         </View>

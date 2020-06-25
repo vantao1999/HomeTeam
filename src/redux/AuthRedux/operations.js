@@ -159,7 +159,32 @@ export const updateOne = createAsyncThunk(
     try {
       const accessToken = getState().auth.token;
       await AuthApis.setToken(accessToken);
-      const response = await AuthApis.updateOne(data.id, data.user);
+      console.log('aaaa', data);
+      const userData = {
+        address: data && data.address ? data.address : data.user.address,
+        phone: data && data.phone ? data.phone : data.user.phone,
+        username: data && data.name ? data.name : data.user.username,
+      };
+      console.log('USERDATA', userData);
+
+      const response = await AuthApis.updateOne(data.userId, userData);
+      return response?.data;
+    } catch (err) {
+      if (!err.data) {
+        throw err;
+      }
+      return rejectWithValue(err.data);
+    }
+  },
+);
+
+export const disable = createAsyncThunk(
+  'admin/disable/',
+  async (data, { rejectWithValue, getState }) => {
+    try {
+      const accessToken = getState().auth.token;
+      await AuthApis.setToken(accessToken);
+      const response = await AuthApis.disable(data);
       return response?.data;
     } catch (err) {
       if (!err.data) {

@@ -5,27 +5,30 @@ import { NavigationUtils } from '../../navigation';
 import Feather from 'react-native-vector-icons/Feather';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useFormik } from 'formik';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { updateOne } from '../../redux/AuthRedux/operations';
-import { get } from 'lodash';
 
 const UserProfile = (props) => {
   const dispatch = useDispatch();
-  const userData = props.userData;
-  console.log('She says where you wanna go', userData);
-
+  // const userData = props.userData;
   const formik = useFormik({
     initialValues: {
-      username: props.userData.username,
-      address: props.userData.address,
-      phone: props.userData.phone,
+      useId: props.userData.id,
+      user: {
+        username: props.userData.username,
+        address: props.userData.address,
+        phone: props.userData.phone,
+      },
     },
     onSubmit: (values) => {
       updateUser(values);
     },
   });
-  const updateUser = async ({ userId, username, email, phone }) => {
-    const result = dispatch(updateOne(userId, username, email, phone));
+
+  const updateUser = async (values) => {
+    console.log('values', values);
+
+    const result = dispatch(updateOne(values));
     if (updateOne.fulfilled.match(result)) {
       Alert.alert('Update successful');
       NavigationUtils.pop();
@@ -66,7 +69,7 @@ const UserProfile = (props) => {
             <Text style={styles.textTitle}>Name</Text>
             <TextInput
               style={styles.textContent}
-              defaultValue={formik.values.username}
+              defaultValue={formik.values.user.username}
               placeholder="Enter name"
               onChangeText={formik.handleChange('name')}
               autoFocus={true}
@@ -77,7 +80,7 @@ const UserProfile = (props) => {
             <Text style={styles.textTitle}>Address</Text>
             <TextInput
               style={styles.textContent}
-              defaultValue={formik.values.address}
+              defaultValue={formik.values.user.address}
               placeholder="Enter address"
               onChangeText={formik.handleChange('address')}
               returnKeyType="next"
@@ -87,7 +90,7 @@ const UserProfile = (props) => {
             <Text style={styles.textTitle}>Phone Number</Text>
             <TextInput
               style={styles.textContent}
-              defaultValue={formik.values.phone}
+              defaultValue={formik.values.user.phone}
               placeholder="Enter phone number"
               onChangeText={formik.handleChange('phone')}
               returnKeyType="go"
@@ -133,7 +136,7 @@ const styles = StyleSheet.create({
   },
   textContent: {
     paddingVertical: 5,
-    fontSize: 22,
+    fontSize: 20,
     fontFamily: 'Roboto',
   },
   edit: {
