@@ -168,6 +168,8 @@ export const updateOne = createAsyncThunk(
       console.log('USERDATA', userData);
 
       const response = await AuthApis.updateOne(data.userId, userData);
+      console.log('RESPONESE', response);
+
       return response?.data;
     } catch (err) {
       if (!err.data) {
