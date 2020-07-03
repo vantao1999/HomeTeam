@@ -8,9 +8,9 @@ import {
   Platform,
   Keyboard,
   Alert,
+  TouchableOpacity,
 } from 'react-native';
-import Feather from 'react-native-vector-icons/Feather';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import Icon from 'react-native-vector-icons/Ionicons';
 import { NavigationUtils } from '../../navigation';
 import { useFormik } from 'formik';
 import { forgotPassword } from '../../redux/AuthRedux/operations';
@@ -20,16 +20,16 @@ const ForgetPassword = () => {
   const dispatch = useDispatch();
   const formik = useFormik({
     initialValues: {
-      email: '',
+      phone: '',
     },
 
     onSubmit: (values) => {
       handleForgotPassword(values);
     },
   });
-  const handleForgotPassword = async ({ email }) => {
+  const handleForgotPassword = async ({ phone }) => {
     Keyboard.dismiss();
-    const result = await dispatch(forgotPassword({ email }));
+    const result = await dispatch(forgotPassword({ phone }));
     if (forgotPassword.fulfilled.match(result)) {
       NavigationUtils.push({ screen: 'VerifyCode' });
     } else {
@@ -46,22 +46,22 @@ const ForgetPassword = () => {
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
       <View style={styles.content}>
-        <Text style={styles.textForgot}> ForgotPassword ?</Text>
+        <Text style={styles.textForgot}> Quên mật khẩu ?</Text>
         <View style={styles.action}>
-          <Feather name="mail" color="#05375a" size={20} />
+          <Icon name="ios-phone-portrait" color="#05375a" size={20} />
           <TextInput
             style={styles.textInput}
-            type="email"
-            placeholder="Enter your email"
-            Value={formik.values.email}
-            onChangeText={formik.handleChange('email')}
-            errorMessage={formik.errors.email}
+            type="phone"
+            placeholder="Nhập số điện thoại"
+            Value={formik.values.phone}
+            onChangeText={formik.handleChange('phone')}
+            errorMessage={formik.errors.phone}
             returnKeyType="go"
           />
         </View>
       </View>
       <TouchableOpacity style={styles.btnSend} onPress={formik.handleSubmit}>
-        <Text style={styles.textSend}>Send Email</Text>
+        <Text style={styles.textSend}>Gửi</Text>
       </TouchableOpacity>
     </KeyboardAvoidingView>
   );
@@ -70,7 +70,7 @@ export default ForgetPassword;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#ffcc00',
+    backgroundColor: '#56aaff',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -85,6 +85,7 @@ const styles = StyleSheet.create({
   },
   action: {
     marginTop: 20,
+    alignItems: 'center',
     flexDirection: 'row',
   },
   textInput: {

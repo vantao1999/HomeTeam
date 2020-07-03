@@ -16,13 +16,13 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { NavigationUtils } from '../../navigation';
 import { useFormik } from 'formik';
 import { useDispatch } from 'react-redux';
-import { register } from '../../redux/AuthRedux/operations';
+import { houseRegister } from '../../redux/AuthRedux/operations';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 const TEXT_INPUT_PHONE = 'TEXT_INPUT_PHONE';
 const TEXT_INPUT_PASSWORD = 'TEXT_INPUT_PASSWORD';
 
-const Register = () => {
+const HouseRegister = () => {
   const [DATA, setData] = React.useState({
     phone: '',
     phoneErr: '',
@@ -52,12 +52,12 @@ const Register = () => {
   const handleRegister = async ({ phone, password }) => {
     Keyboard.dismiss();
     const data = { phone, password };
-    const result = await dispatch(register(data));
-    if (register.fulfilled.match(result)) {
+    const result = await dispatch(houseRegister(data));
+    if (houseRegister.fulfilled.match(result)) {
       NavigationUtils.startLoginContent();
     } else {
       if (result.payload) {
-        Alert.alert('Lỗi', result.payload.message || 'Đã xảy lỗi, vui lòng thử lại');
+        Alert.alert('Lỗi', result.payload || 'Đã xảy lỗi, vui lòng thử lại');
       } else {
         Alert.alert('Lỗi', result.error || 'Đã xảy lỗi, vui lòng thử lại');
       }
@@ -73,16 +73,10 @@ const Register = () => {
     }
   };
 
-  const navigate = () => {
-    NavigationUtils.push({
-      screen: 'houseRegister',
-      isTopBarEnable: false,
-    });
-  };
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.text_header}>Đăng Ký Tài Khoản!</Text>
+        <Text style={styles.text_header}>Chào Mừng Đến Với HuongViQueNha!</Text>
       </View>
 
       <Animatable.View style={styles.footer} animation="fadeInUp" duration={500}>
@@ -135,16 +129,13 @@ const Register = () => {
             <TouchableOpacity onPress={() => NavigationUtils.pop()} style={styles.signIn}>
               <Text style={[styles.textSign, { color: '#56aaff' }]}>Đăng Nhập</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={navigate}>
-              <Text style={styles.textHouse}>Đăng ký trở thành nội trợ</Text>
-            </TouchableOpacity>
           </View>
         </KeyboardAwareScrollView>
       </Animatable.View>
     </SafeAreaView>
   );
 };
-export default Register;
+export default HouseRegister;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -208,12 +199,5 @@ const styles = StyleSheet.create({
   textSign: {
     color: 'white',
     fontWeight: 'bold',
-  },
-  textHouse: {
-    marginTop: 5,
-    color: '#56aaff',
-    fontFamily: 'Roboto',
-    textDecorationLine: 'underline',
-    alignSelf: 'flex-end',
   },
 });

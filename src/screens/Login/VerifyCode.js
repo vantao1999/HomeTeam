@@ -9,9 +9,9 @@ import {
   Platform,
   Keyboard,
   Alert,
+  TouchableOpacity,
 } from 'react-native';
-import Feather from 'react-native-vector-icons/Feather';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import Icon from 'react-native-vector-icons/Ionicons';
 import { NavigationUtils } from '../../navigation';
 import { useFormik } from 'formik';
 import { useDispatch } from 'react-redux';
@@ -86,15 +86,15 @@ const VerifyCode = () => {
     >
       <View style={styles.notice}>
         <Text style={{ fontFamily: 'Roboto' }}>
-          We have sent a verify code include 6 numbers to your email entered, Please check your
-          email and fill in to the form
+          We have sent a verify code include 6 numbers to your phone number entered, Please check
+          your message and fill in to the form
         </Text>
       </View>
 
       <View style={styles.content}>
         <Text style={styles.textForgot}> Verify Code</Text>
         <View style={styles.action}>
-          <Feather name="mail" color="#05375a" size={20} />
+          <Icon name="ios-phone-portrait" color="#05375a" size={20} />
           <TextInput
             style={styles.textInput}
             type="code"

@@ -55,6 +55,7 @@ const styles = StyleSheet.create({
   header: {
     opacity: 0.7,
     flex: 1,
+    marginTop: 20,
     backgroundColor: '#f4f4f4',
     marginHorizontal: 20,
     paddingHorizontal: 20,
@@ -92,7 +93,8 @@ const styles = StyleSheet.create({
   footer: {
     flex: 4,
     backgroundColor: '#f7f7f7',
-    borderRadius: 20,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
     paddingHorizontal: 20,
     marginHorizontal: 20,
     marginTop: 10,

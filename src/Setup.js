@@ -18,12 +18,13 @@ export const startApp = async () => {
       return;
     }
     const user = store.getState().auth.user;
+    console.log('LOG USEr', user);
 
     if (user) {
-      if (user.scope === 'user') {
+      if (user.users.role === 'user') {
         NavigationUtils.startMainContent();
       } else {
-        if (user.scope === 'admin') {
+        if (user.users.role === 'housewife') {
           NavigationUtils.startMainAdminContent();
         }
       }

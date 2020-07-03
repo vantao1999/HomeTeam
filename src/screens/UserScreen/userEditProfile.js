@@ -7,12 +7,13 @@ import {
   TextInput,
   Image,
   Keyboard,
+  TouchableOpacity,
   Alert,
   ActivityIndicator,
+  SafeAreaView,
 } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import { NavigationUtils } from '../../navigation';
-import Feather from 'react-native-vector-icons/Feather';
+import Icon from 'react-native-vector-icons/Ionicons';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
@@ -62,7 +63,7 @@ const userEditProfile = (props) => {
     // }
   };
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       {loading ? <ActivityIndicator /> : null}
       <View style={styles.header}>
         <View style={styles.exit}>
@@ -71,7 +72,7 @@ const userEditProfile = (props) => {
               NavigationUtils.pop();
             }}
           >
-            <Feather name="x" size={20} />
+            <Icon name="md-exit" size={20} />
           </TouchableOpacity>
         </View>
         <View style={styles.edit}>
@@ -89,8 +90,9 @@ const userEditProfile = (props) => {
           <Image source={require('../../assets/Images/user.jpeg')} style={styles.imageUser} />
         </TouchableOpacity>
       </View>
-      <KeyboardAwareScrollView>
-        <View style={styles.footer}>
+
+      <View style={styles.footer}>
+        <KeyboardAwareScrollView>
           <View style={styles.action}>
             <Text style={styles.textTitle}>Name</Text>
             <TextInput
@@ -123,9 +125,9 @@ const userEditProfile = (props) => {
               returnKeyType="go"
             />
           </View>
-        </View>
-      </KeyboardAwareScrollView>
-    </View>
+        </KeyboardAwareScrollView>
+      </View>
+    </SafeAreaView>
   );
 };
 
@@ -136,11 +138,12 @@ const styles = StyleSheet.create({
   },
   header: {
     flex: 1,
-    backgroundColor: '#ffcc00',
+    backgroundColor: '#56aaff',
     borderBottomLeftRadius: 50,
     borderBottomRightRadius: 50,
     alignItems: 'center',
     justifyContent: 'center',
+    overflow: 'hidden',
   },
   imageUser: {
     width: 150,
@@ -179,7 +182,6 @@ const styles = StyleSheet.create({
   },
   textSave: {
     fontFamily: 'Roboto-Regular',
-    color: '#4ba0f4',
     fontSize: 17,
   },
 });

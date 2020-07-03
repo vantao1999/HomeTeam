@@ -1,8 +1,7 @@
 import React, { useEffect } from 'react';
-import { View, Text, ScrollView, StyleSheet, Image } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { View, Text, ScrollView, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { NavigationUtils } from '../../navigation';
-import Feather from 'react-native-vector-icons/Feather';
+import Icon from 'react-native-vector-icons/Ionicons';
 import { useDispatch, useSelector } from 'react-redux';
 import { actions } from '../../redux/AuthRedux';
 import { get } from 'lodash';
@@ -38,14 +37,14 @@ const Setting = () => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <View style={styles.edit}>
-          <TouchableOpacity onPress={() => navigateScreen('userEditProfile')}>
-            <Feather name="edit" size={20} />
+        <View style={styles.logOut}>
+          <TouchableOpacity onPress={LogOut}>
+            <Text style={styles.textLogout}>LogOut</Text>
           </TouchableOpacity>
         </View>
         <Image source={require('../../assets/Images/user.jpeg')} style={styles.imageUser} />
-        <TouchableOpacity style={styles.btnLogout} onPress={LogOut}>
-          <Text style={styles.textLogout}>LogOut</Text>
+        <TouchableOpacity onPress={() => navigateScreen('userEditProfile')} style={styles.btnEdit}>
+          <Icon name="md-create" size={20} />
         </TouchableOpacity>
       </View>
       <View style={styles.footer}>
@@ -75,7 +74,7 @@ const styles = StyleSheet.create({
   },
   header: {
     flex: 1.5,
-    backgroundColor: '#ffcc00',
+    backgroundColor: '#56aaff',
     borderBottomLeftRadius: 50,
     borderBottomRightRadius: 50,
     alignItems: 'center',
@@ -89,7 +88,7 @@ const styles = StyleSheet.create({
   footer: {
     flex: 2,
   },
-  btnLogout: {
+  btnEdit: {
     marginTop: 10,
     backgroundColor: '#fff',
     marginHorizontal: 20,
@@ -99,7 +98,8 @@ const styles = StyleSheet.create({
   },
   textLogout: {
     fontFamily: 'Roboto-bold',
-    fontSize: 18,
+    fontSize: 16,
+    textDecorationLine: 'underline',
   },
   action: {
     backgroundColor: '#fff',
@@ -118,10 +118,10 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     fontFamily: 'Roboto',
   },
-  edit: {
+  logOut: {
     position: 'absolute',
-    right: 50,
-    top: 50,
+    right: 30,
+    top: 30,
     flexDirection: 'row',
   },
 });

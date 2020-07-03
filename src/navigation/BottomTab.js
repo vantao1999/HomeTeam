@@ -29,8 +29,8 @@ const bottomTab = (componentName, icon, defaultTopBar, bottomTabName, selectedIc
 const bottomTabConfig = {
   textColor: '#89857A',
   iconColor: '#bebebe',
-  selectedIconColor: '#ffcc00',
-  selectedTextColor: '#ffcc00',
+  selectedIconColor: '#56aaff',
+  selectedTextColor: '#56aaff',
   fontFamily: Fonts.type.regular,
   iconInsets: {
     top: 3,

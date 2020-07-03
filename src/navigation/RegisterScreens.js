@@ -11,13 +11,16 @@ import InAppNotification from '../screens/Utils/InAppNotification';
 import IntroScreen from '../screens/Intro';
 import Home from '../screens/Home';
 import UploadImage from '../screens/Profile/UploadImage';
-import Setting from '../screens/Settings';
+import User from '../screens/UserScreen';
+
+//HouseWife
+import houseRegister from '../screens/Login/housewifeRegister';
 
 //Admin Screens
 import Admin from '../screens/AdminScreens';
 import userProfile from '../screens/AdminScreens/userProfile';
 import editProfile from '../screens/AdminScreens/editProfile';
-import userEditProfile from '../screens/Settings/userEditProfile';
+import userEditProfile from '../screens/UserScreen/userEditProfile';
 import addUser from '../screens/AdminScreens/addUser';
 
 const SCREENS_WITH_REDUX = {
@@ -29,8 +32,12 @@ const SCREENS_WITH_REDUX = {
   IntroScreen,
   Home,
   UploadImage,
-  Setting,
+  User,
 
+  //HouseWife
+  houseRegister,
+
+  //Admin
   Admin,
   userProfile,
   editProfile,

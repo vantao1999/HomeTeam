@@ -3,17 +3,21 @@ import http from './http';
 export async function login(data) {
   return http.post('/auth/login', data);
 }
-
+//For Users
 export async function register(data) {
-  return http.post('/auth/register', data);
+  return http.post('/auth/signup', data);
 }
 
 export async function forgotPasswordApi(data) {
-  return http.post('/auth/forgotPassword', data);
+  return http.post('/housewifes/forgotpassword/phone', data);
 }
 
 export async function resetPasswordApi(data) {
-  return http.post('/auth/confirmCode', data);
+  return http.post('/housewifes/changepassword/phone', data);
+}
+
+export async function updateProfile(data) {
+  return http.put('/user/updateProfile', data);
 }
 
 export async function uploadFile(data) {
@@ -24,9 +28,9 @@ export async function uploadFile(data) {
 export async function setToken(accessToken) {
   return http.setAuthorizationHeader(accessToken);
 }
-
-export async function updateProfile(data) {
-  return http.put('/user/updateProfile', data);
+//HouseWife
+export async function signup(data) {
+  return http.post('/housewifes/signup', data);
 }
 //For admin
 export async function getMany(data) {

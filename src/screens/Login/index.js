@@ -5,30 +5,26 @@ import {
   Text,
   TextInput,
   StyleSheet,
-  Platform,
   Alert,
-  KeyboardAvoidingView,
-  Keyboard,
   TouchableOpacity,
+  Keyboard,
+  SafeAreaView,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import * as Animatable from 'react-native-animatable';
 import { useFormik } from 'formik';
 import { NavigationUtils } from '../../navigation';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { login } from '../../redux/AuthRedux/operations';
-import Feather from 'react-native-vector-icons/Feather';
-import { get } from 'lodash';
+import Icon from 'react-native-vector-icons/Ionicons';
 import { unwrapResult } from '@reduxjs/toolkit';
-import { getMany } from '../../redux/AuthRedux/operations';
 
-const TEXT_INPUT_EMAIL = 'TEXT_INPUT_EMAIL';
+const TEXT_INPUT_PHONE = 'TEXT_INPUT_EMAIL';
 const TEXT_INPUT_PASSWORD = 'TEXT_INPUT_PASSWORD';
 
 const Login = () => {
   const dispatch = useDispatch();
-  const scope = useSelector((state) => get(state, 'auth.user.scope', null));
-  console.log('SCOPE', scope);
 
   const [data, setData] = React.useState({
     secureTextEntry: true,
@@ -41,7 +37,7 @@ const Login = () => {
     });
   };
 
-  let emailRef = useRef(null);
+  let phoneRef = useRef(null);
   let passRef = useRef(null);
 
   const navigateScreen = (screen) => {
@@ -52,7 +48,7 @@ const Login = () => {
     });
   };
   const onSubmitEditing = (field) => {
-    if (field === TEXT_INPUT_EMAIL) {
+    if (field === TEXT_INPUT_PHONE) {
       passRef.current?.focus();
     }
     if (field === TEXT_INPUT_PASSWORD) {
@@ -61,121 +57,114 @@ const Login = () => {
   };
   const formik = useFormik({
     initialValues: {
-      email: 'admin@gmail.com',
-      password: 'admin123',
+      phone: '0347248085',
+      password: '123456',
     },
 
     onSubmit: (values) => {
       handleLogin(values);
     },
   });
-  const handleLogin = async ({ email, password }) => {
+  const handleLogin = async ({ phone, password }) => {
     Keyboard.dismiss();
-
-    const getUser = await dispatch(getMany(''));
-    console.log('USerData', getUser);
-
-    const result = await dispatch(login({ email, password }));
+    const result = await dispatch(login({ phone, password }));
+    console.log('Log Success', login.fulfilled);
 
     if (login.fulfilled.match(result)) {
       const user = unwrapResult(result);
-      console.log('user', user);
-
-      if (user && user.scope === 'admin') {
+      if (user && user.role === 'user') {
         NavigationUtils.startMainAdminContent();
       } else {
         NavigationUtils.startMainContent();
       }
     } else {
       if (result.payload) {
-        Alert.alert('Error', result.payload.message || 'error');
+        Alert.alert('Lỗi', result.payload || 'Đã xảy lỗi, vui lòng thử lại');
       } else {
-        Alert.alert('Error', result.error || 'error');
+        Alert.alert('Lỗi', result.error || 'Đã xảy lỗi, vui lòng thử lại');
       }
     }
   };
   console.log('error', formik.errors);
-  // console.log('Ref', emailRef);
 
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      style={styles.container}
-    >
+    <SafeAreaView behavior="padding" keyboardVerticalOffset={20} style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.text_header}>Life Begins After Coffee</Text>
+        <Text style={styles.text_header}>Hương Vị Quê Nhà</Text>
       </View>
 
       <Animatable.View style={styles.footer} animation="fadeInUp" duration={500}>
-        <Text style={styles.text_footer}>Email</Text>
-        <View style={styles.action}>
-          <Feather name="mail" color="#05375a" size={20} />
-          <TextInput
-            style={styles.textInput}
-            type="email"
-            ref={emailRef}
-            defaultValue={formik.values.email}
-            placeholder="Enter your email"
-            onChangeText={formik.handleChange('email')}
-            onSubmitEditing={() => onSubmitEditing(TEXT_INPUT_EMAIL)}
-            errorMessage={formik.errors.email}
-            returnKeyType="next"
-          />
-        </View>
+        <KeyboardAwareScrollView showsVerticalScrollIndicator={false}>
+          <Text style={styles.text_footer}>Nhập SDT</Text>
+          <View style={styles.action}>
+            <Icon name="ios-phone-portrait" color="#05375a" size={20} />
+            <TextInput
+              style={styles.textInput}
+              type="phone"
+              ref={phoneRef}
+              defaultValue={formik.values.phone}
+              keyboardType="phone-pad"
+              placeholder="Nhập số điện thoại"
+              onChangeText={formik.handleChange('phone')}
+              onSubmitEditing={() => onSubmitEditing(TEXT_INPUT_PHONE)}
+              returnKeyType="next"
+            />
+          </View>
 
-        <Text style={[styles.text_footer, { marginTop: 35 }]}>Password</Text>
-        <View style={styles.action}>
-          <Feather name="lock" color="#05375a" size={20} />
-          <TextInput
-            style={styles.textInput}
-            ref={passRef}
-            defaultValue={formik.values.password}
-            placeholder="Enter your password"
-            onChangeText={formik.handleChange('password')}
-            onSubmitEditing={() => onSubmitEditing(TEXT_INPUT_PASSWORD)}
-            secureTextEntry={data.secureTextEntry ? true : false}
-            errorMessage={formik.errors.password}
-            returnKeyType="go"
-          />
-          <TouchableOpacity onPress={updateSecureTextEntry}>
-            {data.secureTextEntry ? (
-              <Feather name="eye-off" color="#05375a" size={20} />
-            ) : (
-              <Feather name="eye" color="#05375a" size={20} />
-            )}
+          <Text style={[styles.text_footer, { marginTop: 20 }]}>Nhập Mật Khẩu</Text>
+          <View style={styles.action}>
+            <Icon name="md-lock" color="#05375a" size={20} />
+            <TextInput
+              style={styles.textInput}
+              ref={passRef}
+              defaultValue={formik.values.password}
+              placeholder="Nhập mật khẩu"
+              onChangeText={formik.handleChange('password')}
+              onSubmitEditing={() => onSubmitEditing(TEXT_INPUT_PASSWORD)}
+              secureTextEntry={data.secureTextEntry ? true : false}
+              // errorMessage={formik.errors.password}
+              returnKeyType="go"
+            />
+            <TouchableOpacity onPress={updateSecureTextEntry}>
+              {data.secureTextEntry ? (
+                <Icon name="ios-eye-off" color="#05375a" size={20} />
+              ) : (
+                <Icon name="ios-eye" color="#05375a" size={20} />
+              )}
+            </TouchableOpacity>
+          </View>
+          <TouchableOpacity
+            style={styles.btnForgot}
+            onPress={() => {
+              NavigationUtils.push({
+                screen: 'ForgetPassword',
+                isTopBarEnable: false,
+              });
+            }}
+          >
+            <Text style={styles.textForgot}>Quên mật khẩu?</Text>
           </TouchableOpacity>
-        </View>
-        <TouchableOpacity
-          style={styles.btnForgot}
-          onPress={() => {
-            NavigationUtils.push({
-              screen: 'ForgetPassword',
-              title: 'ForgotPassword',
-            });
-          }}
-        >
-          <Text style={styles.textForgot}>Forgot password?</Text>
-        </TouchableOpacity>
 
-        <View style={styles.button}>
-          <TouchableOpacity onPress={formik.handleSubmit}>
-            <LinearGradient colors={['#f7e120', '#fcdb55']} style={styles.signIn}>
-              <Text style={[styles.textSign, { color: 'black' }]}>Sign In</Text>
-            </LinearGradient>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigateScreen('Register')} style={styles.signUp}>
-            <Text style={[styles.textSign, { color: '#ffcc00' }]}>Sign Up</Text>
-          </TouchableOpacity>
-        </View>
+          <View style={styles.button}>
+            <TouchableOpacity onPress={formik.handleSubmit}>
+              <LinearGradient colors={['#56aaff', '#56a']} style={styles.signIn}>
+                <Text style={styles.textSign}>Đăng Nhập</Text>
+              </LinearGradient>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => navigateScreen('Register')} style={styles.signUp}>
+              <Text style={[styles.textSign, { color: '#56aaff' }]}>Đăng Ký</Text>
+            </TouchableOpacity>
+          </View>
+        </KeyboardAwareScrollView>
       </Animatable.View>
-    </KeyboardAvoidingView>
+    </SafeAreaView>
   );
 };
 export default Login;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#ffcc00',
+    backgroundColor: '#56aaff',
   },
   header: {
     flex: 1,
@@ -202,43 +191,45 @@ const styles = StyleSheet.create({
   },
   action: {
     flexDirection: 'row',
-    marginTop: 10,
     borderBottomWidth: 1,
     borderBottomColor: '#f2f2f2',
-    paddingBottom: 5,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   textInput: {
     flex: 1,
     paddingLeft: 10,
+    paddingVertical: 5,
     color: '#05375a',
   },
   button: {
-    marginTop: 50,
+    marginTop: 30,
   },
   signIn: {
     width: '100%',
-    height: 50,
+    fontFamily: 'Roboto',
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 10,
+    paddingVertical: 10,
+    borderRadius: 20,
   },
   signUp: {
-    height: 50,
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 10,
-    borderColor: '#000',
-    borderWidth: 1,
+    borderColor: '#56aaff',
+    borderWidth: 2,
     marginTop: 15,
+    paddingVertical: 10,
+    borderRadius: 20,
   },
   textForgot: {
-    fontSize: 16,
+    fontSize: 14,
     textDecorationLine: 'underline',
     marginVertical: 10,
+    color: '#56aaff',
   },
   textSign: {
     color: 'white',
     fontWeight: 'bold',
   },
-  btnForgot: {},
 });
