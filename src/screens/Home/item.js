@@ -1,51 +1,38 @@
 import React from 'react';
-import { Text, View, StyleSheet, ScrollView, Image, SafeAreaView } from 'react-native';
+import { TouchableOpacity,Dimensions, Text, StyleSheet, Image, View } from 'react-native'
 import * as Animatable from 'react-native-animatable';
 const Item = () => {
 
   return (
-    <View style={styles.container}>
-      <View style ={styles.viewLocation}>
-        <View style = {styles.viewTrung}>
-          <Text>Image here</Text>
-          <Text>Bac</Text>
-        </View>
-        <View style = {styles.viewTrung}> 
-        <Text>Image here</Text>
-          <Text>Bac</Text>
-        </View>
-      </View>
-      <View style ={styles.viewLocation}>
-        <View style = {styles.viewTrung}>
-          <Text>Image here</Text>
-          <Text>tay</Text>
-        </View>
-        <View style = {styles.viewTrung}> 
-        <Text>Image here</Text>
-          <Text>nam</Text>
-        </View>
-      </View>
-    </View>
+    <TouchableOpacity style={[styles.item]}>
+                {/* <View style={[styles.itemCategory]}> */}
+                    <Image source={this.props.img} style={[styles.imgItem]}/>
+                    <Text >{this.props.title}</Text>
+                {/* </View> */}
+           </TouchableOpacity>
   );
 };
 export default Item;
 
 const styles = StyleSheet.create({
-  container: {
+  item: {
     flex: 1,
-    backgroundColor: '#fff',
+    flexDirection: "row",
+    backgroundColor: '#f9c2ff',
+    padding: 20,
+    marginVertical: 8,
+    marginHorizontal: 16,
   },
-  viewLocation:{
-    marginTop:10,
-    flexDirection: 'row',
+  title: {
+    fontSize: 32,
+    alignItems: "center",
+    padding: 10,
+    justifyContent: "center",
+    flexDirection: "column",
   },
-  viewTrung:{
-    paddingVertical:60,
-    flex:1,
-    marginHorizontal:10,
-    paddingHorizontal:30,
-    alignItems:'center',
-    justifyContent:'center',
-    backgroundColor:'#56aaff',
-  },
+  imgItem: {
+      flexDirection: "column",
+      width: Dimensions.get('window').width/4,
+      height: Dimensions.get('window').width/4,
+  }
 });

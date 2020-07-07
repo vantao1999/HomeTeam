@@ -1,20 +1,12 @@
 import React from 'react';
 import { Text, View, StyleSheet, ScrollView, Image, SafeAreaView,TouchableOpacity } from 'react-native';
-import * as Animatable from 'react-native-animatable';
 import { NavigationUtils } from '../../navigation';
 const Home = () => {
   const Navigate = () =>{
     NavigationUtils.push({
-      screen:'Item',
-      options: { 
-        topBar: {
-          title: {
-            text: 'list product'
-          }
-        }
-      },
+      screen:'ListProduct',
       isTopBarEnable:true,
-      title:'text'
+      title:'Danh sách món ăn của miền Trung'
     })
   }
 
