@@ -1,30 +1,15 @@
 import React from 'react';
-import { Text, View, StyleSheet, ScrollView, Image, SafeAreaView,TouchableOpacity } from 'react-native';
+import { Text, View, StyleSheet, ScrollView, Image, SafeAreaView } from 'react-native';
 import * as Animatable from 'react-native-animatable';
-import { NavigationUtils } from '../../navigation';
-const Home = () => {
-  const Navigate = () =>{
-    NavigationUtils.push({
-      screen:'Item',
-      options: { 
-        topBar: {
-          title: {
-            text: 'list product'
-          }
-        }
-      },
-      isTopBarEnable:true,
-      title:'text'
-    })
-  }
+const Item = () => {
 
   return (
     <View style={styles.container}>
       <View style ={styles.viewLocation}>
-        <TouchableOpacity onPress = {Navigate} style = {styles.viewTrung}>
+        <View style = {styles.viewTrung}>
           <Text>Image here</Text>
           <Text>Bac</Text>
-        </TouchableOpacity>
+        </View>
         <View style = {styles.viewTrung}> 
         <Text>Image here</Text>
           <Text>Bac</Text>
@@ -43,7 +28,7 @@ const Home = () => {
     </View>
   );
 };
-export default Home;
+export default Item;
 
 const styles = StyleSheet.create({
   container: {

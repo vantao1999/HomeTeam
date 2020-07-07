@@ -26,10 +26,10 @@ const Setting = () => {
     NavigationUtils.startLoginContent();
   };
 
-  const navigateScreen = (screen) => {
+  const navigateScreen = () => {
     NavigationUtils.push({
-      screen,
-      isTopBarEnable: screen !== 'userEditProfile',
+      screen: 'userEditProfile',
+      isTopBarEnable: false,
       passProps: { userData },
     });
   };

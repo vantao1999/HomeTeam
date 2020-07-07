@@ -50,17 +50,6 @@ const userEditProfile = (props) => {
           Alert.alert('Error', err.error || 'error');
         }
       });
-    // const result = dispatch(updateProfile({ username, address, phone }));
-    // if (updateProfile.fulfilled.match(result)) {
-    //   Alert.alert('Updated successfully');
-    //   NavigationUtils.push({ screen: 'settings' });
-    // } else {
-    //   if (result.payload) {
-    //     Alert.alert('Error', result.payload.message || 'error');
-    //   } else {
-    //     Alert.alert('Error', result.error || 'error');
-    //   }
-    // }
   };
   return (
     <SafeAreaView style={styles.container}>
