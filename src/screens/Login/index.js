@@ -9,14 +9,15 @@ import {
   TouchableOpacity,
   Keyboard,
   SafeAreaView,
+  ActivityIndicator,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import * as Animatable from 'react-native-animatable';
 import { useFormik } from 'formik';
 import { NavigationUtils } from '../../navigation';
-import { useDispatch } from 'react-redux';
-import { login } from '../../redux/AuthRedux/operations';
+import { useDispatch, useSelector } from 'react-redux';
+import { login, getFoods } from '../../redux/AuthRedux/operations';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { unwrapResult } from '@reduxjs/toolkit';
 
@@ -25,6 +26,7 @@ const TEXT_INPUT_PASSWORD = 'TEXT_INPUT_PASSWORD';
 
 const Login = () => {
   const dispatch = useDispatch();
+  const loading = useSelector((state) => state.auth.loading);
 
   const [data, setData] = React.useState({
     secureTextEntry: true,
@@ -68,14 +70,13 @@ const Login = () => {
   const handleLogin = async ({ phone, password }) => {
     Keyboard.dismiss();
     const result = await dispatch(login({ phone, password }));
-    console.log('Log Success', login.fulfilled);
-
     if (login.fulfilled.match(result)) {
       const user = unwrapResult(result);
-      if (user && user.role === 'user') {
-        NavigationUtils.startMainAdminContent();
-      } else {
+      console.log('Log Success', user);
+      if (user && user.users.role === 'user') {
         NavigationUtils.startMainContent();
+      } else {
+        NavigationUtils.startMainHouseContent();
       }
     } else {
       if (result.payload) {
@@ -84,8 +85,8 @@ const Login = () => {
         Alert.alert('Lỗi', result.error || 'Đã xảy lỗi, vui lòng thử lại');
       }
     }
+    await dispatch(getFoods(''));
   };
-  console.log('error', formik.errors);
 
   return (
     <SafeAreaView behavior="padding" keyboardVerticalOffset={20} style={styles.container}>
@@ -157,6 +158,11 @@ const Login = () => {
           </View>
         </KeyboardAwareScrollView>
       </Animatable.View>
+      {loading ? (
+        <View style={styles.loading}>
+          <ActivityIndicator size="large" color="#56aaff" />
+        </View>
+      ) : null}
     </SafeAreaView>
   );
 };
@@ -231,5 +237,15 @@ const styles = StyleSheet.create({
   textSign: {
     color: 'white',
     fontWeight: 'bold',
+  },
+  loading: {
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
+    backgroundColor: 'rgba(0,0,0,0.2)',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });

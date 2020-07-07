@@ -12,16 +12,16 @@ import IntroScreen from '../screens/Intro';
 import Home from '../screens/Home';
 import UploadImage from '../screens/Profile/UploadImage';
 import User from '../screens/UserScreen';
+import userEditProfile from '../screens/UserScreen/userEditProfile';
 
 //HouseWife
 import houseRegister from '../screens/Login/housewifeRegister';
 
 //Admin Screens
-import Admin from '../screens/AdminScreens';
-import userProfile from '../screens/AdminScreens/userProfile';
-import editProfile from '../screens/AdminScreens/editProfile';
-import userEditProfile from '../screens/UserScreen/userEditProfile';
-import addUser from '../screens/AdminScreens/addUser';
+import Food from '../screens/Foods';
+import userProfile from '../screens/Foods/userProfile';
+import editProfile from '../screens/Foods/editProfile';
+import addUser from '../screens/Foods/addUser';
 
 const SCREENS_WITH_REDUX = {
   Login,
@@ -38,7 +38,7 @@ const SCREENS_WITH_REDUX = {
   houseRegister,
 
   //Admin
-  Admin,
+  Food,
   userProfile,
   editProfile,
   userEditProfile,

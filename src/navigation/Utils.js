@@ -128,7 +128,7 @@ class NavigationUtils {
     Root.mainTab();
     // Root.mainTab(profileScreen);
   }
-  startMainAdminContent(adminScreen) {
+  startMainHouseContent(adminScreen) {
     Root.mainTabAdmin();
   }
 

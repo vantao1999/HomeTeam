@@ -50,8 +50,8 @@ const mainTab = (profileScreen) => {
       bottomTabs: {
         children: [
           BottomTab('Home', 'md-home', defaultTopBar, 'Trang chủ', 'ic-done'),
+          BottomTab('Food', 'ios-people', defaultTopBar, 'Foods'),
           BottomTab('User', 'md-person', defaultTopBar, 'Cài đặt'),
-          // BottomTab('Admin', 'ios-people', defaultTopBar, 'Users'),
         ],
         options: {
           bottomTabs: {

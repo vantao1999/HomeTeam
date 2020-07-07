@@ -50,7 +50,7 @@ export default Home;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#ffcc00',
+    backgroundColor: '#56aaff',
   },
   header: {
     opacity: 0.7,

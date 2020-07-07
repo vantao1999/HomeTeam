@@ -57,7 +57,7 @@ const HouseRegister = () => {
       NavigationUtils.startLoginContent();
     } else {
       if (result.payload) {
-        Alert.alert('Lỗi', result.payload || 'Đã xảy lỗi, vui lòng thử lại');
+        Alert.alert('Lỗi', result.payload.message || 'Đã xảy lỗi, vui lòng thử lại');
       } else {
         Alert.alert('Lỗi', result.error || 'Đã xảy lỗi, vui lòng thử lại');
       }

@@ -26,6 +26,23 @@ export const register = createAsyncThunk('auth/signup', async (data, { rejectWit
   }
 });
 
+//HouseWife
+export const houseRegister = createAsyncThunk(
+  'housewifes/signup',
+  async (data, { rejectWithValue }) => {
+    try {
+      const response = await AuthApis.houseRegisterApi(data);
+      return response?.data;
+    } catch (err) {
+      if (!err.data) {
+        throw err;
+      }
+
+      return rejectWithValue(err.data);
+    }
+  },
+);
+
 export const forgotPassword = createAsyncThunk(
   'auth/forgotPassword',
   async (data, { rejectWithValue }) => {
@@ -90,41 +107,22 @@ export const updateProfile = createAsyncThunk(
     }
   },
 );
-//HouseWife
-export const houseRegister = createAsyncThunk(
-  'housewife/signup',
-  async (data, { rejectWithValue }) => {
-    try {
-      const response = await AuthApis.houseRegister(data);
-      return response?.data;
-    } catch (err) {
-      if (!err.data) {
-        throw err;
-      }
-
-      return rejectWithValue(err.data);
-    }
-  },
-);
 
 //Admin Doing
-export const getMany = createAsyncThunk(
-  'admin/getMany',
-  async (data, { rejectWithValue, getState }) => {
-    try {
-      const accessToken = getState().auth.token;
-      await AuthApis.setToken(accessToken);
+export const getFoods = createAsyncThunk('/foods', async (data, { rejectWithValue, getState }) => {
+  try {
+    const accessToken = getState().auth.token;
+    await AuthApis.setToken(accessToken);
 
-      const response = await AuthApis.getMany(data);
-      return response?.data;
-    } catch (err) {
-      if (!err) {
-        throw err;
-      }
-      return rejectWithValue(err);
+    const response = await AuthApis.getFoods(data);
+    return response?.data;
+  } catch (err) {
+    if (!err) {
+      throw err;
     }
-  },
-);
+    return rejectWithValue(err);
+  }
+});
 
 export const createOne = createAsyncThunk(
   'admin/createOne',
@@ -166,17 +164,12 @@ export const updateOne = createAsyncThunk(
     try {
       const accessToken = getState().auth.token;
       await AuthApis.setToken(accessToken);
-      console.log('aaaa', data);
       const userData = {
         address: data && data.address ? data.address : data.user.address,
         phone: data && data.phone ? data.phone : data.user.phone,
         username: data && data.name ? data.name : data.user.username,
       };
-      console.log('USERDATA', userData);
-
       const response = await AuthApis.updateOne(data.userId, userData);
-      console.log('RESPONESE', response);
-
       return response?.data;
     } catch (err) {
       if (!err.data) {

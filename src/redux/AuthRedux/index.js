@@ -9,7 +9,7 @@ const authSlice = createSlice({
     location: null,
     fcmToken: null,
     token: null,
-    listUser: [],
+    listFood: [],
   },
   reducers: {
     login: (state, action) => {},
@@ -35,7 +35,7 @@ const authSlice = createSlice({
     [operations.login.rejected]: (state) => {
       state.loading = false;
     },
-
+    //User Register
     [operations.register.pending]: (state) => {
       state.loading = true;
     },
@@ -47,6 +47,18 @@ const authSlice = createSlice({
       state.loading = false;
     },
 
+    //houseWife Register
+    [operations.houseRegister.pending]: (state) => {
+      state.loading = true;
+    },
+    [operations.houseRegister.fulfilled]: (state, { payload }) => {
+      state.loading = false;
+      state.user = payload;
+    },
+    [operations.houseRegister.rejected]: (state) => {
+      state.loading = false;
+    },
+
     [operations.updateProfile.pending]: (state) => {
       state.loading = true;
     },
@@ -54,12 +66,12 @@ const authSlice = createSlice({
       state.loading = false;
       state.user = payload[0];
     },
-    [operations.getMany.pending]: (state) => {
+    [operations.getFoods.pending]: (state) => {
       state.loading = true;
     },
-    [operations.getMany.fulfilled]: (state, { payload }) => {
+    [operations.getFoods.fulfilled]: (state, { payload }) => {
       state.loading = false;
-      state.listUser = payload;
+      state.listFood = payload;
     },
   },
 });
