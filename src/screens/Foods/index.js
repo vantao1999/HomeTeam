@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import {
   Text,
@@ -8,24 +9,24 @@ import {
   TouchableOpacity,
   FlatList,
   Alert,
+  SafeAreaView,
 } from 'react-native';
 import { NavigationUtils } from '../../navigation';
 import { useSelector, useDispatch } from 'react-redux';
 import { get } from 'lodash';
 import { getOne } from '../../redux/AuthRedux/operations';
 import { unwrapResult } from '@reduxjs/toolkit';
+import LinearGradient from 'react-native-linear-gradient';
 
 const Index = () => {
   const dispatch = useDispatch();
   const Foods = useSelector((state) => get(state, 'auth.listFood', null));
-  console.log('UserInfo', Foods);
+  console.log('USERDATA', Foods);
 
   const getUserData = async (userId) => {
     const result = await dispatch(getOne(userId));
-    console.log('USER GET ID', result);
     if (getOne.fulfilled.match(result)) {
       const userData = unwrapResult(result);
-      console.log('UNWRAP RESULT ', userData);
 
       if (userData) {
         NavigationUtils.push({
@@ -47,7 +48,8 @@ const Index = () => {
       <Image source={require('../../assets/Images/user.jpeg')} style={styles.imageUser} />
       <View style={styles.viewIn}>
         <Text style={styles.foodTitle}>{item.name}</Text>
-        <Text style={styles.userBalance}>{item.description}</Text>
+        <Text style={styles.textDes}>{item.description}</Text>
+        <Text style={styles.textPrice}>{item.price} vnd</Text>
       </View>
       <TouchableOpacity
         style={styles.btnViewFood}
@@ -61,7 +63,7 @@ const Index = () => {
   );
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <View style={styles.header}>
         <Image
           style={styles.imageHeader}
@@ -70,28 +72,24 @@ const Index = () => {
         />
         <Text>Hi Phuc!</Text>
       </View>
-
+      <Text style={styles.textTitle}>Hôm nay bạn muốn ăn gì?</Text>
+      <View style={styles.viewSearch}>
+        <TextInput style={styles.searchBar} placeholder="Tìm kiếm" />
+      </View>
+      <View style={styles.action} />
+      <View style={styles.content}>
+        <Text style={styles.textTitleContent}>ĐẶT NGAY!</Text>
+      </View>
       <View style={styles.footer}>
-        <Text style={styles.textTitle}>Hôm nay bạn muốn ăn gì?</Text>
-        <View style={styles.viewSearch}>
-          <TextInput style={styles.searchBar} placeholder="Tìm kiếm" />
-        </View>
-        <View style={styles.action}>
-          <Text style={styles.underline}>
-            -----------------------------------------------------
-          </Text>
-        </View>
-        <View style={styles.content}>
-          <Text style={styles.textTitleContent}>ĐẶT NGAY!</Text>
-        </View>
         <FlatList
           showsVerticalScrollIndicator={true}
           data={Foods}
+          contentContainerStyle={{ paddingBottom: 20 }}
           renderItem={Item}
           keyExtractor={(item) => item.email}
         />
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 export default Index;
@@ -115,16 +113,20 @@ const styles = StyleSheet.create({
   },
   footer: {
     flex: 2,
+    borderTopLeftRadius: 25,
+    borderTopRightRadius: 25,
   },
   textTitle: {
-    marginTop: 20,
     alignSelf: 'center',
     fontSize: 20,
     color: '#fff',
   },
+  textPrice: {
+    color: '#56aaff',
+    fontSize: 16,
+  },
   viewSearch: {
     marginHorizontal: 20,
-    marginVertical: 15,
     flexDirection: 'row',
   },
   searchBar: {
@@ -133,15 +135,17 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     backgroundColor: '#fff',
     flex: 1,
-    marginRight: 10,
   },
   action: {
-    marginHorizontal: 20,
+    marginHorizontal: 50,
+    marginVertical: 10,
     alignItems: 'center',
+    borderWidth: 1,
+    borderStyle: 'dotted',
+    borderRadius: 100,
+    borderColor: '#ffffff',
   },
-  underline: {
-    color: '#fff',
-  },
+
   content: {
     marginHorizontal: 20,
   },
@@ -151,7 +155,7 @@ const styles = StyleSheet.create({
   viewFood: {
     marginTop: 20,
     marginHorizontal: 20,
-    backgroundColor: '#f2f2f2',
+    backgroundColor: '#fff',
     borderRadius: 15,
     alignItems: 'center',
     flexDirection: 'row',
