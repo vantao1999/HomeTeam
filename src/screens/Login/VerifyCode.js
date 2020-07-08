@@ -166,7 +166,7 @@ export default VerifyCode;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#ffcc00',
+    backgroundColor: '#56aaff',
     alignItems: 'center',
     justifyContent: 'center',
   },

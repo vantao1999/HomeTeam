@@ -7,7 +7,9 @@ export async function login(data) {
 export async function register(data) {
   return http.post('/auth/signup', data);
 }
-
+export async function houseRegisterApi(data) {
+  return http.post('/housewifes/signup', data);
+}
 export async function forgotPasswordApi(data) {
   return http.post('/housewifes/forgotpassword/phone', data);
 }
@@ -28,13 +30,9 @@ export async function uploadFile(data) {
 export async function setToken(accessToken) {
   return http.setAuthorizationHeader(accessToken);
 }
-//HouseWife
-export async function signup(data) {
-  return http.post('/housewifes/signup', data);
-}
-//For admin
-export async function getMany(data) {
-  return http.get('/admin/getMany');
+// Get Food
+export async function getFoods(data) {
+  return http.get('/foods');
 }
 export async function createOne(data) {
   return http.post('admin/createOne', data);

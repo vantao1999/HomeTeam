@@ -1,13 +1,18 @@
 import React from 'react';
 import { Text, View, StyleSheet, ScrollView, Image, SafeAreaView,TouchableOpacity } from 'react-native';
 import { NavigationUtils } from '../../navigation';
+import {getFoods} from '../../redux/AuthRedux/operations';
+import {useDispatch} from 'react-redux';
+
 const Home = () => {
-  const Navigate = () =>{
+  const dispatch = useDispatch();
+  const Navigate = async() =>{
     NavigationUtils.push({
       screen:'ListProduct',
       isTopBarEnable:true,
       title:'Danh sách món ăn của miền Trung'
     })
+    await dispatch(getFoods(''));
   }
 
   return (
@@ -32,6 +37,9 @@ const Home = () => {
           <Text>nam</Text>
         </View>
       </View>
+      <TouchableOpacity style = {styles.btnBook}>
+        <Text style ={styles.textBook}>Dat Ngay</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -40,7 +48,6 @@ export default Home;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
   },
   viewLocation:{
     marginTop:10,
@@ -55,4 +62,16 @@ const styles = StyleSheet.create({
     justifyContent:'center',
     backgroundColor:'#56aaff',
   },
+  btnBook:{
+    backgroundColor:'#56aaff',
+    marginVertical:20,
+    marginHorizontal:110,
+    paddingVertical:5,
+    alignItems:'center',
+    borderRadius:15,
+  },
+  textBook:{
+    color:'#fff',
+    fontSize:16,
+  }
 });

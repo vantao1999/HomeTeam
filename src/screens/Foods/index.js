@@ -18,10 +18,10 @@ import { getOne } from '../../redux/AuthRedux/operations';
 import { unwrapResult } from '@reduxjs/toolkit';
 import LinearGradient from 'react-native-linear-gradient';
 
-const ListProduct = () => {
+const Index = () => {
   const dispatch = useDispatch();
-  const listFood = useSelector((state) => get(state, 'auth.listFood', null));
-  console.log('USERDATA', listFood);
+  const Foods = useSelector((state) => get(state, 'auth.listFood', null));
+  console.log('USERDATA', Foods);
 
   const getUserData = async (userId) => {
     const result = await dispatch(getOne(userId));
@@ -83,7 +83,7 @@ const ListProduct = () => {
       <View style={styles.footer}>
         <FlatList
           showsVerticalScrollIndicator={true}
-          data={listFood.filter((item) => item.location === "Miền Bắc")}
+          data={Foods}
           contentContainerStyle={{ paddingBottom: 20 }}
           renderItem={Item}
           keyExtractor={(item) => item.email}
@@ -92,7 +92,7 @@ const ListProduct = () => {
     </SafeAreaView>
   );
 };
-export default ListProduct;
+export default Index;
 const styles = StyleSheet.create({
   container: {
     flex: 1,

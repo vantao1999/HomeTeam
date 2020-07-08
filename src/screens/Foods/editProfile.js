@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
   },
   header: {
     flex: 1,
-    backgroundColor: '#ffcc00',
+    backgroundColor: '#56aaff',
     borderBottomLeftRadius: 50,
     borderBottomRightRadius: 50,
     alignItems: 'center',

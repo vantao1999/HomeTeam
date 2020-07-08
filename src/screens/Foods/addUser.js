@@ -166,7 +166,7 @@ export default AddUser;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#ffcc00',
+    backgroundColor: '#56aaff',
   },
   header: {
     flex: 1,
