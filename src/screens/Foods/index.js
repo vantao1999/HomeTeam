@@ -12,20 +12,18 @@ import {
   SafeAreaView,
 } from 'react-native';
 import { NavigationUtils } from '../../navigation';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { get } from 'lodash';
-import { getFood } from '../../redux/AuthRedux/operations';
-import { unwrapResult } from '@reduxjs/toolkit';
 
 const Index = () => {
-  const dispatch = useDispatch();
   const Foods = useSelector((state) => get(state, 'auth.listFood', null));
-  console.log('LOGGGGG', Foods);
 
   const getFoodData = async (item) => {
     NavigationUtils.push({
       screen: 'foodDetails',
       title: 'Food Details',
+      isTopBarEnable: true,
+      leftButtons: true,
       passProps: { item },
     });
   };
