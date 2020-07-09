@@ -13,7 +13,7 @@ const Setting = () => {
   });
   const dispatch = useDispatch();
   const user = useSelector((state) => get(state, 'auth.user', null));
-  // console.log('UserData', user);
+  console.log('UserData', user);
 
   useEffect(() => {
     if (user) {
@@ -51,15 +51,15 @@ const Setting = () => {
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.action}>
             <Text style={styles.textTitle}>Name</Text>
-            <Text style={styles.textContent}>{userData.username}</Text>
+            <Text style={styles.textContent}>{userData.users.role}</Text>
           </View>
           <View style={styles.action}>
             <Text style={styles.textTitle}>Address</Text>
-            <Text style={styles.textContent}>{userData.address}</Text>
+            <Text style={styles.textContent}>{userData.users.joinDate}</Text>
           </View>
           <View style={styles.action}>
             <Text style={styles.textTitle}>Phone Number</Text>
-            <Text style={styles.textContent}>{userData.phone}</Text>
+            <Text style={styles.textContent}>{userData.users.phone}</Text>
           </View>
         </ScrollView>
       </View>

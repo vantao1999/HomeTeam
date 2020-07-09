@@ -64,14 +64,6 @@ const ListProduct = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <Image
-          style={styles.imageHeader}
-          source={require('../../assets/Images/logo.png')}
-          resizeMode={'stretch'}
-        />
-        <Text>Hi Phuc!</Text>
-      </View>
       <Text style={styles.textTitle}>Hôm nay bạn muốn ăn gì?</Text>
       <View style={styles.viewSearch}>
         <TextInput style={styles.searchBar} placeholder="Tìm kiếm" />

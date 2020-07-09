@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React from 'react';
+import React,{useState,useEffect} from 'react';
 import {
   Text,
   TextInput,
@@ -12,54 +12,57 @@ import {
   SafeAreaView,
 } from 'react-native';
 import { NavigationUtils } from '../../navigation';
-import { useSelector, useDispatch } from 'react-redux';
-import { get } from 'lodash';
-import { getOne } from '../../redux/AuthRedux/operations';
-import { unwrapResult } from '@reduxjs/toolkit';
-import LinearGradient from 'react-native-linear-gradient';
+import { useSelector } from 'react-redux';
+import { get,includes,toLower } from 'lodash';
 
 const Index = () => {
-  const dispatch = useDispatch();
-  const Foods = useSelector((state) => get(state, 'auth.listFood', null));
-  console.log('USERDATA', Foods);
+const listFood = useSelector((state) => get(state, 'auth.listFood', null));
+const [searchTxt,setSearchTxt] = React.useState('');
+const [userData, setUserData] = useState([]);
+useEffect(() => {
+  if (listFood) {
+    setUserData(listFood);
+  }
+}, [listFood]);
 
-  const getUserData = async (userId) => {
-    const result = await dispatch(getOne(userId));
-    if (getOne.fulfilled.match(result)) {
-      const userData = unwrapResult(result);
+useEffect(() => {
+  if (searchTxt) {
+    const temp = listFood.filter((i) => includes(toLower(i.name), toLower(searchTxt)));
+    setUserData(temp);
+  } else {
+    setUserData(listFood);
+  }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+}, [searchTxt]);
 
-      if (userData) {
-        NavigationUtils.push({
-          screen: 'userProfile',
-          title: 'User Profile Details',
-          passProps: { userData },
-        });
-      }
-    } else {
-      if (result.payload) {
-        Alert.alert('Error', result.payload.message || 'error');
-      } else {
-        Alert.alert('Error', result.error || 'error');
-      }
-    }
+  const getFoodData = async (item) => {
+    NavigationUtils.push({
+      screen: 'foodDetails',
+      title: 'Food Details',
+      isTopBarEnable: true,
+      leftButtons: true,
+      passProps: { item },
+    });
   };
+
   const Item = ({ item }) => (
-    <View style={styles.viewFood}>
+    <TouchableOpacity
+      style={styles.viewFood}
+      onPress={() => {
+        console.log('LOG ID', item._id);
+        getFoodData(item);
+      }}
+    >
       <Image source={require('../../assets/Images/user.jpeg')} style={styles.imageUser} />
       <View style={styles.viewIn}>
         <Text style={styles.foodTitle}>{item.name}</Text>
         <Text style={styles.textDes}>{item.description}</Text>
         <Text style={styles.textPrice}>{item.price} vnd</Text>
       </View>
-      <TouchableOpacity
-        style={styles.btnViewFood}
-        onPress={() => {
-          getUserData(item.id);
-        }}
-      >
+      <TouchableOpacity style={styles.btnViewFood}>
         <Text style={styles.textOrder}>Đặt Ngay</Text>
       </TouchableOpacity>
-    </View>
+    </TouchableOpacity>
   );
 
   return (
@@ -74,7 +77,11 @@ const Index = () => {
       </View>
       <Text style={styles.textTitle}>Hôm nay bạn muốn ăn gì?</Text>
       <View style={styles.viewSearch}>
-        <TextInput style={styles.searchBar} placeholder="Tìm kiếm" />
+        <TextInput style={styles.searchBar} placeholder="Tìm kiếm" value={searchTxt}
+            autoCorrect={false}
+            onChangeText={(text) => {
+              setSearchTxt(text);
+            }}/>
       </View>
       <View style={styles.action} />
       <View style={styles.content}>
@@ -83,7 +90,7 @@ const Index = () => {
       <View style={styles.footer}>
         <FlatList
           showsVerticalScrollIndicator={true}
-          data={Foods}
+          data={userData}
           contentContainerStyle={{ paddingBottom: 20 }}
           renderItem={Item}
           keyExtractor={(item) => item.email}

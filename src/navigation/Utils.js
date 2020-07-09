@@ -162,6 +162,7 @@ class NavigationUtils {
               text: title,
               fontSize: 16,
               color: 'black',
+              alignment: 'center',
               fontFamily: Fonts.type.bold,
             },
             background: {
@@ -173,7 +174,7 @@ class NavigationUtils {
                   {
                     id: 'backBtt',
                     icon: Images.icBack,
-                    color: Platform.OS === 'android' ? 'white' : '',
+                    color: 'black',
                   },
                 ]
               : leftButtons || [],
