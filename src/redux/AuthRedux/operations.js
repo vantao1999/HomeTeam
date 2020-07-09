@@ -124,6 +124,20 @@ export const getFoods = createAsyncThunk('/foods', async (data, { rejectWithValu
   }
 });
 
+export const getFood = createAsyncThunk('/foods', async (_id, { rejectWithValue, getState }) => {
+  try {
+    const accessToken = getState().auth.token;
+    await AuthApis.setToken(accessToken);
+    const response = await AuthApis.getFoodDetail(_id);
+    return response?.data;
+  } catch (err) {
+    if (!err.data) {
+      throw err;
+    }
+    return rejectWithValue(err.data);
+  }
+});
+
 export const createOne = createAsyncThunk(
   'admin/createOne',
   async (data, { rejectWithValue, getState }) => {
@@ -131,23 +145,6 @@ export const createOne = createAsyncThunk(
       const accessToken = getState().auth.token;
       await AuthApis.setToken(accessToken);
       const response = await AuthApis.createOne(data);
-      return response?.data;
-    } catch (err) {
-      if (!err.data) {
-        throw err;
-      }
-      return rejectWithValue(err.data);
-    }
-  },
-);
-
-export const getOne = createAsyncThunk(
-  'admin/getOne/',
-  async (userId, { rejectWithValue, getState }) => {
-    try {
-      const accessToken = getState().auth.token;
-      await AuthApis.setToken(accessToken);
-      const response = await AuthApis.getOne(userId);
       return response?.data;
     } catch (err) {
       if (!err.data) {

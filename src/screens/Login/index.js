@@ -158,11 +158,11 @@ const Login = () => {
           </View>
         </KeyboardAwareScrollView>
       </Animatable.View>
-      {loading ? (
+      {/* {loading ? (
         <View style={styles.loading}>
           <ActivityIndicator size="large" color="#56aaff" />
         </View>
-      ) : null}
+      ) : null} */}
     </SafeAreaView>
   );
 };

@@ -14,52 +14,40 @@ import {
 import { NavigationUtils } from '../../navigation';
 import { useSelector, useDispatch } from 'react-redux';
 import { get } from 'lodash';
-import { getOne } from '../../redux/AuthRedux/operations';
+import { getFood } from '../../redux/AuthRedux/operations';
 import { unwrapResult } from '@reduxjs/toolkit';
-import LinearGradient from 'react-native-linear-gradient';
 
 const Index = () => {
   const dispatch = useDispatch();
   const Foods = useSelector((state) => get(state, 'auth.listFood', null));
-  console.log('USERDATA', Foods);
+  console.log('LOGGGGG', Foods);
 
-  const getUserData = async (userId) => {
-    const result = await dispatch(getOne(userId));
-    if (getOne.fulfilled.match(result)) {
-      const userData = unwrapResult(result);
-
-      if (userData) {
-        NavigationUtils.push({
-          screen: 'userProfile',
-          title: 'User Profile Details',
-          passProps: { userData },
-        });
-      }
-    } else {
-      if (result.payload) {
-        Alert.alert('Error', result.payload.message || 'error');
-      } else {
-        Alert.alert('Error', result.error || 'error');
-      }
-    }
+  const getFoodData = async (item) => {
+    NavigationUtils.push({
+      screen: 'foodDetails',
+      title: 'Food Details',
+      passProps: { item },
+    });
   };
+
   const Item = ({ item }) => (
-    <View style={styles.viewFood}>
+    <TouchableOpacity
+      style={styles.viewFood}
+      onPress={() => {
+        console.log('LOG ID', item._id);
+        getFoodData(item);
+      }}
+    >
       <Image source={require('../../assets/Images/user.jpeg')} style={styles.imageUser} />
       <View style={styles.viewIn}>
         <Text style={styles.foodTitle}>{item.name}</Text>
         <Text style={styles.textDes}>{item.description}</Text>
         <Text style={styles.textPrice}>{item.price} vnd</Text>
       </View>
-      <TouchableOpacity
-        style={styles.btnViewFood}
-        onPress={() => {
-          getUserData(item.id);
-        }}
-      >
+      <TouchableOpacity style={styles.btnViewFood}>
         <Text style={styles.textOrder}>Đặt Ngay</Text>
       </TouchableOpacity>
-    </View>
+    </TouchableOpacity>
   );
 
   return (

@@ -19,7 +19,7 @@ import houseRegister from '../screens/Login/housewifeRegister';
 
 //Admin Screens
 import Food from '../screens/Foods';
-import userProfile from '../screens/Foods/userProfile';
+import foodDetails from '../screens/Foods/foodDetails';
 import editProfile from '../screens/Foods/editProfile';
 import addUser from '../screens/Foods/addUser';
 
@@ -39,7 +39,7 @@ const SCREENS_WITH_REDUX = {
 
   //Admin
   Food,
-  userProfile,
+  foodDetails,
   editProfile,
   userEditProfile,
   addUser,
