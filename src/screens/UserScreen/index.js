@@ -7,13 +7,12 @@ import { actions } from '../../redux/AuthRedux';
 import { get } from 'lodash';
 const Setting = () => {
   const [userData, setData] = React.useState({
-    username: '',
-    address: '',
+    role: '',
+    joinDate: '',
     phone: '',
   });
   const dispatch = useDispatch();
   const user = useSelector((state) => get(state, 'auth.user', null));
-  console.log('UserData', user);
 
   useEffect(() => {
     if (user) {
@@ -33,6 +32,8 @@ const Setting = () => {
       passProps: { userData },
     });
   };
+  // console.log(userData.users.role,'hhhh');
+  
 
   return (
     <View style={styles.container}>
@@ -51,15 +52,17 @@ const Setting = () => {
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.action}>
             <Text style={styles.textTitle}>Name</Text>
-            <Text style={styles.textContent}>{userData.users.role}</Text>
+            <Text style={styles.textContent}></Text>
           </View>
           <View style={styles.action}>
             <Text style={styles.textTitle}>Address</Text>
-            <Text style={styles.textContent}>{userData.users.joinDate}</Text>
+            <Text style={styles.textContent}></Text>
+            {/* {userData.users.joinDate} */}
           </View>
           <View style={styles.action}>
             <Text style={styles.textTitle}>Phone Number</Text>
-            <Text style={styles.textContent}>{userData.users.phone}</Text>
+            <Text style={styles.textContent}></Text>
+            {/* {userData.users.phone} */}
           </View>
         </ScrollView>
       </View>

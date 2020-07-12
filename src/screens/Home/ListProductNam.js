@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React from 'react';
+import React,{useState,useEffect} from 'react';
 import {
   Text,
   TextInput,
@@ -12,16 +12,38 @@ import {
   SafeAreaView,
 } from 'react-native';
 import { NavigationUtils } from '../../navigation';
+import { Navigation } from 'react-native-navigation';
 import { useSelector, useDispatch } from 'react-redux';
-import { get } from 'lodash';
+// import { get } from 'lodash';
+import { get,includes,toLower } from 'lodash';
 import { getOne } from '../../redux/AuthRedux/operations';
 import { unwrapResult } from '@reduxjs/toolkit';
 import LinearGradient from 'react-native-linear-gradient';
 
-const ListProduct = () => {
+const ListProductNam = () => {
   const dispatch = useDispatch();
   const listFood = useSelector((state) => get(state, 'auth.listFood', null));
   console.log('USERDATA', listFood);
+  // const mienbac = useSelector((state) => get(state, 'auth.listFood', null));
+
+
+  const [searchTxt,setSearchTxt] = React.useState('');
+const [userData, setUserData] = useState([]);
+useEffect(() => {
+  if (listFood) {
+    setUserData(listFood);
+  }
+}, [listFood]);
+
+  useEffect(() => {
+    if (searchTxt) {
+      const temp = listFood.filter((i) => includes(toLower(i.name), toLower(searchTxt)));
+      setUserData(temp);
+    } else {
+      setUserData(listFood);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchTxt]);
 
   const getUserData = async (userId) => {
     const result = await dispatch(getOne(userId));
@@ -29,10 +51,21 @@ const ListProduct = () => {
       const userData = unwrapResult(result);
 
       if (userData) {
-        NavigationUtils.push({
-          screen: 'userProfile',
-          title: 'User Profile Details',
-          passProps: { userData },
+        Navigation.push(NavigationUtils.currentScreenId,{
+          component: {
+            name: 'userProfile', 
+            passProps:{
+              userData
+            },
+            options: { 
+              topBar: {
+                title: {
+                  text: 'User Profile Details'
+                }
+              }
+            }
+          }
+          
         });
       }
     } else {
@@ -43,8 +76,32 @@ const ListProduct = () => {
       }
     }
   };
+  const getFoodData = async (item) => {
+    Navigation.push(NavigationUtils.currentScreenId,{
+      component: {
+        name: 'foodDetails', 
+        passProps:{
+          item
+        },
+        options: { 
+          topBar: {
+            title: {
+              text: 'Food Details'
+            }
+          }
+        }
+      }
+    });
+    console.log(isTopBarEnable,"111")
+  };
   const Item = ({ item }) => (
-    <View style={styles.viewFood}>
+    <TouchableOpacity
+      style={styles.viewFood}
+      onPress={() => {
+        console.log('LOG ID', item._id);
+        getFoodData(item);
+      }}
+    >
       <Image source={require('../../assets/Images/user.jpeg')} style={styles.imageUser} />
       <View style={styles.viewIn}>
         <Text style={styles.foodTitle}>{item.name}</Text>
@@ -59,14 +116,20 @@ const ListProduct = () => {
       >
         <Text style={styles.textOrder}>Đặt Ngay</Text>
       </TouchableOpacity>
-    </View>
+    </TouchableOpacity>
   );
 
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.textTitle}>Hôm nay bạn muốn ăn gì?</Text>
       <View style={styles.viewSearch}>
-        <TextInput style={styles.searchBar} placeholder="Tìm kiếm" />
+        <TextInput style={styles.searchBar} placeholder="Tìm kiếm" value={searchTxt}
+            autoCorrect={false}
+            onChangeText={(text) => {
+              setSearchTxt(text);
+              console.log('log', text )
+
+            }}/>
       </View>
       <View style={styles.action} />
       <View style={styles.content}>
@@ -75,7 +138,7 @@ const ListProduct = () => {
       <View style={styles.footer}>
         <FlatList
           showsVerticalScrollIndicator={true}
-          data={listFood.filter((item) => item.location === "Miền Bắc")}
+          data={listFood.filter((item) => item.location === "Miền Nam")}
           contentContainerStyle={{ paddingBottom: 20 }}
           renderItem={Item}
           keyExtractor={(item) => item.email}
@@ -84,7 +147,7 @@ const ListProduct = () => {
     </SafeAreaView>
   );
 };
-export default ListProduct;
+export default ListProductNam;
 const styles = StyleSheet.create({
   container: {
     flex: 1,

@@ -1,16 +1,59 @@
-import React from 'react';
+import React,{useState} from 'react';
 import { Text, View, StyleSheet, ScrollView, Image, SafeAreaView,TouchableOpacity,Dimensions } from 'react-native';
 import { NavigationUtils } from '../../navigation';
+import { Navigation } from 'react-native-navigation';
 import {getFoods} from '../../redux/AuthRedux/operations';
-import {useDispatch} from 'react-redux';
+import { get,includes,toLower } from 'lodash';
+import { useSelector, useDispatch } from 'react-redux';
+
 
 const Home = () => {
   const dispatch = useDispatch();
-  const Navigate = async() =>{
-    NavigationUtils.push({
-      screen:'ListProduct',
-      isTopBarEnable:true,
-      title:'Danh sách món ăn của miền Bắc'
+  const listFood = useSelector((state) => get(state, 'auth.listFood', null));
+  console.log(listFood,'thuong111');
+  
+  const NavigateBac = async() =>{
+    Navigation.push(NavigationUtils.currentScreenId,{
+      component: {
+        name: 'ListProductBac', 
+        options: { 
+          topBar: {
+            title: {
+              text: 'Danh sách món ăn của miền Bắc'
+            }
+          }
+        }
+      }
+    })
+    await dispatch(getFoods(''));
+  }
+  const NavigateTrung = async() =>{
+    Navigation.push(NavigationUtils.currentScreenId,{
+      component: {
+        name: 'ListProductTrung', 
+        options: { 
+          topBar: {
+            title: {
+              text: 'Danh sách món ăn của miền Trung'
+            }
+          }
+        }
+      }
+    })
+    await dispatch(getFoods(''));
+  }
+  const NavigateNam = async() =>{
+    Navigation.push(NavigationUtils.currentScreenId,{
+      component: {
+        name: 'ListProductNam', 
+        options: { 
+          topBar: {
+            title: {
+              text: 'Danh sách món ăn của miền Nam'
+            }
+          }
+        }
+      }
     })
     await dispatch(getFoods(''));
   }
@@ -31,13 +74,13 @@ const Home = () => {
       </View>
       <View style = {styles.content}>
       <View style ={styles.viewLocation}>
-        <TouchableOpacity onPress = {Navigate} style = {styles.viewTrung}>
+        <TouchableOpacity onPress = {NavigateBac} style = {styles.viewTrung}>
           <View>
             <Image source = {require('../../assets/Images/user.jpeg')} resizeMode ='center' style = {styles.imgLocation}/>
           </View>
           <Text style = {styles.textLocation}>Miền Bắc</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress = {Navigate} style = {styles.viewTrung}>
+        <TouchableOpacity onPress = {NavigateTrung} style = {styles.viewTrung}>
           <View>
             <Image source = {require('../../assets/Images/user.jpeg')} resizeMode ='center' style = {styles.imgLocation}/>
           </View>
@@ -45,17 +88,17 @@ const Home = () => {
         </TouchableOpacity>
       </View>
       <View style ={styles.viewLocation}>
-      <TouchableOpacity onPress = {Navigate} style = {styles.viewTrung}>
+      <TouchableOpacity onPress = {NavigateNam} style = {styles.viewTrung}>
           <View>
             <Image source = {require('../../assets/Images/user.jpeg')} resizeMode ='center' style = {styles.imgLocation}/>
           </View>
           <Text style = {styles.textLocation}>Miền Nam</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress = {Navigate} style = {styles.viewTrung}>
+        <TouchableOpacity onPress = {NavigateBac} style = {styles.viewTrung}>
           <View>
             <Image source = {require('../../assets/Images/user.jpeg')} resizeMode ='center' style = {styles.imgLocation}/>
           </View>
-          <Text style = {styles.textLocation}>Miền Tây</Text>
+          <Text style = {styles.textLocation}>Khác</Text>
         </TouchableOpacity>
       </View>
       <TouchableOpacity style = {styles.btnBook}>

@@ -71,7 +71,6 @@ const mainTabAdmin = (adminScreen) => {
       bottomTabs: {
         children: [
           BottomTab('Home', 'md-home', defaultTopBar, 'Home', 'ic-done'),
-          BottomTab('Admin', 'ios-people', defaultTopBar, 'Users'),
           BottomTab('User', 'md-person', defaultTopBar, 'Profile'),
         ],
         options: {
