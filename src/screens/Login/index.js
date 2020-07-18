@@ -59,7 +59,7 @@ const Login = () => {
   };
   const formik = useFormik({
     initialValues: {
-      phone: '0347248085',
+      phone: '0347248088',
       password: '123456',
     },
 

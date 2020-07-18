@@ -2,20 +2,24 @@ import React,{useState} from 'react';
 import { Text, View, StyleSheet, ScrollView, Image, SafeAreaView,TouchableOpacity,Dimensions } from 'react-native';
 import { NavigationUtils } from '../../navigation';
 import { Navigation } from 'react-native-navigation';
-import {getFoods} from '../../redux/AuthRedux/operations';
+import {getFoods,getFoodNorth,getFoodSouth,getFoodCentral} from '../../redux/AuthRedux/operations';
 import { get,includes,toLower } from 'lodash';
 import { useSelector, useDispatch } from 'react-redux';
 
 
 const Home = () => {
   const dispatch = useDispatch();
-  const listFood = useSelector((state) => get(state, 'auth.listFood', null));
-  console.log(listFood,'thuong111');
   
   const NavigateBac = async() =>{
+    const bac = await dispatch(getFoodNorth(''));
+    console.log(bac, 'bac');
+    
     Navigation.push(NavigationUtils.currentScreenId,{
       component: {
         name: 'ListProductBac', 
+        passProps:{
+          bac
+        },
         options: { 
           topBar: {
             title: {
@@ -25,12 +29,17 @@ const Home = () => {
         }
       }
     })
-    await dispatch(getFoods(''));
   }
   const NavigateTrung = async() =>{
+    const trung = await dispatch(getFoodCentral(''));
+    console.log(trung,'trunghhh');
+    
     Navigation.push(NavigationUtils.currentScreenId,{
       component: {
-        name: 'ListProductTrung', 
+        name: 'ListProductBac', 
+        passProps:{
+          trung
+        },
         options: { 
           topBar: {
             title: {
@@ -40,12 +49,12 @@ const Home = () => {
         }
       }
     })
-    await dispatch(getFoods(''));
   }
   const NavigateNam = async() =>{
+    await dispatch(getFoodSouth(''));
     Navigation.push(NavigationUtils.currentScreenId,{
       component: {
-        name: 'ListProductNam', 
+        name: 'ListProductBac', 
         options: { 
           topBar: {
             title: {
@@ -55,7 +64,6 @@ const Home = () => {
         }
       }
     })
-    await dispatch(getFoods(''));
   }
 
   return (
@@ -74,13 +82,13 @@ const Home = () => {
       </View>
       <View style = {styles.content}>
       <View style ={styles.viewLocation}>
-        <TouchableOpacity onPress = {NavigateBac} style = {styles.viewTrung}>
+        <TouchableOpacity onPress = {NavigateBac} style = {styles.viewRegions}>
           <View>
             <Image source = {require('../../assets/Images/user.jpeg')} resizeMode ='center' style = {styles.imgLocation}/>
           </View>
           <Text style = {styles.textLocation}>Miền Bắc</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress = {NavigateTrung} style = {styles.viewTrung}>
+        <TouchableOpacity onPress = {NavigateTrung} style = {styles.viewRegions}>
           <View>
             <Image source = {require('../../assets/Images/user.jpeg')} resizeMode ='center' style = {styles.imgLocation}/>
           </View>
@@ -88,17 +96,17 @@ const Home = () => {
         </TouchableOpacity>
       </View>
       <View style ={styles.viewLocation}>
-      <TouchableOpacity onPress = {NavigateNam} style = {styles.viewTrung}>
+      <TouchableOpacity onPress = {NavigateNam} style = {styles.viewRegions}>
           <View>
             <Image source = {require('../../assets/Images/user.jpeg')} resizeMode ='center' style = {styles.imgLocation}/>
           </View>
           <Text style = {styles.textLocation}>Miền Nam</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress = {NavigateBac} style = {styles.viewTrung}>
+        <TouchableOpacity onPress = {NavigateBac} style = {styles.viewRegions}>
           <View>
             <Image source = {require('../../assets/Images/user.jpeg')} resizeMode ='center' style = {styles.imgLocation}/>
           </View>
-          <Text style = {styles.textLocation}>Khác</Text>
+          <Text style = {styles.textLocation}>Tất Cả</Text>
         </TouchableOpacity>
       </View>
       <TouchableOpacity style = {styles.btnBook}>
@@ -147,7 +155,7 @@ const styles = StyleSheet.create({
     marginTop:10,
     flexDirection: 'row',
   },
-  viewTrung:{
+  viewRegions:{
     flex:1,
     marginHorizontal:10,
     paddingHorizontal:30,

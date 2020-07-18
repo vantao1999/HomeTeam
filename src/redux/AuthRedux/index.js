@@ -66,6 +66,7 @@ const authSlice = createSlice({
       state.loading = false;
       state.user = payload[0];
     },
+
     [operations.getFoods.pending]: (state) => {
       state.loading = true;
     },
@@ -73,6 +74,20 @@ const authSlice = createSlice({
       state.loading = false;
       state.listFood = payload;
     },
+    [operations.getFoods.rejected]:(state)=>{
+      state.loading = false;
+    },
+
+    [operations.getFoodNorth.pending]: (state) => {
+      state.loading = true;
+    },
+    [operations.getFoodNorth.fulfilled]: (state, { payload }) => {
+      state.loading = false;
+      state.listFood = payload;
+    },
+    [operations.getFoodNorth.rejected]:(state)=>{
+      state.loading = false;
+    }
   },
 });
 

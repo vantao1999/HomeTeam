@@ -139,6 +139,6 @@ const defaultTopBar = {
   drawerBehind: false,
   noBorder: true,
   background: {
-    color: Colors.primary,
+    color: 'white',
   },
 };

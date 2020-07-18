@@ -6,19 +6,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { actions } from '../../redux/AuthRedux';
 import { get } from 'lodash';
 const Setting = () => {
-  const [userData, setData] = React.useState({
-    role: '',
-    joinDate: '',
-    phone: '',
-  });
   const dispatch = useDispatch();
   const user = useSelector((state) => get(state, 'auth.user', null));
 
-  useEffect(() => {
-    if (user) {
-      setData(user);
-    }
-  }, [user]);
+  // useEffect(() => {
+  //   if (user) {
+  //     setData(user);
+  //   }
+  // }, [user]);
 
   const LogOut = async () => {
     await dispatch(actions.logout());
@@ -29,7 +24,7 @@ const Setting = () => {
     NavigationUtils.push({
       screen: 'userEditProfile',
       isTopBarEnable: false,
-      passProps: { userData },
+      passProps: { user },
     });
   };
   // console.log(userData.users.role,'hhhh');
@@ -52,17 +47,25 @@ const Setting = () => {
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.action}>
             <Text style={styles.textTitle}>Name</Text>
-            <Text style={styles.textContent}></Text>
+            <Text style={styles.textContent}>{user.users.name}</Text>
           </View>
           <View style={styles.action}>
             <Text style={styles.textTitle}>Address</Text>
-            <Text style={styles.textContent}></Text>
-            {/* {userData.users.joinDate} */}
+            <Text style={styles.textContent}>
+            {user.users.address}
+            </Text>
+          </View>
+          <View style={styles.action}>
+            <Text style={styles.textTitle}>Email</Text>
+            <Text style={styles.textContent}>
+            {user.users.email}
+            </Text>
           </View>
           <View style={styles.action}>
             <Text style={styles.textTitle}>Phone Number</Text>
-            <Text style={styles.textContent}></Text>
-            {/* {userData.users.phone} */}
+            <Text style={styles.textContent}>
+            {user.users.phone}
+            </Text>
           </View>
         </ScrollView>
       </View>

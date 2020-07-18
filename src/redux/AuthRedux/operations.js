@@ -92,7 +92,7 @@ export const uploadImage = createAsyncThunk(
 );
 
 export const updateProfile = createAsyncThunk(
-  'user/updateProfile',
+  'auth/updateProfile/phone',
   async (data, { rejectWithValue, getState }) => {
     try {
       const accessToken = getState().auth.token;
@@ -115,6 +115,48 @@ export const getFoods = createAsyncThunk('/foods', async (data, { rejectWithValu
     await AuthApis.setToken(accessToken);
 
     const response = await AuthApis.getFoods(data);
+    return response?.data;
+  } catch (err) {
+    if (!err) {
+      throw err;
+    }
+    return rejectWithValue(err);
+  }
+});
+
+export const getFoodNorth = createAsyncThunk('/foods/north', async (data, { rejectWithValue, getState }) => {
+  try {
+    const accessToken = getState().auth.token;
+    await AuthApis.setToken(accessToken);
+    const response = await AuthApis.getFoodNorth(data);
+    return response?.data;
+  } catch (err) {
+    if (!err) {
+      throw err;
+    }
+    return rejectWithValue(err);
+  }
+});
+
+export const getFoodSouth = createAsyncThunk('/foods/south', async (data, { rejectWithValue, getState }) => {
+  try {
+    const accessToken = getState().auth.token;
+    await AuthApis.setToken(accessToken);
+    const response = await AuthApis.getFoodSouth(data);
+    return response?.data;
+  } catch (err) {
+    if (!err) {
+      throw err;
+    }
+    return rejectWithValue(err);
+  }
+});
+
+export const getFoodCentral = createAsyncThunk('/foods/central', async (data, { rejectWithValue, getState }) => {
+  try {
+    const accessToken = getState().auth.token;
+    await AuthApis.setToken(accessToken);
+    const response = await AuthApis.getFoodCentral(data);
     return response?.data;
   } catch (err) {
     if (!err) {
@@ -150,6 +192,7 @@ export const getFood = createAsyncThunk('/foods', async (_id, { rejectWithValue,
     return rejectWithValue(err.data);
   }
 });
+
 
 export const createOne = createAsyncThunk(
   'admin/createOne',

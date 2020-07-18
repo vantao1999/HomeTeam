@@ -13,9 +13,6 @@ import Home from '../screens/Home';
 import UploadImage from '../screens/Profile/UploadImage';
 import User from '../screens/UserScreen';
 import ListProductBac from '../screens/Home/ListProductBac';
-import ListProductTrung from '../screens/Home/ListProductTrung';
-import ListProductNam from '../screens/Home/ListProductNam';
-
 import userEditProfile from '../screens/UserScreen/userEditProfile';
 
 //HouseWife
@@ -38,8 +35,6 @@ const SCREENS_WITH_REDUX = {
   UploadImage,
   User,
   ListProductBac,
-  ListProductTrung,
-  ListProductNam,
   
 
   //HouseWife

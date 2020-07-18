@@ -138,7 +138,7 @@ useEffect(() => {
       <View style={styles.footer}>
         <FlatList
           showsVerticalScrollIndicator={true}
-          data={listFood.filter((item) => item.location === "Miền Bắc")}
+          data={listFood}
           contentContainerStyle={{ paddingBottom: 20 }}
           renderItem={Item}
           keyExtractor={(item) => item.email}

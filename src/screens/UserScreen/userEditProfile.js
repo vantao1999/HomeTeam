@@ -23,21 +23,24 @@ import { unwrapResult } from '@reduxjs/toolkit';
 
 const userEditProfile = (props) => {
   const dispatch = useDispatch();
+  console.log("PROPS",props.user.users);
+  
   const loading = useSelector((state) => get(state, 'auth.loading', null));
 
   const formik = useFormik({
     initialValues: {
-      username: props.userData.username,
-      address: props.userData.address,
-      phone: props.userData.phone,
+      name: props.user.users.name,
+      address: props.user.users.address,
+      email: props.user.users.email,
     },
     onSubmit: (values) => {
       userUpdateProfile(values);
     },
   });
-  const userUpdateProfile = async ({ username, address, phone }) => {
+  console.log("PROPS1111",props.user.users);
+  const userUpdateProfile = async ({ name, address, email }) => {
     Keyboard.dismiss();
-    const result = await dispatch(updateProfile({ username, address, phone }))
+    const result = await dispatch(updateProfile({ name, address, email }))
       .then(unwrapResult)
       .then((result) => {
         Alert.alert('Updated successfully');
@@ -86,9 +89,9 @@ const userEditProfile = (props) => {
             <Text style={styles.textTitle}>Name</Text>
             <TextInput
               style={styles.textContent}
-              defaultValue={formik.values.username}
+              // defaultValue={formik.values.name}
               placeholder="Enter name"
-              onChangeText={formik.handleChange('username')}
+              onChangeText={formik.handleChange('name')}
               autoFocus={true}
               returnKeyType="next"
             />
@@ -97,20 +100,19 @@ const userEditProfile = (props) => {
             <Text style={styles.textTitle}>Address</Text>
             <TextInput
               style={styles.textContent}
-              defaultValue={formik.values.address}
+              // defaultValue={formik.values.address}
               placeholder="Enter address"
               onChangeText={formik.handleChange('address')}
               returnKeyType="next"
             />
           </View>
           <View style={styles.action}>
-            <Text style={styles.textTitle}>Phone Number</Text>
+            <Text style={styles.textTitle}>Email</Text>
             <TextInput
               style={styles.textContent}
-              defaultValue={formik.values.phone}
-              placeholder="Enter phone number"
-              onChangeText={formik.handleChange('phone')}
-              keyboardType="phone-pad"
+              defaultValue={formik.values.email}
+              placeholder="Enter email"
+              onChangeText={formik.handleChange('email')}
               returnKeyType="go"
             />
           </View>

@@ -19,7 +19,7 @@ export async function resetPasswordApi(data) {
 }
 
 export async function updateProfile(data) {
-  return http.put('/user/updateProfile', data);
+  return http.patch('/auth/updateprofile/phone', data);
 }
 
 export async function uploadFile(data) {
@@ -34,6 +34,16 @@ export async function setToken(accessToken) {
 export async function getFoods(data) {
   return http.get('/foods');
 }
+export async function getFoodNorth(data){
+  return http.get('/foods/north')
+}
+export async function getFoodSouth(data){
+  return http.get('/foods/south')
+}
+export async function getFoodCentral(data){
+  return http.get('/foods/central')
+}
+//FoodDetails
 export async function getFoodDetail(_id) {
   return http.get(`/foods/${_id}`);
 }
