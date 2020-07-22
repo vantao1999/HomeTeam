@@ -26,13 +26,13 @@ const Setting = () => {
     NavigationUtils.startLoginContent();
   };
 
-  const navigateScreen = (screen) => {
-    NavigationUtils.push({
-      screen,
-      isTopBarEnable: screen !== 'userEditProfile',
-      passProps: { userData },
-    });
-  };
+  // const navigateScreen = (screen) => {
+  //   NavigationUtils.push({
+  //     screen,
+  //     isTopBarEnable: screen !== 'userEditProfile',
+  //     passProps: { userData },
+  //   });
+  // };
 
   return (
     <View style={styles.container}>
