@@ -67,6 +67,7 @@ const Login = () => {
       handleLogin(values);
     },
   });
+  
   const handleLogin = async ({ phone, password }) => {
     Keyboard.dismiss();
     const result = await dispatch(login({ phone, password }));
@@ -74,8 +75,10 @@ const Login = () => {
       const user = unwrapResult(result);
       console.log('Log Success', user);
       if (user && user.users.role === 'user') {
+        await dispatch(getFoods(''));
         NavigationUtils.startMainContent();
       } else {
+        await dispatch(getFoods(''));
         NavigationUtils.startMainHouseContent();
       }
     } else {
@@ -85,7 +88,7 @@ const Login = () => {
         Alert.alert('Lỗi', result.error || 'Đã xảy lỗi, vui lòng thử lại');
       }
     }
-    await dispatch(getFoods(''));
+    // await dispatch(getFoods(''));
   };
 
   return (
@@ -158,11 +161,11 @@ const Login = () => {
           </View>
         </KeyboardAwareScrollView>
       </Animatable.View>
-      {/* {loading ? (
+      {loading ? (
         <View style={styles.loading}>
           <ActivityIndicator size="large" color="#56aaff" />
         </View>
-      ) : null} */}
+      ) : null}
     </SafeAreaView>
   );
 };

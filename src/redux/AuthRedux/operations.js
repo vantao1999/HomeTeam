@@ -1,6 +1,11 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import * as AuthApis from '../../api/auth';
 
+//LogOut
+export const logOut = createAsyncThunk('user/logout', async () => {
+  return true;
+});
+
 export const login = createAsyncThunk('auth/login', async (data, { rejectWithValue }) => {
   try {
     const response = await AuthApis.login(data);
@@ -113,7 +118,6 @@ export const getFoods = createAsyncThunk('/foods', async (data, { rejectWithValu
   try {
     const accessToken = getState().auth.token;
     await AuthApis.setToken(accessToken);
-
     const response = await AuthApis.getFoods(data);
     return response?.data;
   } catch (err) {
@@ -128,7 +132,7 @@ export const getFoodNorth = createAsyncThunk('/foods/north', async (data, { reje
   try {
     const accessToken = getState().auth.token;
     await AuthApis.setToken(accessToken);
-    const response = await AuthApis.getFoodNorth(data);
+    const response = await AuthApis.getFoodNorth();
     return response?.data;
   } catch (err) {
     if (!err) {
@@ -142,7 +146,7 @@ export const getFoodSouth = createAsyncThunk('/foods/south', async (data, { reje
   try {
     const accessToken = getState().auth.token;
     await AuthApis.setToken(accessToken);
-    const response = await AuthApis.getFoodSouth(data);
+    const response = await AuthApis.getFoodSouth();
     return response?.data;
   } catch (err) {
     if (!err) {
@@ -156,7 +160,7 @@ export const getFoodCentral = createAsyncThunk('/foods/central', async (data, { 
   try {
     const accessToken = getState().auth.token;
     await AuthApis.setToken(accessToken);
-    const response = await AuthApis.getFoodCentral(data);
+    const response = await AuthApis.getFoodCentral();
     return response?.data;
   } catch (err) {
     if (!err) {

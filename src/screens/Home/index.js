@@ -11,14 +11,13 @@ const Home = () => {
   const dispatch = useDispatch();
   
   const NavigateBac = async() =>{
-    const bac = await dispatch(getFoodNorth(''));
-    console.log(bac, 'bac');
+    const result = await dispatch(getFoodNorth(''));
     
     Navigation.push(NavigationUtils.currentScreenId,{
       component: {
         name: 'ListProductBac', 
         passProps:{
-          bac
+          result
         },
         options: { 
           topBar: {
@@ -31,14 +30,13 @@ const Home = () => {
     })
   }
   const NavigateTrung = async() =>{
-    const trung = await dispatch(getFoodCentral(''));
-    console.log(trung,'trunghhh');
+    const result = await dispatch(getFoodCentral(''));
     
     Navigation.push(NavigationUtils.currentScreenId,{
       component: {
         name: 'ListProductBac', 
         passProps:{
-          trung
+          result
         },
         options: { 
           topBar: {
@@ -51,10 +49,11 @@ const Home = () => {
     })
   }
   const NavigateNam = async() =>{
-    await dispatch(getFoodSouth(''));
+    const result = await dispatch(getFoodSouth(''));
     Navigation.push(NavigationUtils.currentScreenId,{
       component: {
         name: 'ListProductBac', 
+        passProps: {result},
         options: { 
           topBar: {
             title: {
@@ -102,7 +101,7 @@ const Home = () => {
           </View>
           <Text style = {styles.textLocation}>Miền Nam</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress = {NavigateBac} style = {styles.viewRegions}>
+        <TouchableOpacity onPress = {NavigateNam} style = {styles.viewRegions}>
           <View>
             <Image source = {require('../../assets/Images/user.jpeg')} resizeMode ='center' style = {styles.imgLocation}/>
           </View>
@@ -128,7 +127,7 @@ const styles = StyleSheet.create({
     overflow:'hidden',
   },
   contentHeader: {
-    paddingVertical: 10,
+    paddingVertical: 5,
     flexDirection: 'row',
     borderBottomWidth: 2,
     borderBottomColor: '#f2f2f2',

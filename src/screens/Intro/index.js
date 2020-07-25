@@ -68,7 +68,7 @@ const IntroScreen = () => {
       onDone={onSkip}
       renderDoneButton={renderDoneButton}
       renderNextButton={renderNextButton}
-      keyExtractor={(item) => item.title}
+      keyExtractor={(item, index) => `${index}`}
       activeDotStyle={{ backgroundColor: '#3c64aa' }}
     />
   );

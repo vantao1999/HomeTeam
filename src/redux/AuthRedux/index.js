@@ -5,6 +5,7 @@ const authSlice = createSlice({
   name: 'auth',
   initialState: {
     user: null,
+    logInErr: null,
     loading: false,
     location: null,
     fcmToken: null,
@@ -24,12 +25,18 @@ const authSlice = createSlice({
     updateProfile: (state) => {},
   },
   extraReducers: {
+
+    [operations.logOut.fulfilled]: (state) => {
+      state.user = null;
+      state.token = null;
+    },
+
     [operations.login.pending]: (state) => {
       state.loading = true;
     },
     [operations.login.fulfilled]: (state, { payload }) => {
       state.loading = false;
-      state.user = payload;
+      state.user = payload.users;
       state.token = payload.token;
     },
     [operations.login.rejected]: (state) => {
@@ -65,6 +72,10 @@ const authSlice = createSlice({
     [operations.updateProfile.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.user = payload[0];
+    },
+    [operations.updateProfile.rejected]: (state, {payload}) =>{
+      state.loading = false;
+      state.logInErr = payload.message;
     },
 
     [operations.getFoods.pending]: (state) => {

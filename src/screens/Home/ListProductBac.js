@@ -20,62 +20,30 @@ import { getOne } from '../../redux/AuthRedux/operations';
 import { unwrapResult } from '@reduxjs/toolkit';
 import LinearGradient from 'react-native-linear-gradient';
 
-const ListProductBac = () => {
+const ListProductBac = (props) => {
   const dispatch = useDispatch();
-  const listFood = useSelector((state) => get(state, 'auth.listFood', null));
-  console.log('USERDATA', listFood);
-  // const mienbac = useSelector((state) => get(state, 'auth.listFood', null));
+  const listFood = props.result.payload;
+  console.log('ListFoodData', listFood);
 
 
   const [searchTxt,setSearchTxt] = React.useState('');
 const [userData, setUserData] = useState([]);
-useEffect(() => {
-  if (listFood) {
-    setUserData(listFood);
-  }
-}, [listFood]);
+// useEffect(() => {
+//   if (listFood) {
+//     setUserData(listFood);
+//   }
+// }, [listFood]);
 
-  useEffect(() => {
-    if (searchTxt) {
-      const temp = listFood.filter((i) => includes(toLower(i.name), toLower(searchTxt)));
-      setUserData(temp);
-    } else {
-      setUserData(listFood);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchTxt]);
+//   useEffect(() => {
+//     if (searchTxt) {
+//       const temp = listFood.filter((i) => includes(toLower(i.name), toLower(searchTxt)));
+//       setUserData(temp);
+//     } else {
+//       setUserData(listFood);
+//     }
+//     // eslint-disable-next-line react-hooks/exhaustive-deps
+//   }, [searchTxt]);
 
-  const getUserData = async (userId) => {
-    const result = await dispatch(getOne(userId));
-    if (getOne.fulfilled.match(result)) {
-      const userData = unwrapResult(result);
-
-      if (userData) {
-        Navigation.push(NavigationUtils.currentScreenId,{
-          component: {
-            name: 'userProfile', 
-            passProps:{
-              userData
-            },
-            options: { 
-              topBar: {
-                title: {
-                  text: 'User Profile Details'
-                }
-              }
-            }
-          }
-          
-        });
-      }
-    } else {
-      if (result.payload) {
-        Alert.alert('Error', result.payload.message || 'error');
-      } else {
-        Alert.alert('Error', result.error || 'error');
-      }
-    }
-  };
   const getFoodData = async (item) => {
     Navigation.push(NavigationUtils.currentScreenId,{
       component: {
@@ -92,7 +60,6 @@ useEffect(() => {
         }
       }
     });
-    console.log(isTopBarEnable,"111")
   };
   const Item = ({ item }) => (
     <TouchableOpacity
@@ -141,7 +108,7 @@ useEffect(() => {
           data={listFood}
           contentContainerStyle={{ paddingBottom: 20 }}
           renderItem={Item}
-          keyExtractor={(item) => item.email}
+          keyExtractor={(item,index) => `${index}`}
         />
       </View>
     </SafeAreaView>
@@ -211,7 +178,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
     marginHorizontal: 20,
     backgroundColor: '#fff',
-    borderRadius: 15,
+    borderRadius: 20,
     alignItems: 'center',
     flexDirection: 'row',
   },

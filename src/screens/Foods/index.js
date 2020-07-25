@@ -94,7 +94,7 @@ useEffect(() => {
           data={userData}
           contentContainerStyle={{ paddingBottom: 20 }}
           renderItem={Item}
-          keyExtractor={(item) => item.email}
+          keyExtractor={(item, index) => `${index}`}
         />
       </View>
     </SafeAreaView>
@@ -164,7 +164,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
     marginHorizontal: 20,
     backgroundColor: '#fff',
-    borderRadius: 15,
+    borderRadius: 20,
     alignItems: 'center',
     flexDirection: 'row',
   },

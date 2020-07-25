@@ -31,17 +31,17 @@ export async function setToken(accessToken) {
   return http.setAuthorizationHeader(accessToken);
 }
 // Get Food
-export async function getFoods(data) {
+export async function getFoods() {
   return http.get('/foods');
 }
-export async function getFoodNorth(data){
-  return http.get('/foods/north')
+export async function getFoodNorth(){
+  return http.get('/foods?location=1')
 }
-export async function getFoodSouth(data){
-  return http.get('/foods/south')
+export async function getFoodSouth(){
+  return http.get('/foods?location=2')
 }
-export async function getFoodCentral(data){
-  return http.get('/foods/central')
+export async function getFoodCentral(){
+  return http.get('/foods?location=3')
 }
 //FoodDetails
 export async function getFoodDetail(_id) {

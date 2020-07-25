@@ -32,7 +32,7 @@ const http = {
   setAuthorizationHeader(accessToken) {
     console.log('accessToken', accessToken);
 
-    axios.defaults.headers.Authorization = `bearer ${accessToken}`;
+    axios.defaults.headers.token =  accessToken;
   },
   request(config = {}) {
     return axios.request(config);
