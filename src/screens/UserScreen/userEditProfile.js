@@ -37,7 +37,6 @@ const userEditProfile = (props) => {
       userUpdateProfile(values);
     },
   });
-  console.log("PROPS1111",props.user.users);
   const userUpdateProfile = async ({ name, address, email }) => {
     Keyboard.dismiss();
     const result = await dispatch(updateProfile({ name, address, email }))

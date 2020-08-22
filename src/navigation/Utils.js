@@ -166,7 +166,7 @@ class NavigationUtils {
               fontFamily: Fonts.type.bold,
             },
             background: {
-              color: Colors.primary,
+              color: Colors.white,
             },
             buttonColor: 'white',
             leftButtons: isBack

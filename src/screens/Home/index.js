@@ -9,7 +9,8 @@ import {
   getFoodCentral,
 } from '../../redux/AuthRedux/operations';
 import { useDispatch } from 'react-redux';
-
+import FastImage from 'react-native-fast-image';
+import { Colors } from '../../themes';
 const Home = () => {
   const dispatch = useDispatch();
 
@@ -89,9 +90,9 @@ const Home = () => {
     <View style={styles.container}>
       <View style={styles.header}>
         <View style={styles.contentHeader}>
-          <Image
+          <FastImage
             source={require('../../assets/Images/user.jpeg')}
-            resizeMode="contain"
+            resizeMode={FastImage.resizeMode.cover}
             style={styles.imgProduct}
           />
           <View style={styles.viewGradient}>
@@ -104,8 +105,8 @@ const Home = () => {
           <TouchableOpacity onPress={NavigateBac} style={styles.viewRegions}>
             <View>
               <Image
-                source={require('../../assets/Images/user.jpeg')}
-                resizeMode="center"
+                source={require('../../assets/Images/north.jpg')}
+                resizeMode={FastImage.resizeMode.cover}
                 style={styles.imgLocation}
               />
             </View>
@@ -114,8 +115,8 @@ const Home = () => {
           <TouchableOpacity onPress={NavigateTrung} style={styles.viewRegions}>
             <View>
               <Image
-                source={require('../../assets/Images/user.jpeg')}
-                resizeMode="center"
+                source={require('../../assets/Images/central.jpg')}
+                resizeMode={FastImage.resizeMode.cover}
                 style={styles.imgLocation}
               />
             </View>
@@ -126,8 +127,8 @@ const Home = () => {
           <TouchableOpacity onPress={NavigateNam} style={styles.viewRegions}>
             <View>
               <Image
-                source={require('../../assets/Images/user.jpeg')}
-                resizeMode="center"
+                source={require('../../assets/Images/south.jpg')}
+                resizeMode={FastImage.resizeMode.cover}
                 style={styles.imgLocation}
               />
             </View>
@@ -136,8 +137,8 @@ const Home = () => {
           <TouchableOpacity onPress={NavigateAllFoods} style={styles.viewRegions}>
             <View>
               <Image
-                source={require('../../assets/Images/user.jpeg')}
-                resizeMode="center"
+                source={require('../../assets/Images/all.jpg')}
+                resizeMode={FastImage.resizeMode.cover}
                 style={styles.imgLocation}
               />
             </View>
@@ -157,13 +158,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  header: {
-    flex: 1,
-    overflow: 'hidden',
-  },
+  
   contentHeader: {
-    paddingVertical: 5,
+    alignItems:'center',
+    justifyContent:'center',
     flexDirection: 'row',
+    paddingHorizontal:20,
     borderBottomWidth: 2,
     borderBottomColor: '#f2f2f2',
   },
@@ -177,13 +177,15 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   imgProduct: {
-    height: 100,
-    borderRadius: 50,
-    width: Dimensions.get('window').width / 3,
+    height: 90,
+    borderRadius: 100,
+    width: Dimensions.get('window').width / 4,
   },
   content: {
     flex: 4,
     backgroundColor: '#19b7b7',
+    alignItems:'center',
+    justifyContent:'center',
   },
   viewLocation: {
     marginTop: 10,
@@ -192,17 +194,20 @@ const styles = StyleSheet.create({
   viewRegions: {
     flex: 1,
     marginHorizontal: 10,
-    paddingHorizontal: 30,
-    paddingBottom: 20,
     alignItems: 'center',
-    justifyContent: 'center',
     backgroundColor: '#fefefe',
     borderRadius: 25,
+    width: (Dimensions.get('window'). width - 30) /2,
+    height: Dimensions.get('window'). height / 5,
+
   },
   textLocation: {
-    marginTop: -20,
+    position:'absolute',
+    alignSelf:'center',
+    marginVertical:55,
     fontSize: 18,
-    color: '#19b7b7',
+    color: Colors.white,
+    fontWeight:'bold',
   },
   btnBook: {
     backgroundColor: '#fff',
@@ -217,5 +222,11 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: 'red',
     fontWeight: 'bold',
+  },
+  imgLocation:{
+    width: (Dimensions.get('window'). width - 30) /2,
+    height: Dimensions.get('window'). height / 5,
+    borderRadius:25,
+    opacity:0.7,
   },
 });

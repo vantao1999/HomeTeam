@@ -22,6 +22,7 @@ import HouseWifeHistory from '../screens/HouseWife/houseWifeHistory';
 import History from '../screens/History';
 import foodDetails from '../screens/Home/foodDetails';
 import User from '../screens/UserScreen';
+import Order from '../screens/Foods/order';
 
 const SCREENS_WITH_REDUX = {
   Login,
@@ -40,9 +41,10 @@ const SCREENS_WITH_REDUX = {
   HouseWifeProduct,
   HouseWifeHistory,
 
-  //Admin
+  //User
   History,
   foodDetails,
+  Order,
 };
 const SCREENS = {
   Loading,

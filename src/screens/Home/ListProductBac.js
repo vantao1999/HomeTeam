@@ -18,6 +18,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { get, includes, toLower } from 'lodash';
 import { getOne } from '../../redux/AuthRedux/operations';
 import NumberFormat from 'react-number-format';
+import FastImage from 'react-native-fast-image';
 
 const ListProductBac = (props) => {
   const dispatch = useDispatch();
@@ -67,7 +68,11 @@ const ListProductBac = (props) => {
         getFoodData(item);
       }}
     >
-      <Image source={require('../../assets/Images/user.jpeg')} style={styles.imageUser} />
+      {item.image ? (
+        <FastImage source={{uri: item.image}} resizeMode={FastImage.resizeMode.cover} style={styles.imageUser} />
+      ):(
+        <Image source={require('../../assets/Images/user.jpeg')} style={styles.imageUser} />
+      )}
       <View style={styles.viewIn}>
         <Text style={styles.foodTitle}>{item.name}</Text>
         <Text numberOfLines={2} ellipsizeMode="tail" style={styles.textDes}>

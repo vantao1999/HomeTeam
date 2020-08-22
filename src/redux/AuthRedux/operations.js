@@ -80,21 +80,21 @@ export const resetPassword = createAsyncThunk(
   },
 );
 
-export const uploadImage = createAsyncThunk(
-  'user/uploadFile',
-  async (data, { rejectWithValue }) => {
-    try {
-      const response = await AuthApis.uploadFile(data);
-      return response?.data;
-    } catch (err) {
-      if (!err.data) {
-        throw err;
-      }
+// export const uploadImage = createAsyncThunk(
+//   'user/uploadFile',
+//   async (data, { rejectWithValue }) => {
+//     try {
+//       const response = await AuthApis.uploadFile(data);
+//       return response?.data;
+//     } catch (err) {
+//       if (!err.data) {
+//         throw err;
+//       }
 
-      return rejectWithValue(err.data);
-    }
-  },
-);
+//       return rejectWithValue(err.data);
+//     }
+//   },
+// );
 
 export const updateProfile = createAsyncThunk(
   'auth/updateProfile/phone',
@@ -209,58 +209,17 @@ export const getFood = createAsyncThunk('/foods', async (_id, { rejectWithValue,
   }
 });
 
-export const createOne = createAsyncThunk(
-  'admin/createOne',
-  async (data, { rejectWithValue, getState }) => {
-    try {
-      const accessToken = getState().auth.token;
-      await AuthApis.setToken(accessToken);
-      const response = await AuthApis.createOne(data);
-      return response?.data;
-    } catch (err) {
-      if (!err.data) {
-        throw err;
-      }
-      return rejectWithValue(err.data);
+//Oder
+export const createOrder = createAsyncThunk('/oders/create', async (data, { rejectWithValue, getState }) => {
+  try {
+    const accessToken = getState().auth.token;
+    await AuthApis.setToken(accessToken);
+    const response = await AuthApis.createOrderApi(data);
+    return response?.data;
+  } catch (err) {
+    if (!err.data) {
+      throw err;
     }
-  },
-);
-
-export const updateOne = createAsyncThunk(
-  'admin/updateOne/',
-  async (data, { rejectWithValue, getState }) => {
-    try {
-      const accessToken = getState().auth.token;
-      await AuthApis.setToken(accessToken);
-      const userData = {
-        address: data && data.address ? data.address : data.user.address,
-        phone: data && data.phone ? data.phone : data.user.phone,
-        username: data && data.name ? data.name : data.user.username,
-      };
-      const response = await AuthApis.updateOne(data.userId, userData);
-      return response?.data;
-    } catch (err) {
-      if (!err.data) {
-        throw err;
-      }
-      return rejectWithValue(err.data);
-    }
-  },
-);
-
-export const disable = createAsyncThunk(
-  'admin/disable/',
-  async (data, { rejectWithValue, getState }) => {
-    try {
-      const accessToken = getState().auth.token;
-      await AuthApis.setToken(accessToken);
-      const response = await AuthApis.disable(data);
-      return response?.data;
-    } catch (err) {
-      if (!err.data) {
-        throw err;
-      }
-      return rejectWithValue(err.data);
-    }
-  },
-);
+    return rejectWithValue(err.data);
+  }
+});

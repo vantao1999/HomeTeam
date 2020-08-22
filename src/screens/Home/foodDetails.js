@@ -1,17 +1,34 @@
 import React from 'react';
-import { View, Text, ScrollView, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { View, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
 // import { NavigationUtils } from '../../navigation';
 // import { useDispatch } from 'react-redux';
 import UserReview from './components/comment';
+import { Text } from '../../components';
+import FastImage from 'react-native-fast-image';
+import { NavigationUtils } from '../../navigation';
 const FoodDetails = (props) => {
+  const onOder = () =>{
+    NavigationUtils.push({
+      screen:'Order',
+      passProps:{data: props.item},
+    });
+  };
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Image
-          source={require('../../assets/Images/home.jpg')}
-          resizeMode="stretch"
+        {props.item.image ? (
+          <FastImage
+          source={{uri: props.item.image}}
+          resizeMode={FastImage.resizeMode.cover}
+          style={styles.image}/>
+        ):(
+          <FastImage
+          source={require('../../assets/Images/dummy.png')}
+          resizeMode={FastImage.resizeMode.cover}
           style={styles.image}
         />
+        )}
+        
       </View>
       <View style={styles.footer}>
         <ScrollView showsVerticalScrollIndicator={false}>
@@ -19,9 +36,9 @@ const FoodDetails = (props) => {
             <Text style={styles.textTitle}>{props.item.name}</Text>
             <Text style={styles.textContent}>{props.item.description}</Text>
             <View style={styles.viewHouseWife}>
-              <Image
-                source={require('../../assets/Images/home.jpg')}
-                resizeMode="contain"
+              <FastImage
+                source={require('../../assets/Images/dummy.png')}
+                resizeMode={FastImage.resizeMode.cover}
                 style={styles.imgProduct}
               />
               <Text style={styles.textHouse}>{props.item.housewife_name}</Text>
@@ -35,7 +52,7 @@ const FoodDetails = (props) => {
             <Text style={styles.textComment}>Bình Luận</Text>
           </View>
           <UserReview />
-          <TouchableOpacity style={styles.btnBook}>
+          <TouchableOpacity style={styles.btnBook} onPress={onOder}>
             <Text style={styles.textBook}>THÊM VÀO GIỎ HÀNG</Text>
           </TouchableOpacity>
         </ScrollView>

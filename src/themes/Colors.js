@@ -71,6 +71,7 @@ const defaultColors = {
 
   // semantic colors
   semanticGreen: '#38D595',
+  mainText: '#19b7b7',
 };
 
 export default defaultColors;
