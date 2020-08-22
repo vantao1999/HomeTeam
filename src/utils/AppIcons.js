@@ -5,7 +5,8 @@ const replaceSuffixPattern = /--(active|big|small|very-big)/g;
 const icons = {
   'md-home': [24, '#000', 'ionIcons'],
   'md-person': [24, '#000', 'ionIcons'],
-  'ios-people': [30, '#000', 'ionIcons'],
+  'ios-clock': [30, '#000', 'ionIcons'],
+  'md-menu': [30, '#000', 'ionIcons'],
 };
 
 const iconsMap = {};

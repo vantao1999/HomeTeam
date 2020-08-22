@@ -128,61 +128,73 @@ export const getFoods = createAsyncThunk('/foods', async (data, { rejectWithValu
   }
 });
 
-export const getFoodNorth = createAsyncThunk('/foods/north', async (data, { rejectWithValue, getState }) => {
-  try {
-    const accessToken = getState().auth.token;
-    await AuthApis.setToken(accessToken);
-    const response = await AuthApis.getFoodNorth();
-    return response?.data;
-  } catch (err) {
-    if (!err) {
-      throw err;
+export const getFoodNorth = createAsyncThunk(
+  '/foods/north',
+  async (data, { rejectWithValue, getState }) => {
+    try {
+      const accessToken = getState().auth.token;
+      await AuthApis.setToken(accessToken);
+      const response = await AuthApis.getFoodNorth();
+      return response?.data;
+    } catch (err) {
+      if (!err) {
+        throw err;
+      }
+      return rejectWithValue(err);
     }
-    return rejectWithValue(err);
-  }
-});
+  },
+);
 
-export const getFoodSouth = createAsyncThunk('/foods/south', async (data, { rejectWithValue, getState }) => {
-  try {
-    const accessToken = getState().auth.token;
-    await AuthApis.setToken(accessToken);
-    const response = await AuthApis.getFoodSouth();
-    return response?.data;
-  } catch (err) {
-    if (!err) {
-      throw err;
+export const getFoodSouth = createAsyncThunk(
+  '/foods/south',
+  async (data, { rejectWithValue, getState }) => {
+    try {
+      const accessToken = getState().auth.token;
+      await AuthApis.setToken(accessToken);
+      const response = await AuthApis.getFoodSouth();
+      return response?.data;
+    } catch (err) {
+      if (!err) {
+        throw err;
+      }
+      return rejectWithValue(err);
     }
-    return rejectWithValue(err);
-  }
-});
+  },
+);
 
-export const getFoodCentral = createAsyncThunk('/foods/central', async (data, { rejectWithValue, getState }) => {
-  try {
-    const accessToken = getState().auth.token;
-    await AuthApis.setToken(accessToken);
-    const response = await AuthApis.getFoodCentral();
-    return response?.data;
-  } catch (err) {
-    if (!err) {
-      throw err;
+export const getFoodCentral = createAsyncThunk(
+  '/foods/central',
+  async (data, { rejectWithValue, getState }) => {
+    try {
+      const accessToken = getState().auth.token;
+      await AuthApis.setToken(accessToken);
+      const response = await AuthApis.getFoodCentral();
+      return response?.data;
+    } catch (err) {
+      if (!err) {
+        throw err;
+      }
+      return rejectWithValue(err);
     }
-    return rejectWithValue(err);
-  }
-});
+  },
+);
 
-export const getProfile = createAsyncThunk('/auth/me', async (data, {rejectWithValue, getState})=>{
-  try {
-    const accessToken = getState().auth.token;
-    await AuthApis.setToken(accessToken);
-    const response = await AuthApis.getMe('');
-    return response?.data;
-  } catch (err) {
-    if (!err.data) {
-      throw err;
+export const getProfile = createAsyncThunk(
+  '/auth/me',
+  async (data, { rejectWithValue, getState }) => {
+    try {
+      const accessToken = getState().auth.token;
+      await AuthApis.setToken(accessToken);
+      const response = await AuthApis.getMe('');
+      return response?.data;
+    } catch (err) {
+      if (!err.data) {
+        throw err;
+      }
+      return rejectWithValue(err.data);
     }
-    return rejectWithValue(err.data);
-  }
-})
+  },
+);
 export const getFood = createAsyncThunk('/foods', async (_id, { rejectWithValue, getState }) => {
   try {
     const accessToken = getState().auth.token;
@@ -196,7 +208,6 @@ export const getFood = createAsyncThunk('/foods', async (_id, { rejectWithValue,
     return rejectWithValue(err.data);
   }
 });
-
 
 export const createOne = createAsyncThunk(
   'admin/createOne',

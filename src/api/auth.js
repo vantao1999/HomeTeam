@@ -34,14 +34,14 @@ export async function setToken(accessToken) {
 export async function getFoods() {
   return http.get('/foods');
 }
-export async function getFoodNorth(){
-  return http.get('/foods?location=1')
+export async function getFoodNorth() {
+  return http.get('/foods?location=1');
 }
-export async function getFoodSouth(){
-  return http.get('/foods?location=2')
+export async function getFoodSouth() {
+  return http.get('/foods?location=2');
 }
-export async function getFoodCentral(){
-  return http.get('/foods?location=3')
+export async function getFoodCentral() {
+  return http.get('/foods?location=3');
 }
 //FoodDetails
 export async function getFoodDetail(_id) {

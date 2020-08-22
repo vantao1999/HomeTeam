@@ -15,6 +15,7 @@ const Text = (props) => {
     color,
     center,
     underLine,
+    lineHeight,
     style,
     children,
     marginTop,
@@ -39,6 +40,7 @@ const Text = (props) => {
         marginRight && { marginRight: marginRight },
         marginHorizontal && { marginHorizontal: marginHorizontal },
         marginVertical && { marginVertical: marginVertical },
+        lineHeight && { lineHeight: lineHeight },
         style,
       ]}
     >

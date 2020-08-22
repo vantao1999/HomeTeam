@@ -11,15 +11,17 @@ import InAppNotification from '../screens/Utils/InAppNotification';
 import IntroScreen from '../screens/Intro';
 import Home from '../screens/Home';
 import UploadImage from '../screens/Profile/UploadImage';
-import User from '../screens/UserScreen';
 import ListProductBac from '../screens/Home/ListProductBac';
 
 //HouseWife
+import HouseWifeProduct from '../screens/HouseWife';
 import houseRegister from '../screens/Login/housewifeRegister';
+import HouseWifeHistory from '../screens/HouseWife/houseWifeHistory';
 
-//Admin Screens
-import Food from '../screens/Foods';
-import foodDetails from '../screens/Foods/foodDetails';
+//Normal User
+import History from '../screens/History';
+import foodDetails from '../screens/Home/foodDetails';
+import User from '../screens/UserScreen';
 
 const SCREENS_WITH_REDUX = {
   Login,
@@ -32,13 +34,14 @@ const SCREENS_WITH_REDUX = {
   UploadImage,
   User,
   ListProductBac,
-  
 
   //HouseWife
   houseRegister,
+  HouseWifeProduct,
+  HouseWifeHistory,
 
   //Admin
-  Food,
+  History,
   foodDetails,
 };
 const SCREENS = {
