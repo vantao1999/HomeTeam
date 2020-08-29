@@ -119,6 +119,7 @@ const Setting = () => {
                 defaultValue={userData.name}
                 editable={userData.isEdit}
                 placeholder="Enter name"
+                onBlur={formik.handleBlur('name')}
                 onChangeText={formik.handleChange('name')}
                 returnKeyType="next"
               />
@@ -147,6 +148,7 @@ const Setting = () => {
                 editable={userData.isEdit}
                 placeholder="Nhập địa chỉ"
                 onChangeText={formik.handleChange('address')}
+              onBlur={formik.handleBlur('address')}
                 returnKeyType="next"
               />
             </View>

@@ -50,6 +50,9 @@ export async function getFoodDetail(_id) {
 export async function createOrderApi(data){
   return http.post('/orders/create', data);
 }
+export async function getOrderApi(){
+  return http.get('/orders/getOrder');
+}
 //Get Me
 export async function getMe() {
   return http.get('/auth/me');

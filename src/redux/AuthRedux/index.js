@@ -11,6 +11,7 @@ const authSlice = createSlice({
     fcmToken: null,
     token: null,
     listFood: [],
+    listOrders: [],
   },
   reducers: {
     login: (state, action) => {},
@@ -97,6 +98,17 @@ const authSlice = createSlice({
       state.listFood = payload;
     },
     [operations.getFoodNorth.rejected]:(state)=>{
+      state.loading = false;
+    },
+
+    [operations.getOrder.pending]: (state) => {
+      state.loading = true;
+    },
+    [operations.getOrder.fulfilled]: (state, { payload }) => {
+      state.loading = false;
+      state.listOrders = payload;
+    },
+    [operations.getOrder.rejected]:(state)=>{
       state.loading = false;
     }
   },

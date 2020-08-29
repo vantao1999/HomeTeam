@@ -20,6 +20,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { login, getFoods } from '../../redux/AuthRedux/operations';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { unwrapResult } from '@reduxjs/toolkit';
+import * as Yup from 'yup';
 
 const TEXT_INPUT_PHONE = 'TEXT_INPUT_EMAIL';
 const TEXT_INPUT_PASSWORD = 'TEXT_INPUT_PASSWORD';
@@ -62,7 +63,10 @@ const Login = () => {
       phone: '0347248088',
       password: '123456',
     },
-
+    validationSchema: Yup.object({
+      phone: Yup.string().min(10, 'Ít nhất 10 kí tự').max(10, 'Số điện thoại không hợp lệ'),
+      password: Yup.string().min(6, 'Ít nhất 6 kí tự').max(30, 'Không quá 30 kí tự'),
+    }),
     onSubmit: (values) => {
       handleLogin(values);
     },
@@ -109,12 +113,13 @@ const Login = () => {
               defaultValue={formik.values.phone}
               keyboardType="phone-pad"
               placeholder="Nhập số điện thoại"
+              onBlur={formik.handleBlur('phone')}
               onChangeText={formik.handleChange('phone')}
               onSubmitEditing={() => onSubmitEditing(TEXT_INPUT_PHONE)}
               returnKeyType="next"
             />
           </View>
-
+          <Text style={styles.mesValidate}>{formik.touched.phone && formik.errors.phone}</Text>
           <Text style={[styles.text_footer, { marginTop: 20 }]}>Nhập Mật Khẩu</Text>
           <View style={styles.action}>
             <Icon name="md-lock" color="#05375a" size={20} />
@@ -126,7 +131,7 @@ const Login = () => {
               onChangeText={formik.handleChange('password')}
               onSubmitEditing={() => onSubmitEditing(TEXT_INPUT_PASSWORD)}
               secureTextEntry={data.secureTextEntry ? true : false}
-              // errorMessage={formik.errors.password}
+              onBlur={formik.handleBlur('password')}
               returnKeyType="go"
             />
             <TouchableOpacity onPress={updateSecureTextEntry}>
@@ -137,6 +142,7 @@ const Login = () => {
               )}
             </TouchableOpacity>
           </View>
+          <Text style={styles.mesValidate}>{formik.touched.password && formik.errors.password}</Text>
           <TouchableOpacity
             style={styles.btnForgot}
             onPress={() => {
@@ -240,6 +246,9 @@ const styles = StyleSheet.create({
   textSign: {
     color: 'white',
     fontWeight: 'bold',
+  },
+  mesValidate: {
+    color: 'red',
   },
   loading: {
     position: 'absolute',

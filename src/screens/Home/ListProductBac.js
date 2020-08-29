@@ -93,7 +93,7 @@ const ListProductBac = (props) => {
       </TouchableOpacity>
     </TouchableOpacity>
   );
-
+console.log("logoooooo",foodData);
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.textTitle}>Hôm nay bạn muốn ăn gì?</Text>

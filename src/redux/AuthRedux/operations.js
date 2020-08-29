@@ -223,3 +223,17 @@ export const createOrder = createAsyncThunk('/oders/create', async (data, { reje
     return rejectWithValue(err.data);
   }
 });
+
+export const getOrder = createAsyncThunk('/orders/getOrder', async (data, { rejectWithValue, getState }) => {
+  try {
+    const accessToken = getState().auth.token;
+    await AuthApis.setToken(accessToken);
+    const response = await AuthApis.getOrderApi();
+    return response?.data;
+  } catch (err) {
+    if (!err.data) {
+      throw err;
+    }
+    return rejectWithValue(err.data);
+  }
+});

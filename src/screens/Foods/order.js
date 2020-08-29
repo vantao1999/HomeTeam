@@ -8,17 +8,17 @@ import FastImage from 'react-native-fast-image';
 import Icon from 'react-native-vector-icons/Ionicons';
 import NumberFormat from 'react-number-format';
 import { useDispatch } from 'react-redux';
-import { createOrder } from '../../redux/AuthRedux/operations';
+import { createOrder, getOrder } from '../../redux/AuthRedux/operations';
 import { useFormik } from 'formik';
 
 
 const Order = (props) => {
   const dispatch = useDispatch();
   const id = props.data._id;
-  console.log("idddddddd",id);
   const [count, setCount] = React.useState(1);
   const onPlus = () =>{
     setCount( count +1);
+    
   };
   const onMinus = () =>{
     if(count > 0){
@@ -27,8 +27,8 @@ const Order = (props) => {
   };
   const formik = useFormik({
     initialValues: {
-      food_id: props.data._id,
-      number: count,
+      food_id: id,
+      number: null,
     },
     onSubmit: (values) => {
       onCreateOrder(values);
@@ -36,6 +36,7 @@ const Order = (props) => {
   });
   const onCreateOrder = async({food_id,number})=>{
     await dispatch(createOrder({food_id,number}));
+    await dispatch(getOrder());
   }
   return (
     <View style={styles.container}>
@@ -55,12 +56,12 @@ const Order = (props) => {
         </View>
         <View style= {styles.viewAction}>
           <View style= {styles.viewQuantity}>
+          <TouchableOpacity onPress={onMinus}>
+              <Icon name="md-remove" size={30} color={Colors.grey}/>
+            </TouchableOpacity>
+          <Text type="regular20" marginHorizontal={20}>{formik.values.number = count}</Text>
             <TouchableOpacity onPress={onPlus}>
               <Icon name="md-add" size={30} color={Colors.grey}/>
-            </TouchableOpacity>
-            <Text type="regular20" marginHorizontal={20}>{count}</Text>
-            <TouchableOpacity onPress={onMinus}>
-              <Icon name="md-remove" size={30} color={Colors.grey}/>
             </TouchableOpacity>
           </View>
           <Text type="regular16"> 
