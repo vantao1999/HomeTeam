@@ -1,12 +1,11 @@
 import React from 'react';
 import { View, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
-// import { NavigationUtils } from '../../navigation';
-// import { useDispatch } from 'react-redux';
 import UserReview from './components/comment';
 import { Text } from '../../components';
 import FastImage from 'react-native-fast-image';
 import { NavigationUtils } from '../../navigation';
 const FoodDetails = (props) => {
+  console.log("logprops",props);
   const onOder = () =>{
     NavigationUtils.push({
       screen:'Order',

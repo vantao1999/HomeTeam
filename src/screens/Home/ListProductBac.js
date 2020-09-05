@@ -14,7 +14,6 @@ import {
 import { NavigationUtils } from '../../navigation';
 import { Navigation } from 'react-native-navigation';
 import { useSelector, useDispatch } from 'react-redux';
-// import { get } from 'lodash';
 import { get, includes, toLower } from 'lodash';
 import { getOne } from '../../redux/AuthRedux/operations';
 import NumberFormat from 'react-number-format';
@@ -60,40 +59,55 @@ const ListProductBac = (props) => {
       },
     });
   };
+  const onBook = (item) => () => {
+    console.log('looooogggg', item);
+    NavigationUtils.push({
+      screen: 'Order',
+      passProps: { data: item },
+    });
+  };
   const Item = ({ item }) => (
-    <TouchableOpacity
-      style={styles.viewFood}
-      onPress={() => {
-        console.log('LOG ID', item._id);
-        getFoodData(item);
-      }}
-    >
-      {item.image ? (
-        <FastImage source={{uri: item.image}} resizeMode={FastImage.resizeMode.cover} style={styles.imageUser} />
-      ):(
-        <Image source={require('../../assets/Images/user.jpeg')} style={styles.imageUser} />
+    <View>
+      {item.isCkeck && (
+        <TouchableOpacity
+          style={styles.viewFood}
+          onPress={() => {
+            console.log('LOG ID', item._id);
+            getFoodData(item);
+          }}
+        >
+          {item.image ? (
+            <FastImage
+              source={{ uri: item.image }}
+              resizeMode={FastImage.resizeMode.cover}
+              style={styles.imageUser}
+            />
+          ) : (
+            <Image source={require('../../assets/Images/user.jpeg')} style={styles.imageUser} />
+          )}
+          <View style={styles.viewIn}>
+            <Text style={styles.foodTitle}>{item.name}</Text>
+            <Text numberOfLines={2} ellipsizeMode="tail" style={styles.textDes}>
+              {item.description}
+            </Text>
+            <Text style={styles.textPrice}>
+              <NumberFormat
+                value={item.price}
+                displayType={'text'}
+                thousandSeparator={true}
+                renderText={(value) => <Text>{value}</Text>}
+              />{' '}
+              vnd
+            </Text>
+          </View>
+          <TouchableOpacity style={styles.btnViewFood} onPress={onBook(item)}>
+            <Text style={styles.textOrder}>Đặt Ngay</Text>
+          </TouchableOpacity>
+        </TouchableOpacity>
       )}
-      <View style={styles.viewIn}>
-        <Text style={styles.foodTitle}>{item.name}</Text>
-        <Text numberOfLines={2} ellipsizeMode="tail" style={styles.textDes}>
-          {item.description}
-        </Text>
-        <Text style={styles.textPrice}>
-          <NumberFormat
-            value={item.price}
-            displayType={'text'}
-            thousandSeparator={true}
-            renderText={(value) => <Text>{value}</Text>}
-          />{' '}
-          vnd
-        </Text>
-      </View>
-      <TouchableOpacity style={styles.btnViewFood}>
-        <Text style={styles.textOrder}>Đặt Ngay</Text>
-      </TouchableOpacity>
-    </TouchableOpacity>
+    </View>
   );
-console.log("logoooooo",foodData);
+  console.log('logoooooo', foodData);
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.textTitle}>Hôm nay bạn muốn ăn gì?</Text>

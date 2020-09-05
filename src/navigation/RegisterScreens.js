@@ -20,6 +20,7 @@ import HouseWifeHistory from '../screens/HouseWife/houseWifeHistory';
 
 //Normal User
 import History from '../screens/History';
+import orderDetail from '../screens/History/detailOrder';
 import foodDetails from '../screens/Home/foodDetails';
 import User from '../screens/UserScreen';
 import Order from '../screens/Foods/order';
@@ -43,6 +44,7 @@ const SCREENS_WITH_REDUX = {
 
   //User
   History,
+  orderDetail,
   foodDetails,
   Order,
 };

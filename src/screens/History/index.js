@@ -9,6 +9,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { get } from 'lodash';
 import { getOrder } from '../../redux/AuthRedux/operations';
 import NumberFormat from 'react-number-format';
+import { Navigation } from 'react-native-navigation';
+import { NavigationUtils } from '../../navigation';
 
 const Index = () => {
   const dispatch = useDispatch();
@@ -21,10 +23,33 @@ const Index = () => {
   const orderData = useSelector((state) => get(state, 'auth.listOrders', null));
   const loading = useSelector((state) => state.auth.loading);
 
+  const NavigateOrderDetail = async (item) => {
+
+    Navigation.push(NavigationUtils.currentScreenId, {
+      component: {
+        name: 'orderDetail',
+        passProps: {
+          item,
+        },
+        options: {
+          topBar: {
+            title: {
+              text: 'Chi Tiết Đặt Hàng',
+            },
+          },
+        },
+      },
+    });
+  };
+
   const renderOrdered = ({ item }) => (
     <View>
       {item.foods && item.status === 'ordered' ? (
-        <TouchableOpacity style={styles.viewOrder}>
+        <TouchableOpacity style={styles.viewOrder} 
+        onPress={() => {
+          console.log('LOG ID', item._id);
+          NavigateOrderDetail(item);
+        }}>
           <View style={styles.imgOrder}>
             <FastImage style={styles.imageOrder} source={{ uri: item.foods.image }}></FastImage>
           </View>

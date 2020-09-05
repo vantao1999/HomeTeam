@@ -3,6 +3,11 @@ import { Colors } from '../themes';
 import BottomTab from './BottomTab';
 
 const introScreen = () => {
+  Navigation.setDefaultOptions({
+    layout: {
+        orientation: ["portrait"],
+    },
+});
   Navigation.setRoot({
     root: {
       stack: {
@@ -24,6 +29,11 @@ const introScreen = () => {
 };
 
 const login = () => {
+  Navigation.setDefaultOptions({
+    layout: {
+        orientation: ["portrait"],
+    },
+});
   Navigation.setRoot({
     root: {
       stack: {
