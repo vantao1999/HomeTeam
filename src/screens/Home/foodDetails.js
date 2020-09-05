@@ -5,11 +5,11 @@ import { Text } from '../../components';
 import FastImage from 'react-native-fast-image';
 import { NavigationUtils } from '../../navigation';
 const FoodDetails = (props) => {
-  console.log("logprops",props);
-  const onOder = () =>{
+  console.log('logprops', props);
+  const onOder = () => {
     NavigationUtils.push({
-      screen:'Order',
-      passProps:{data: props.item},
+      screen: 'Order',
+      passProps: { data: props.item },
     });
   };
   return (
@@ -17,17 +17,17 @@ const FoodDetails = (props) => {
       <View style={styles.header}>
         {props.item.image ? (
           <FastImage
-          source={{uri: props.item.image}}
-          resizeMode={FastImage.resizeMode.cover}
-          style={styles.image}/>
-        ):(
+            source={{ uri: props.item.image }}
+            resizeMode={FastImage.resizeMode.cover}
+            style={styles.image}
+          />
+        ) : (
           <FastImage
-          source={require('../../assets/Images/dummy.png')}
-          resizeMode={FastImage.resizeMode.cover}
-          style={styles.image}
-        />
+            source={require('../../assets/Images/dummy.png')}
+            resizeMode={FastImage.resizeMode.cover}
+            style={styles.image}
+          />
         )}
-        
       </View>
       <View style={styles.footer}>
         <ScrollView showsVerticalScrollIndicator={false}>
