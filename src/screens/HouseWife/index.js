@@ -1,15 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useRef  } from 'react';
 import {
   View,
   StyleSheet,
-  ScrollView,
-  Image,
-  SafeAreaView,
-  TouchableOpacity,
   TextInput,
 } from 'react-native';
-import { Text, Button } from '../../components';
-// import { NavigationUtils } from '../../navigation';
+import { Text, Button, Touchable } from '../../components';
+import { NavigationUtils } from '../../navigation';
 import { useSelector, useDispatch } from 'react-redux';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useFormik } from 'formik';
@@ -19,9 +15,18 @@ import { SCREEN_HEIGHT, SCREEN_WIDTH } from '../../themes/Constants';
 import { Fonts, Colors, Images } from '../../themes';
 
 
+const TEXT_INPUT_NAME = 'TEXT_INPUT_NAME';
+const TEXT_INPUT_HOUSEWIFE_NAME = 'TEXT_INPUT_HOUSEWIFE_NAME';
+const TEXT_INPUT_PRICE = 'TEXT_INPUT_PRICE';
+const TEXT_INPUT_DESCRIPTION = 'TEXT_INPUT_DESCRIPTION';
 
 const Index = () => {
-  const [location, setLocation] = useState('Miền Bắc');
+  let nameRef = useRef(null);
+  let housewife_nameRef = useRef(null);
+  let priceRef = useRef(null);
+  let descriptionRef = useRef(null);
+
+  const [location, setLocation] = useState('Miền Trung');
   const data = [
     {label: 'Miền Bắc', value: 'Miền Bắc'},
     {label: 'Miền Trung', value: 'Miền Trung'},
@@ -31,16 +36,38 @@ const Index = () => {
   const dispatch = useDispatch();
   const formik = useFormik({
     initialValues: {
-      name:'Mon Bien',
-
-      phone: '0347248089',
-      password: '123456',
+      name:'',
+      location,
+      foods:'',
+      price:'',
+      housewife_name:'',
+      description:'',
     },
 
     onSubmit: (values) => {
       handleLogin(values);
     },
   });
+
+  const onSubmitEditing = (field) => {
+    if (field === TEXT_INPUT_NAME) {
+      housewife_nameRef.current?.focus();
+    }
+    if (field === TEXT_INPUT_HOUSEWIFE_NAME) {
+      priceRef.current?.focus();
+    }
+    if (field === TEXT_INPUT_PRICE) {
+      descriptionRef.current?.focus();
+    }
+    if (field === TEXT_INPUT_DESCRIPTION) {
+      descriptionRef.current?.blur();
+    }
+  };
+  const onUploadImage = () =>{
+    NavigationUtils.push({
+      screen: 'UploadImage',
+    });
+  }
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -53,15 +80,15 @@ const Index = () => {
           <Text type="regular14">Tên món</Text>
           <TextInput
             style={styles.textInput}
-            type="phone"
-            defaultValue={formik.values.phone}
-            keyboardType="phone-pad"
-            placeholder="Nhập số điện thoại"
-            onChangeText={formik.handleChange('phone')}
-            onSubmitEditing={() => onSubmitEditing(TEXT_INPUT_PHONE)}
+            type="name"
+            ref={nameRef}
+            defaultValue={formik.values.name}
+            placeholder="Nhập Tên Món"
+            onChangeText={formik.handleChange('name')}
+            onSubmitEditing={() => onSubmitEditing(TEXT_INPUT_NAME)}
             returnKeyType="next"
           />
-          <Text type="regular14">Vùng miền</Text>
+          <Text type="regular14">Chọn miền</Text>
           <View style={{ height: dropdownHeight, marginBottom: 12 }}>
             <View style = {{marginTop:5}}>
               <View style={{ height: dropdownHeight || 50, width: 320 }}>
@@ -119,36 +146,39 @@ const Index = () => {
           <Text type="regular14">Tên người nấu</Text>
           <TextInput
             style={styles.textInput}
-            type="phone"
-            defaultValue={formik.values.phone}
-            keyboardType="phone-pad"
-            placeholder="Nhập số điện thoại"
-            onChangeText={formik.handleChange('phone')}
-            onSubmitEditing={() => onSubmitEditing(TEXT_INPUT_PHONE)}
+            type="housewife_name"
+            ref={housewife_nameRef}
+            defaultValue={formik.values.housewife_name}
+            placeholder="Nhập Tên Người Nấu"
+            onChangeText={formik.handleChange('housewife_name')}
+            onSubmitEditing={() => onSubmitEditing(TEXT_INPUT_HOUSEWIFE_NAME)}
             returnKeyType="next"
           />
           <Text type="regular14">Giá</Text>
           <TextInput
             style={styles.textInput}
-            type="phone"
-            defaultValue={formik.values.phone}
-            keyboardType="phone-pad"
-            placeholder="Nhập số điện thoại"
-            onChangeText={formik.handleChange('phone')}
-            onSubmitEditing={() => onSubmitEditing(TEXT_INPUT_PHONE)}
+            type="price"
+            ref={priceRef}
+            defaultValue={formik.values.price}
+            placeholder="Nhập Giá Tiền"
+            onChangeText={formik.handleChange('price')}
+            onSubmitEditing={() => onSubmitEditing(TEXT_INPUT_PRICE)}
             returnKeyType="next"
           />
           <Text type="regular14">Miêu tả</Text>
           <TextInput
             style={styles.textInput}
-            type="phone"
-            defaultValue={formik.values.phone}
-            keyboardType="phone-pad"
-            placeholder="Nhập số điện thoại"
-            onChangeText={formik.handleChange('phone')}
-            onSubmitEditing={() => onSubmitEditing(TEXT_INPUT_PHONE)}
+            type="description"
+            ref={descriptionRef}
+            defaultValue={formik.values.description}
+            placeholder="Miêu Tả"
+            onChangeText={formik.handleChange('description')}
+            onSubmitEditing={() => onSubmitEditing(TEXT_INPUT_DESCRIPTION)}
             returnKeyType="next"
           />
+          <Touchable onPress={onUploadImage}>
+            <Text>Chọn hình</Text>
+          </Touchable>
           <Button label="Thêm"></Button>
         </KeyboardAwareScrollView>
       </View>

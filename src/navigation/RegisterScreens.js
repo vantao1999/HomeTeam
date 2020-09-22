@@ -10,7 +10,6 @@ import Loading from '../screens/Utils/Loading';
 import InAppNotification from '../screens/Utils/InAppNotification';
 import IntroScreen from '../screens/Intro';
 import Home from '../screens/Home';
-import UploadImage from '../screens/Profile/UploadImage';
 import ListProductBac from '../screens/Home/ListProductBac';
 
 //HouseWife
@@ -24,6 +23,7 @@ import orderDetail from '../screens/History/detailOrder';
 import foodDetails from '../screens/Home/foodDetails';
 import User from '../screens/UserScreen';
 import Order from '../screens/Foods/order';
+import UploadImage from '../screens/HouseWife/UploadImage';
 
 const SCREENS_WITH_REDUX = {
   Login,
@@ -47,6 +47,7 @@ const SCREENS_WITH_REDUX = {
   orderDetail,
   foodDetails,
   Order,
+  UploadImage
 };
 const SCREENS = {
   Loading,
