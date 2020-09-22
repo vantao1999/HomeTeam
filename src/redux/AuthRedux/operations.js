@@ -237,3 +237,17 @@ export const getOrder = createAsyncThunk('/orders/getOrder', async (data, { reje
     return rejectWithValue(err.data);
   }
 });
+
+export const addFood = createAsyncThunk ('create/foods', async (data, {rejectWithValue, getState})=>{
+  try{
+    const accessToken = getState().auth.token;
+    await AuthApis.setToken(accessToken);
+    const response = await AuthApis.addFoodApi(data);
+    return response?.data;
+  } catch (err) {
+    if (!err.data) {
+      throw err;
+    }
+    return rejectWithValue(err.data);
+  }
+})

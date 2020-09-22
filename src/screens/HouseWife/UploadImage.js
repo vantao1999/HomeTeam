@@ -21,7 +21,7 @@ const UploadImage = () => {
   const dispatch = useDispatch();
   const [fileData, setFileDta] = React.useState(null);
   const token = useSelector((state) => get(state, 'auth.token', null));
-//   const uploading = useSelector((state) => get(state, 'auth.uploading', null));
+  //   const uploading = useSelector((state) => get(state, 'auth.uploading', null));
 
   const launchImageLibrary = () => {
     let options = {
@@ -38,7 +38,7 @@ const UploadImage = () => {
       } else {
         setFileDta({
           ...fileData,
-          fileData: response.uri,
+          fileData: response?.data,
         });
       }
     });
@@ -55,27 +55,28 @@ const UploadImage = () => {
   };
   const onUpload = async () => {
     const formData = new FormData();
-    // const dataUri = `data:image/png;base64,${fileData.fileData}`;
-    formData.append('file', fileData);
-    console.log("Me noi voi anh",fileData);
-    // axios({
-    //   url: 'http://192.168.9.32:8080/api/v1/s3/upload',
-    //   method: 'POST',
-    //   data: formData,
-    //   headers: {
-    //     Accept: '*',
-    //     Authorization: 'Bearer ' + token,
-    //     'Content-Type': 'multipart/form-data',
-    //   },
-    // })
-    //   .then(function (response) {
-    //     console.log('response image:', response);
-    //     const avatar = response.data.image;
-    //     saveAvatar({ avatar });
-    //   })
-    //   .catch(function (error) {
-    //     console.log('error from image :', error);
-    //   });
+    const dataUri = `data:image/png;base64,${fileData.fileData}`;
+    formData.append('image_base64', dataUri);
+    console.log('Me noi voi anh', fileData);
+
+    axios({
+      url: 'https://hometown-flavor.herokuapp.com/api/foods/postImage',
+      method: 'POST',
+      data: formData,
+      headers: {
+        Accept: '*',
+        Authorization: 'Bearer ' + token,
+        'Content-Type': 'multipart/form-data',
+      },
+    })
+      .then(function (response) {
+        console.log('response image:', response);
+        const avatar = response.data.image;
+        NavigationUtils.push({isTopBarEnable:false, screen: 'HouseWifeProduct', passProps: { image: avatar } });
+      })
+      .catch(function (error) {
+        console.log('error from image :', error);
+      });
   };
 
   return (
@@ -85,8 +86,8 @@ const UploadImage = () => {
           {fileData ? (
             <View>
               <FastImage
-                // source={{ uri: 'data:image/jpeg;base64,' + fileData.fileData }}
-                source={{ uri: fileData }}
+                source={{ uri: 'data:image/jpeg;base64,' + fileData.fileData }}
+                // source={{ uri: fileData }}
                 resizeMode={FastImage.resizeMode.cover}
                 style={styles.images}
               />

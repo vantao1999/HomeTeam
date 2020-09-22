@@ -53,7 +53,7 @@ export async function createOrderApi(data){
 export async function getOrderApi(){
   return http.get('/orders/getOrder');
 }
-//Get Me
-export async function getMe() {
-  return http.get('/auth/me');
+//Add Foods
+export async function addFoodApi (data){
+  return http.post('/foods/create',data);
 }

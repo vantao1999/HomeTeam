@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Text, View, StyleSheet, Image, TouchableOpacity, Dimensions } from 'react-native';
+import { Text, View, StyleSheet, Image, TouchableOpacity, Dimensions, ActivityIndicator } from 'react-native';
 import { NavigationUtils } from '../../navigation';
 import { Navigation } from 'react-native-navigation';
 import {
@@ -13,10 +13,11 @@ import FastImage from 'react-native-fast-image';
 import { Colors, Images } from '../../themes';
 const Home = () => {
   const dispatch = useDispatch();
-
+const [loading, setLoading] = useState(false);
   const NavigateBac = async () => {
+    setLoading(true);
     const result = await dispatch(getFoodNorth(''));
-
+    setLoading(false);
     Navigation.push(NavigationUtils.currentScreenId, {
       component: {
         name: 'ListProductBac',
@@ -34,8 +35,9 @@ const Home = () => {
     });
   };
   const NavigateTrung = async () => {
+    setLoading(true);
     const result = await dispatch(getFoodCentral(''));
-
+    setLoading(false);
     Navigation.push(NavigationUtils.currentScreenId, {
       component: {
         name: 'ListProductBac',
@@ -53,7 +55,9 @@ const Home = () => {
     });
   };
   const NavigateNam = async () => {
+    setLoading(true);
     const result = await dispatch(getFoodSouth(''));
+    setLoading(false);
     Navigation.push(NavigationUtils.currentScreenId, {
       component: {
         name: 'ListProductBac',
@@ -70,7 +74,9 @@ const Home = () => {
   };
 
   const NavigateAllFoods = async () => {
+    setLoading(true);
     const result = await dispatch(getFoods(''));
+    setLoading(false);
     Navigation.push(NavigationUtils.currentScreenId, {
       component: {
         name: 'ListProductBac',
@@ -149,6 +155,11 @@ const Home = () => {
           <Text style={styles.textBook}>ĐẶT NGAY</Text>
         </TouchableOpacity>
       </View>
+      {loading ? (
+        <View style={styles.loading}>
+          <ActivityIndicator size="large" color="#56aaff" />
+        </View>
+      ) : null}
     </View>
   );
 };
@@ -228,5 +239,15 @@ const styles = StyleSheet.create({
     height: Dimensions.get('window'). height / 5,
     borderRadius:25,
     opacity:0.7,
+  },
+  loading: {
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
+    backgroundColor: 'rgba(0,0,0,0.2)',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
