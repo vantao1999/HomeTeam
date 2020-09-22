@@ -15,12 +15,13 @@ export const startApp = async () => {
       return;
     }
     const user = store.getState().auth.user;
+    console.log('Loggogogogo',user);
 
     if (user) {
       if (user.role === 'user') {
         NavigationUtils.startMainContent();
       } else {
-        NavigationUtils.startMainAdminContent();
+        NavigationUtils.startMainHouseContent();
       }
     } else {
       NavigationUtils.startLoginContent();
