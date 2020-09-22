@@ -10,7 +10,7 @@ import {
 } from '../../redux/AuthRedux/operations';
 import { useDispatch } from 'react-redux';
 import FastImage from 'react-native-fast-image';
-import { Colors } from '../../themes';
+import { Colors, Images } from '../../themes';
 const Home = () => {
   const dispatch = useDispatch();
 
@@ -91,7 +91,7 @@ const Home = () => {
       <View style={styles.header}>
         <View style={styles.contentHeader}>
           <FastImage
-            source={require('../../assets/Images/user.jpeg')}
+            source={Images.mainLogo}
             resizeMode={FastImage.resizeMode.cover}
             style={styles.imgProduct}
           />
