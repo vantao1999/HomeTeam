@@ -5,9 +5,9 @@ import BottomTab from './BottomTab';
 const introScreen = () => {
   Navigation.setDefaultOptions({
     layout: {
-        orientation: ["portrait"],
+      orientation: ['portrait'],
     },
-});
+  });
   Navigation.setRoot({
     root: {
       stack: {
@@ -31,9 +31,9 @@ const introScreen = () => {
 const login = () => {
   Navigation.setDefaultOptions({
     layout: {
-        orientation: ["portrait"],
+      orientation: ['portrait'],
     },
-});
+  });
   Navigation.setRoot({
     root: {
       stack: {
@@ -81,8 +81,8 @@ const mainTabAdmin = (adminScreen) => {
       bottomTabs: {
         children: [
           BottomTab('Home', 'md-home', defaultTopBar, 'Trang Chủ', 'ic-done'),
-          BottomTab('HouseWifeHistory', 'ios-clock', defaultTopBar, 'Lịch Sử'),
-          BottomTab('HouseWifeProduct', 'md-menu', defaultTopBar, 'Sản Phẩm'),
+          BottomTab('HouseWifeHistory', 'md-menu', defaultTopBar, 'Sản Phẩm'),
+          BottomTab('HouseWifeProduct', 'md-cart', defaultTopBar, 'Đơn Hàng'),
           BottomTab('User', 'md-person', defaultTopBar, 'Cài Đặt'),
         ],
         options: {

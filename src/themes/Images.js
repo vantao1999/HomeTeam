@@ -8,6 +8,7 @@ import intro_2 from '../assets/Images/intro_2.jpg';
 import intro_3 from '../assets/Images/intro_3.jpeg';
 import dummy from '../assets/Images/dummy.png';
 import mainLogo from '../assets/Images/defaulLogo.png';
+import gallery from '../assets/Images/nullImage.png';
 const Images = {
   signUpLogo,
   defaultAvatar,
@@ -19,6 +20,7 @@ const Images = {
   intro_3,
   dummy,
   mainLogo,
+  gallery,
 };
 
 export default Images;

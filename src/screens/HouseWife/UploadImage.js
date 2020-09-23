@@ -1,27 +1,15 @@
 import React from 'react';
 import ImagePicker from 'react-native-image-picker';
 import FastImage from 'react-native-fast-image';
-import {
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  Alert,
-  TouchableOpacity,
-  Dimensions,
-  ActivityIndicator,
-} from 'react-native';
-import { useSelector, useDispatch } from 'react-redux';
+import { StyleSheet, Text, View, Image, Alert, TouchableOpacity, Dimensions } from 'react-native';
+import { useSelector } from 'react-redux';
 import { get } from 'lodash';
 import axios from 'axios';
-// import { saveImage } from '../../redux/UserRedux/operations';
 import { NavigationUtils } from '../../navigation';
 
 const UploadImage = () => {
-  const dispatch = useDispatch();
   const [fileData, setFileDta] = React.useState(null);
   const token = useSelector((state) => get(state, 'auth.token', null));
-  //   const uploading = useSelector((state) => get(state, 'auth.uploading', null));
 
   const launchImageLibrary = () => {
     let options = {
@@ -40,19 +28,11 @@ const UploadImage = () => {
           ...fileData,
           fileData: response?.data,
         });
+        console.log('vaochuaeem?', fileData);
       }
     });
   };
 
-  const saveAvatar = async (image) => {
-    const result = await dispatch(saveImage(image));
-    if (saveImage.fulfilled.match(result)) {
-      Alert.alert('Update successfully');
-      NavigationUtils.popToRoot();
-    } else {
-      Alert.alert('Error', 'Please try again' || 'error');
-    }
-  };
   const onUpload = async () => {
     const formData = new FormData();
     const dataUri = `data:image/png;base64,${fileData.fileData}`;
@@ -72,7 +52,11 @@ const UploadImage = () => {
       .then(function (response) {
         console.log('response image:', response);
         const avatar = response.data.image;
-        NavigationUtils.push({isTopBarEnable:false, screen: 'HouseWifeProduct', passProps: { image: avatar } });
+        NavigationUtils.push({
+          isTopBarEnable: false,
+          screen: 'HouseWifeProduct',
+          passProps: { image: avatar },
+        });
       })
       .catch(function (error) {
         console.log('error from image :', error);
@@ -87,7 +71,6 @@ const UploadImage = () => {
             <View>
               <FastImage
                 source={{ uri: 'data:image/jpeg;base64,' + fileData.fileData }}
-                // source={{ uri: fileData }}
                 resizeMode={FastImage.resizeMode.cover}
                 style={styles.images}
               />
@@ -150,15 +133,5 @@ const styles = StyleSheet.create({
   textUpload: {
     fontFamily: 'Roboto',
     fontSize: 18,
-  },
-  loading: {
-    position: 'absolute',
-    top: 0,
-    bottom: 0,
-    left: 0,
-    right: 0,
-    backgroundColor: 'rgba(0,0,0,0.2)',
-    justifyContent: 'center',
-    alignItems: 'center',
   },
 });

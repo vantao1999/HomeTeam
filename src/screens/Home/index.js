@@ -1,5 +1,13 @@
 import React, { useState } from 'react';
-import { Text, View, StyleSheet, Image, TouchableOpacity, Dimensions, ActivityIndicator } from 'react-native';
+import {
+  Text,
+  View,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  Dimensions,
+  ActivityIndicator,
+} from 'react-native';
 import { NavigationUtils } from '../../navigation';
 import { Navigation } from 'react-native-navigation';
 import {
@@ -13,7 +21,7 @@ import FastImage from 'react-native-fast-image';
 import { Colors, Images } from '../../themes';
 const Home = () => {
   const dispatch = useDispatch();
-const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const NavigateBac = async () => {
     setLoading(true);
     const result = await dispatch(getFoodNorth(''));
@@ -151,9 +159,6 @@ const [loading, setLoading] = useState(false);
             <Text style={styles.textLocation}>Tất Cả</Text>
           </TouchableOpacity>
         </View>
-        <TouchableOpacity style={styles.btnBook}>
-          <Text style={styles.textBook}>ĐẶT NGAY</Text>
-        </TouchableOpacity>
       </View>
       {loading ? (
         <View style={styles.loading}>
@@ -169,12 +174,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  
   contentHeader: {
-    alignItems:'center',
-    justifyContent:'center',
+    alignItems: 'center',
+    justifyContent: 'center',
     flexDirection: 'row',
-    paddingHorizontal:20,
+    paddingHorizontal: 20,
     borderBottomWidth: 2,
     borderBottomColor: '#f2f2f2',
   },
@@ -195,8 +199,8 @@ const styles = StyleSheet.create({
   content: {
     flex: 4,
     backgroundColor: '#19b7b7',
-    alignItems:'center',
-    justifyContent:'center',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   viewLocation: {
     marginTop: 10,
@@ -208,37 +212,22 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#fefefe',
     borderRadius: 25,
-    width: (Dimensions.get('window'). width - 30) /2,
-    height: Dimensions.get('window'). height / 5,
-
+    width: (Dimensions.get('window').width - 30) / 2,
+    height: Dimensions.get('window').height / 5,
   },
   textLocation: {
-    position:'absolute',
-    alignSelf:'center',
-    marginVertical:55,
+    position: 'absolute',
+    alignSelf: 'center',
+    marginVertical: 55,
     fontSize: 18,
     color: Colors.white,
-    fontWeight:'bold',
-  },
-  btnBook: {
-    backgroundColor: '#fff',
-    marginVertical: 20,
-    paddingVertical: 10,
-    alignItems: 'center',
-    alignSelf: 'center',
-    borderRadius: 15,
-    width: Dimensions.get('window').width / 2,
-  },
-  textBook: {
-    fontSize: 18,
-    color: 'red',
     fontWeight: 'bold',
   },
-  imgLocation:{
-    width: (Dimensions.get('window'). width - 30) /2,
-    height: Dimensions.get('window'). height / 5,
-    borderRadius:25,
-    opacity:0.7,
+  imgLocation: {
+    width: (Dimensions.get('window').width - 30) / 2,
+    height: Dimensions.get('window').height / 5,
+    borderRadius: 25,
+    opacity: 0.7,
   },
   loading: {
     position: 'absolute',

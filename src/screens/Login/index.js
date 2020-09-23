@@ -71,7 +71,7 @@ const Login = () => {
       handleLogin(values);
     },
   });
-  
+
   const handleLogin = async ({ phone, password }) => {
     Keyboard.dismiss();
     const result = await dispatch(login({ phone, password }));
@@ -142,7 +142,9 @@ const Login = () => {
               )}
             </TouchableOpacity>
           </View>
-          <Text style={styles.mesValidate}>{formik.touched.password && formik.errors.password}</Text>
+          <Text style={styles.mesValidate}>
+            {formik.touched.password && formik.errors.password}
+          </Text>
           <TouchableOpacity
             style={styles.btnForgot}
             onPress={() => {

@@ -1,5 +1,15 @@
 import React, { useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image, TextInput,Keyboard, Alert, ActivityIndicator } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Image,
+  TextInput,
+  Keyboard,
+  Alert,
+  ActivityIndicator,
+} from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { NavigationUtils } from '../../navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -9,6 +19,8 @@ import { get } from 'lodash';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { unwrapResult } from '@reduxjs/toolkit';
+import FastImage from 'react-native-fast-image';
+import { Images } from '../../themes';
 
 const Setting = () => {
   const [userData, setData] = React.useState({
@@ -18,7 +30,7 @@ const Setting = () => {
   const user = useSelector((state) => get(state, 'auth.user', null));
   const errMes = useSelector((state) => get(state, 'auth.logInErr', null));
   const loading = useSelector((state) => get(state, 'auth.loading', null));
-  
+
   useEffect(() => {
     if (user) {
       setData((data) => ({ ...data, ...user }));
@@ -39,7 +51,7 @@ const Setting = () => {
     validationSchema: Yup.object({
       name: Yup.string().min(2, 'Quá ngắn').max(50, 'Quá dài'),
       email: Yup.string().email('Email không đúng'),
-      address: Yup.string().min(3,'Quá ngắn'),
+      address: Yup.string().min(3, 'Quá ngắn'),
     }),
     onSubmit: (values) => {
       userUpdateProfile(values);
@@ -85,7 +97,7 @@ const Setting = () => {
                 formik.handleSubmit();
               }}
             >
-              <Text style={styles.textSave}>Save</Text>
+              <Text style={styles.textSave}>Lưu</Text>
             </TouchableOpacity>
           ) : (
             <TouchableOpacity onPress={LogOut}>
@@ -95,17 +107,27 @@ const Setting = () => {
         </View>
         {userData.isEdit ? (
           <TouchableOpacity onPress={navigate}>
-              <Image source={require('../../assets/Images/user.jpeg')} style={styles.imageUser} />
+            <FastImage
+              source={Images.gallery}
+              resizeMode={FastImage.resizeMode.cover}
+              style={styles.imageUser}
+            />
           </TouchableOpacity>
         ) : (
           <View onPress={navigate}>
-           
-              <Image source={require('../../assets/Images/user.jpeg')} style={styles.imageUser} />
+            <FastImage
+              source={Images.gallery}
+              resizeMode={FastImage.resizeMode.cover}
+              style={styles.imageUser}
+            />
           </View>
         )}
         {!userData.isEdit ? (
-          <TouchableOpacity style={styles.btnLogout} onPress={() => setData({ ...userData, isEdit: !userData.isEdit })}>
-            <Icon name="md-create" size={24} style = {styles.textLogout}/>
+          <TouchableOpacity
+            style={styles.btnLogout}
+            onPress={() => setData({ ...userData, isEdit: !userData.isEdit })}
+          >
+            <Icon name="md-create" size={24} style={styles.textLogout} />
           </TouchableOpacity>
         ) : null}
       </View>
@@ -127,8 +149,8 @@ const Setting = () => {
             <Text style={styles.mesValidate}>{formik.touched.name && formik.errors.name}</Text>
 
             <View style={styles.action}>
-            <Text style={styles.textTitle}>Email</Text>
-            <TextInput
+              <Text style={styles.textTitle}>Email</Text>
+              <TextInput
                 style={userData.isEdit ? styles.textEditContent : styles.textContent}
                 defaultValue={userData.email}
                 editable={userData.isEdit}
@@ -148,11 +170,13 @@ const Setting = () => {
                 editable={userData.isEdit}
                 placeholder="Nhập địa chỉ"
                 onChangeText={formik.handleChange('address')}
-              onBlur={formik.handleBlur('address')}
+                onBlur={formik.handleBlur('address')}
                 returnKeyType="next"
               />
             </View>
-            <Text style={styles.mesValidate}>{formik.touched.address && formik.errors.address}</Text>
+            <Text style={styles.mesValidate}>
+              {formik.touched.address && formik.errors.address}
+            </Text>
 
             <View style={styles.action}>
               <Text style={styles.textTitle}>Số điện thoại</Text>
@@ -244,7 +268,7 @@ const styles = StyleSheet.create({
   },
   mesValidate: {
     color: 'red',
-    marginHorizontal:20,
+    marginHorizontal: 20,
   },
   loading: {
     position: 'absolute',

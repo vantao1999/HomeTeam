@@ -75,6 +75,7 @@ const defaultColors = {
   backgroundOrder: '#FAFAFA',
   defaultBackground: '#f2f2f2',
   textDefault: '#05375a',
+  mainBorder: '#e0e0e0',
 };
 
 export default defaultColors;

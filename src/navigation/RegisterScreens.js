@@ -47,7 +47,6 @@ const SCREENS_WITH_REDUX = {
   orderDetail,
   foodDetails,
   Order,
-  UploadImage
 };
 const SCREENS = {
   Loading,

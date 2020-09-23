@@ -1,16 +1,30 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, { useState, useRef, useEffect } from 'react';
-import { View, StyleSheet, TextInput, Alert, Keyboard, ActivityIndicator } from 'react-native';
-import { Text, Button, Touchable } from '../../components';
+import {
+  View,
+  StyleSheet,
+  TextInput,
+  Alert,
+  Keyboard,
+  ActivityIndicator,
+  TouchableOpacity,
+  Platform,
+} from 'react-native';
+import { Text, Button } from '../../components';
 import { NavigationUtils } from '../../navigation';
 import { useSelector, useDispatch } from 'react-redux';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useFormik } from 'formik';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import DropDownPicker from 'react-native-dropdown-picker';
-import { SCREEN_HEIGHT, SCREEN_WIDTH } from '../../themes/Constants';
-import { Fonts, Colors, Images } from '../../themes';
+import ImagePicker from 'react-native-image-picker';
+import { Fonts, Colors } from '../../themes';
 import FastImage from 'react-native-fast-image';
 import { addFood } from '../../redux/AuthRedux/operations';
+import { get } from 'lodash';
+import axios from 'axios';
+import NumberFormat from 'react-number-format';
+import { getFoodOfHouseWife } from '../../redux/AuthRedux/operations';
 
 const TEXT_INPUT_NAME = 'TEXT_INPUT_NAME';
 const TEXT_INPUT_HOUSEWIFE_NAME = 'TEXT_INPUT_HOUSEWIFE_NAME';
@@ -18,11 +32,16 @@ const TEXT_INPUT_PRICE = 'TEXT_INPUT_PRICE';
 const TEXT_INPUT_FOOD = 'TEXT_INPUT_FOOD';
 const TEXT_INPUT_DESCRIPTION = 'TEXT_INPUT_DESCRIPTION';
 
-const Index = (props) => {
-  const [image, setProductImg] = React.useState(null);
+const Index = () => {
+  const [image, setProductImg] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [loadingImg, setLoadingImg] = useState(false);
+
   const [dropdownHeight, setDropdownHeight] = useState(null);
   const dispatch = useDispatch();
+  const [imgBase64, setImgBase64] = useState(null);
+  const token = useSelector((state) => get(state, 'auth.token', null));
+
   let nameRef = useRef(null);
   let housewife_nameRef = useRef(null);
   let priceRef = useRef(null);
@@ -34,60 +53,54 @@ const Index = (props) => {
     { label: 'Miền Trung', value: 'Miền Trung' },
     { label: 'Miền Nam', value: 'Miền Nam' },
   ];
-  const getProductImg = async () => {
-    if (props.image) {
-      setProductImg(props.image);
-    }
-  };
-  useEffect(() => {
-    getProductImg();
-  }, [image]);
+
   const formik = useFormik({
     initialValues: {
       name: '',
-      location,
+      location: '',
       foods: '',
       price: '',
       housewife_name: '',
       description: '',
-      image: props.image || null,
+      image,
     },
-
     onSubmit: (values) => {
-      console.log('lovalue', values);
-      handleAddFood(values);
+      let foodData = {
+        name: values.name,
+        location: location,
+        foods: values.foods,
+        price: parseInt(values.price.replace(',', ''), 10),
+        housewife_name: values.housewife_name,
+        description: values.description,
+        image,
+      };
+      handleAddFood(foodData);
     },
   });
 
-  const handleAddFood = async ({
-    foods,
-    location,
-    image,
-    housewife_name,
-    price,
-    name,
-    description,
-  }) => {
+  const handleAddFood = async (values) => {
+    await onUpload(imgBase64);
     Keyboard.dismiss();
-    const data = { foods, location, image, housewife_name, price, name, description };
+    // const data = { foods, location, image, housewife_name, price, name, description };
     try {
       setLoading(true);
-      const result = await dispatch(addFood(data));
-      if(addFood.fulfilled.match(result)){
+      const result = await dispatch(addFood(values));
+      if (addFood.fulfilled.match(result)) {
+        await dispatch(getFoodOfHouseWife());
         setLoading(false);
-        Alert.alert('Thông báo!', 'Đăng sản phẩm thành công', [
+        Alert.alert('Thông báo!', 'Thêm sản phẩm thành công', [
           { text: 'OK', onPress: () => console.log('OK Pressed') },
         ]);
-      }
-     else{
-      setLoading(false);
-      if (result.payload) {
-        Alert.alert('Lỗi', result.payload.message || 'lỗi');
+        NavigationUtils.pop();
       } else {
         setLoading(false);
-        Alert.alert('Lỗi', result.error || 'lỗi');
+        if (result.payload) {
+          Alert.alert('Lỗi', result.payload.message || 'lỗi');
+        } else {
+          setLoading(false);
+          Alert.alert('Lỗi', result.error || 'lỗi');
+        }
       }
-    }
     } catch (error) {
       setLoading(false);
       console.log(error);
@@ -113,10 +126,50 @@ const Index = (props) => {
       descriptionRef.current?.blur();
     }
   };
-  const onUploadImage = () => {
-    NavigationUtils.push({
-      screen: 'UploadImage',
+
+  const launchImageLibrary = () => {
+    let options = {
+      storageOptions: {
+        skipBackup: true,
+        path: 'images',
+      },
+    };
+    ImagePicker.launchImageLibrary(options, (response) => {
+      const url = response.data;
+      if (url) {
+        setLoadingImg(true);
+        console.log('loading1', loading);
+        setImgBase64(url);
+        setLoadingImg(false);
+        console.log('loading2', loading);
+      }
     });
+    console.log('loading3', loading);
+    setLoadingImg(false);
+  };
+  const onUpload = async (fileData) => {
+    const formData = new FormData();
+    const dataUri = `data:image/png;base64,${fileData}`;
+    formData.append('image_base64', dataUri);
+
+    await axios({
+      url: 'https://hometown-flavor.herokuapp.com/api/foods/postImage',
+      method: 'POST',
+      data: formData,
+      headers: {
+        Accept: '*',
+        Authorization: 'Bearer ' + token,
+        'Content-Type': 'multipart/form-data',
+      },
+    })
+      .then(function (response) {
+        console.log('response image:', response);
+        let imgUrl = response.data.image;
+        setProductImg(imgUrl);
+      })
+      .catch(function (error) {
+        console.log('error from image :', error);
+      });
   };
   return (
     <View style={styles.container}>
@@ -205,15 +258,21 @@ const Index = (props) => {
             returnKeyType="next"
           />
           <Text type="regular14">Giá</Text>
-          <TextInput
-            style={styles.textInput}
-            type="price"
-            ref={priceRef}
+          <NumberFormat
             value={formik.values.price}
-            placeholder="Nhập Giá Tiền"
-            onChangeText={formik.handleChange('price')}
-            onSubmitEditing={() => onSubmitEditing(TEXT_INPUT_PRICE)}
-            returnKeyType="next"
+            displayType={'text'}
+            thousandSeparator={true}
+            renderText={(value) => (
+              <TextInput
+                style={styles.textInput}
+                onChangeText={formik.handleChange('price')}
+                onBlur={formik.handleBlur('price')}
+                value={value}
+                maxLength={7}
+                placeholder="Nhập Giá Tiền"
+                keyboardType="number-pad"
+              />
+            )}
           />
           <Text type="regular14">Nguyên liệu</Text>
           <TextInput
@@ -237,23 +296,34 @@ const Index = (props) => {
             onSubmitEditing={() => onSubmitEditing(TEXT_INPUT_DESCRIPTION)}
             returnKeyType="next"
           />
-          <Touchable style={styles.btnImage} onPress={onUploadImage}>
-            <Text type="regular14">Chọn hình</Text>
-          </Touchable>
-          <View style={{ alignItems: 'center', marginTop: 15 }}>
-            {image ? (
-              <FastImage
-                source={{ uri: image }}
-                resizeMode={FastImage.resizeMode.cover}
-                style={styles.productImg}
-              />
+
+          <View style={styles.ImageSections}>
+            <TouchableOpacity
+              onPress={() => {
+                launchImageLibrary();
+              }}
+              style={styles.btnUpload}
+            >
+              <Text type="regular14">Chọn hình</Text>
+            </TouchableOpacity>
+            <View>
+              {imgBase64 && (
+                <View>
+                  <FastImage
+                    source={{ uri: 'data:image/jpeg;base64,' + imgBase64 }}
+                    resizeMode={FastImage.resizeMode.cover}
+                    style={styles.images}
+                  />
+                </View>
+              )}
+            </View>
+            {loadingImg ? (
+              <View style={styles.loading}>
+                <ActivityIndicator size="large" color="#56aaff" />
+              </View>
             ) : null}
           </View>
-          <Button
-            label="Thêm"
-            style={{ marginVertical: 20 }}
-            onPress={formik.handleSubmit}
-          ></Button>
+          <Button label="Thêm" style={{ marginVertical: 20 }} onPress={formik.handleSubmit} />
         </KeyboardAwareScrollView>
       </View>
       {loading ? (
@@ -281,18 +351,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: Colors.primary,
   },
-  btnImage: {
-    width: 100,
-    borderColor: Colors.neturalGrey,
-    alignItems: 'center',
-    borderRadius: 10,
-    borderWidth: 1,
-    padding: 5,
-  },
-  productImg: {
-    width: 200,
-    height: 200,
-  },
   content: {
     flex: 1,
     paddingTop: 20,
@@ -300,13 +358,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     borderTopRightRadius: 30,
     borderTopLeftRadius: 30,
-  },
-  action: {
-    flexDirection: 'row',
-    borderBottomWidth: 1,
-    borderBottomColor: '#f2f2f2',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
   textInput: {
     marginTop: 5,
@@ -344,5 +395,23 @@ const styles = StyleSheet.create({
   },
   containerDropdown: {
     height: 50,
+  },
+  ImageSections: {
+    flexDirection: 'row',
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  images: {
+    width: 150,
+    height: 150,
+  },
+  btnUpload: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 100,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: Colors.neturalGrey,
   },
 });

@@ -47,13 +47,17 @@ export async function getFoodCentral() {
 export async function getFoodDetail(_id) {
   return http.get(`/foods/${_id}`);
 }
-export async function createOrderApi(data){
+export async function createOrderApi(data) {
   return http.post('/orders/create', data);
 }
-export async function getOrderApi(){
+export async function getOrderApi() {
   return http.get('/orders/getOrder');
 }
 //Add Foods
-export async function addFoodApi (data){
-  return http.post('/foods/create',data);
+export async function addFoodApi(data) {
+  return http.post('/foods/create', data);
+}
+//getHouswifeFoods
+export async function getFoodOfHouseWfieApi() {
+  return http.get('/foods/getFoodByHousewife');
 }

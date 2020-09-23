@@ -8,19 +8,15 @@ import {
   Image,
   TouchableOpacity,
   FlatList,
-  Alert,
   SafeAreaView,
 } from 'react-native';
 import { NavigationUtils } from '../../navigation';
 import { Navigation } from 'react-native-navigation';
-import { useSelector, useDispatch } from 'react-redux';
-import { get, includes, toLower } from 'lodash';
-import { getOne } from '../../redux/AuthRedux/operations';
+import { includes, toLower } from 'lodash';
 import NumberFormat from 'react-number-format';
 import FastImage from 'react-native-fast-image';
 
 const ListProductBac = (props) => {
-  const dispatch = useDispatch();
   const listFood = props.result.payload;
   console.log('ListFoodData', listFood);
 
@@ -144,19 +140,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#19b7b7',
-  },
-  header: {
-    marginTop: 10,
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-    flexDirection: 'row',
-    marginHorizontal: 20,
-  },
-  imageHeader: {
-    width: 35,
-    height: 35,
-    borderRadius: 50,
-    marginRight: 5,
   },
   footer: {
     flex: 2,
